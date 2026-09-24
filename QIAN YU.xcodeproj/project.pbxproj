@@ -1,0 +1,512 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+/* Begin PBXBuildFile section */
+		47E9582401674B2B947A7967 /* QianYuApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D8A37183A74B719C5904BC /* QianYuApp.swift */; };
+		800D9F52529544369409160C /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69800022F984BC39B14A87D /* ChatMessage.swift */; };
+		335B1A15091D4A3EA0999B0E /* CourseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DAD27A7891468F9B85B703 /* CourseItem.swift */; };
+		8194FB8B66224AD19D9A2F8B /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A47FCE42194EBA8432A37D /* AppSettings.swift */; };
+		1F79DD0317764F6781EE655D /* PersonaEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089EE8855582444898BCEE7C /* PersonaEngine.swift */; };
+		82019A74B7F246C79159FB1E /* QianYuDialogueCorpus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA818FC8727463DB50DED01 /* QianYuDialogueCorpus.swift */; };
+		EE01C925131D4530847E7CFA /* LLMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A667035134A1432796AB99B7 /* LLMService.swift */; };
+		6DEDB85E5F924662A6B45892 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11593F6DCCBF4F779A00EED9 /* NotificationManager.swift */; };
+		918CFD7272C24C8E9296C81F /* CourseReminderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1F18C209624FC2886E9AE2 /* CourseReminderService.swift */; };
+		00CA77B950EB4388B0F860BA /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE9364011674E7BB4B60FE3 /* ChatViewModel.swift */; };
+		06074522E9904523BA64DCD5 /* CourseScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF443555EF04EC196AA9574 /* CourseScheduleViewModel.swift */; };
+		41FBE959F808408D94D1E849 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420FE9B7DD3C4520832FF6AA /* SettingsViewModel.swift */; };
+		2D7BCB28A64B49418E0B8B73 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2ECF536EAE444FFBC13804E /* MainView.swift */; };
+		9B3EEA9852CB4F2D92AAD469 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413EE747DBB9454BA8321B5A /* ChatView.swift */; };
+		A6A36A4D9AE14BE4B2E507EA /* MessageBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F7BC3BE369489EA2563FCD /* MessageBubbleView.swift */; };
+		C9D1AE87264047728ECCBA0B /* CompanionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD819A95D37340DABC878899 /* CompanionHeaderView.swift */; };
+		54D6E261E1C0403991890A0D /* NextClassBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949DCFB620E44DE3923FB953 /* NextClassBannerView.swift */; };
+		DE57B8C201AA49D2A12153BC /* QuickActionChipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004FCB660B9449889CB0C13F /* QuickActionChipsView.swift */; };
+		C47208BAC5014A78BDD0B8B2 /* CourseScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EC5F6FC6974023A8EE504C /* CourseScheduleView.swift */; };
+		B8796BA22A2B490194DCC81C /* AddCourseSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568C531E37E246DFA618FD7E /* AddCourseSheet.swift */; };
+		4DBE29BE196D4250AC810B12 /* CourseCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C640C2E5FB6348BBB35E38A1 /* CourseCardView.swift */; };
+		ABF38EA924C64C2C9B71C7B8 /* DailyPushSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC99E1A20084A6D827AC44C /* DailyPushSettingsView.swift */; };
+		E869EAA2A7A3444584103183 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC6F13D95154CA9A0713B63 /* SettingsView.swift */; };
+		E91A1DB8BA514FF0A43DBE8F /* PersonaDocView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6CE63FC40B46EFABB09718 /* PersonaDocView.swift */; };
+		FED540FDE5B44AA7ACCBCDF1 /* MenuBarCompanionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF31D93F8A8B4DBC85B32BF9 /* MenuBarCompanionView.swift */; };
+		B77100E245EB4C16BB10A4D0 /* ICSParserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4769137462B46C6A4C89DDA /* ICSParserService.swift */; };
+		7FF12AD661F54A0E960CE65E /* ImportCoursesPreviewSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876EAA338CF44ABB8DE34B5F /* ImportCoursesPreviewSheet.swift */; };
+		C1B01100D0014D88A1230001 /* CalendarSyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A01100D0014D88A1230001 /* CalendarSyncService.swift */; };
+		C1B01100D0014D88A1230002 /* AICourseParserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A01100D0014D88A1230002 /* AICourseParserService.swift */; };
+		C1B01100D0014D88A1230003 /* AICourseImportSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A01100D0014D88A1230003 /* AICourseImportSheet.swift */; };
+		C2B01100D0014D88A1230001 /* PomodoroTimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A01100D0014D88A1230001 /* PomodoroTimerViewModel.swift */; };
+		C2B01100D0014D88A1230002 /* PomodoroActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A01100D0014D88A1230002 /* PomodoroActivityAttributes.swift */; };
+		C2B01100D0014D88A1230003 /* LiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A01100D0014D88A1230003 /* LiveActivityManager.swift */; };
+		C2B01100D0014D88A1230004 /* PomodoroTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A01100D0014D88A1230004 /* PomodoroTimerView.swift */; };
+		C2B01100D0014D88A1230005 /* QianYuDynamicIslandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A01100D0014D88A1230005 /* QianYuDynamicIslandView.swift */; };
+		C2B01100D0014D88A1230006 /* QianYuCourseWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A01100D0014D88A1230006 /* QianYuCourseWidget.swift */; };
+		3F28AC8AF00B452DA5462CD0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCA5D11ED32546FA9D904316 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+/* Begin PBXFileReference section */
+		F9D8A37183A74B719C5904BC /* QianYuApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QianYuApp.swift"; sourceTree = "<group>"; };
+		C69800022F984BC39B14A87D /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatMessage.swift"; sourceTree = "<group>"; };
+		28DAD27A7891468F9B85B703 /* CourseItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CourseItem.swift"; sourceTree = "<group>"; };
+		10A47FCE42194EBA8432A37D /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppSettings.swift"; sourceTree = "<group>"; };
+		089EE8855582444898BCEE7C /* PersonaEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersonaEngine.swift"; sourceTree = "<group>"; };
+		2AA818FC8727463DB50DED01 /* QianYuDialogueCorpus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QianYuDialogueCorpus.swift"; sourceTree = "<group>"; };
+		A667035134A1432796AB99B7 /* LLMService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LLMService.swift"; sourceTree = "<group>"; };
+		11593F6DCCBF4F779A00EED9 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationManager.swift"; sourceTree = "<group>"; };
+		7B1F18C209624FC2886E9AE2 /* CourseReminderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CourseReminderService.swift"; sourceTree = "<group>"; };
+		DCE9364011674E7BB4B60FE3 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewModel.swift"; sourceTree = "<group>"; };
+		FBF443555EF04EC196AA9574 /* CourseScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CourseScheduleViewModel.swift"; sourceTree = "<group>"; };
+		420FE9B7DD3C4520832FF6AA /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewModel.swift"; sourceTree = "<group>"; };
+		F2ECF536EAE444FFBC13804E /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainView.swift"; sourceTree = "<group>"; };
+		413EE747DBB9454BA8321B5A /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatView.swift"; sourceTree = "<group>"; };
+		97F7BC3BE369489EA2563FCD /* MessageBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageBubbleView.swift"; sourceTree = "<group>"; };
+		BD819A95D37340DABC878899 /* CompanionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompanionHeaderView.swift"; sourceTree = "<group>"; };
+		949DCFB620E44DE3923FB953 /* NextClassBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NextClassBannerView.swift"; sourceTree = "<group>"; };
+		004FCB660B9449889CB0C13F /* QuickActionChipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QuickActionChipsView.swift"; sourceTree = "<group>"; };
+		C1EC5F6FC6974023A8EE504C /* CourseScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CourseScheduleView.swift"; sourceTree = "<group>"; };
+		568C531E37E246DFA618FD7E /* AddCourseSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddCourseSheet.swift"; sourceTree = "<group>"; };
+		C640C2E5FB6348BBB35E38A1 /* CourseCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CourseCardView.swift"; sourceTree = "<group>"; };
+		BCC99E1A20084A6D827AC44C /* DailyPushSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DailyPushSettingsView.swift"; sourceTree = "<group>"; };
+		CDC6F13D95154CA9A0713B63 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsView.swift"; sourceTree = "<group>"; };
+		3B6CE63FC40B46EFABB09718 /* PersonaDocView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersonaDocView.swift"; sourceTree = "<group>"; };
+		AF31D93F8A8B4DBC85B32BF9 /* MenuBarCompanionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MenuBarCompanionView.swift"; sourceTree = "<group>"; };
+		E4769137462B46C6A4C89DDA /* ICSParserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ICSParserService.swift"; sourceTree = "<group>"; };
+		876EAA338CF44ABB8DE34B5F /* ImportCoursesPreviewSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImportCoursesPreviewSheet.swift"; sourceTree = "<group>"; };
+		C1A01100D0014D88A1230001 /* CalendarSyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CalendarSyncService.swift"; sourceTree = "<group>"; };
+		C1A01100D0014D88A1230002 /* AICourseParserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AICourseParserService.swift"; sourceTree = "<group>"; };
+		C1A01100D0014D88A1230003 /* AICourseImportSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AICourseImportSheet.swift"; sourceTree = "<group>"; };
+		C2A01100D0014D88A1230001 /* PomodoroTimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PomodoroTimerViewModel.swift"; sourceTree = "<group>"; };
+		C2A01100D0014D88A1230002 /* PomodoroActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PomodoroActivityAttributes.swift"; sourceTree = "<group>"; };
+		C2A01100D0014D88A1230003 /* LiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LiveActivityManager.swift"; sourceTree = "<group>"; };
+		C2A01100D0014D88A1230004 /* PomodoroTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Focus/PomodoroTimerView.swift"; sourceTree = "<group>"; };
+		C2A01100D0014D88A1230005 /* QianYuDynamicIslandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QianYuDynamicIslandView.swift"; sourceTree = "<group>"; };
+		C2A01100D0014D88A1230006 /* QianYuCourseWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QianYuCourseWidget.swift"; sourceTree = "<group>"; };
+		BCA5D11ED32546FA9D904316 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets.xcassets"; sourceTree = "<group>"; };
+		5103F1DE65594684BC8649D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info.plist"; sourceTree = "<group>"; };
+		51B305F2E60B4F4381A49331 /* 千语伴行_iOS_macOS开发参考指南.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "千语伴行_iOS_macOS开发参考指南.md"; path = "../千语伴行_iOS_macOS开发参考指南.md"; sourceTree = "<group>"; };
+		3D22BA40428E426988624FED /* 陈千语_完整人设设定.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "陈千语_完整人设设定.md"; path = "../陈千语_完整人设设定.md"; sourceTree = "<group>"; };
+		54847C9A445B4FAE8A2039F1 /* QIAN YU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "QIAN YU.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+/* Begin PBXFrameworksBuildPhase section */
+		83B3B9DABBC945008F2783BA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+/* Begin PBXGroup section */
+		8F5CC6955C204FC8A364BCD2 = {
+			isa = PBXGroup;
+			children = (
+				7429974BD79C4812AC139EB4,
+				AADA89971EBB42AAA1B03BD0,
+				2977D44238E44C018B93BC9A,
+			);
+			sourceTree = "<group>";
+		};
+		2977D44238E44C018B93BC9A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				54847C9A445B4FAE8A2039F1 /* QIAN YU.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7429974BD79C4812AC139EB4 /* QIAN_YU */ = {
+			isa = PBXGroup;
+			children = (
+				4FA67A71871A4820A77C868D,
+				4233154A3CB74495BE171980,
+				112AEF505E1644678F93A289,
+				ED73DFCB3BD74047BDE42C38,
+				A4206A11189C42E6A85E9D8E,
+				EB2840C6988F4FA68D1224B3,
+				C2A01100D0014D88A1230010 /* Widgets */,
+				A67DFF1FC05446888E86B191,
+			);
+			path = "QIAN_YU";
+			sourceTree = "<group>";
+		};
+		4FA67A71871A4820A77C868D /* App */ = {
+			isa = PBXGroup;
+			children = (
+				F9D8A37183A74B719C5904BC,
+			);
+			path = "App";
+			sourceTree = "<group>";
+		};
+		4233154A3CB74495BE171980 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C69800022F984BC39B14A87D,
+				28DAD27A7891468F9B85B703,
+				10A47FCE42194EBA8432A37D,
+				C2A01100D0014D88A1230002 /* PomodoroActivityAttributes.swift */,
+			);
+			path = "Models";
+			sourceTree = "<group>";
+		};
+		112AEF505E1644678F93A289 /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				089EE8855582444898BCEE7C,
+				2AA818FC8727463DB50DED01,
+			);
+			path = "Engine";
+			sourceTree = "<group>";
+		};
+		ED73DFCB3BD74047BDE42C38 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A667035134A1432796AB99B7,
+				11593F6DCCBF4F779A00EED9,
+				7B1F18C209624FC2886E9AE2,
+				E4769137462B46C6A4C89DDA /* ICSParserService.swift */,
+				C1A01100D0014D88A1230001 /* CalendarSyncService.swift */,
+				C1A01100D0014D88A1230002 /* AICourseParserService.swift */,
+				C2A01100D0014D88A1230003 /* LiveActivityManager.swift */,
+			);
+			path = "Services";
+			sourceTree = "<group>";
+		};
+		A4206A11189C42E6A85E9D8E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				DCE9364011674E7BB4B60FE3,
+				FBF443555EF04EC196AA9574,
+				420FE9B7DD3C4520832FF6AA,
+				C2A01100D0014D88A1230001 /* PomodoroTimerViewModel.swift */,
+			);
+			path = "ViewModels";
+			sourceTree = "<group>";
+		};
+		EB2840C6988F4FA68D1224B3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F2ECF536EAE444FFBC13804E,
+				E5216E5F0C5D43218D50243F,
+				D75286DE07F64E13A60B4981,
+				F42BB5490C0342529F3EEE6B,
+				30127A221AF641E189D14BC3,
+				E298EB2510AA491AAEAD1281,
+				C2A01100D0014D88A1230004 /* PomodoroTimerView.swift */,
+			);
+			path = "Views";
+			sourceTree = "<group>";
+		};
+		C2A01100D0014D88A1230010 /* Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				C2A01100D0014D88A1230005 /* QianYuDynamicIslandView.swift */,
+				C2A01100D0014D88A1230006 /* QianYuCourseWidget.swift */,
+			);
+			path = "Widgets";
+			sourceTree = "<group>";
+		};
+		E5216E5F0C5D43218D50243F /* Companion */ = {
+			isa = PBXGroup;
+			children = (
+				413EE747DBB9454BA8321B5A,
+				97F7BC3BE369489EA2563FCD,
+				BD819A95D37340DABC878899,
+				949DCFB620E44DE3923FB953,
+				004FCB660B9449889CB0C13F,
+			);
+			path = "Companion";
+			sourceTree = "<group>";
+		};
+		D75286DE07F64E13A60B4981 /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				C1EC5F6FC6974023A8EE504C,
+				568C531E37E246DFA618FD7E,
+				C640C2E5FB6348BBB35E38A1,
+				876EAA338CF44ABB8DE34B5F /* ImportCoursesPreviewSheet.swift */,
+				C1A01100D0014D88A1230003 /* AICourseImportSheet.swift */,
+			);
+			path = "Schedule";
+			sourceTree = "<group>";
+		};
+		F42BB5490C0342529F3EEE6B /* Reminders */ = {
+			isa = PBXGroup;
+			children = (
+				BCC99E1A20084A6D827AC44C,
+			);
+			path = "Reminders";
+			sourceTree = "<group>";
+		};
+		30127A221AF641E189D14BC3 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				CDC6F13D95154CA9A0713B63,
+				3B6CE63FC40B46EFABB09718,
+			);
+			path = "Settings";
+			sourceTree = "<group>";
+		};
+		E298EB2510AA491AAEAD1281 /* MenuBar */ = {
+			isa = PBXGroup;
+			children = (
+				AF31D93F8A8B4DBC85B32BF9,
+			);
+			path = "MenuBar";
+			sourceTree = "<group>";
+		};
+		A67DFF1FC05446888E86B191 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BCA5D11ED32546FA9D904316,
+				5103F1DE65594684BC8649D6,
+			);
+			path = "Resources";
+			sourceTree = "<group>";
+		};
+		AADA89971EBB42AAA1B03BD0 /* Persona & Guides */ = {
+			isa = PBXGroup;
+			children = (
+				51B305F2E60B4F4381A49331,
+				3D22BA40428E426988624FED,
+			);
+			name = "Persona & Guides";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+/* Begin PBXNativeTarget section */
+		1FACEE77FB4D41DEA98174FF /* QIAN YU */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A39060ABA235436995235185 /* Build configuration list for PBXNativeTarget "QIAN YU" */;
+			buildPhases = (
+				609727D57EE84AED86BAB78D /* Sources */,
+				83B3B9DABBC945008F2783BA /* Frameworks */,
+				8E40640F292749DA8108F6E7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "QIAN YU";
+			productName = "QIAN YU";
+			productReference = 54847C9A445B4FAE8A2039F1 /* QIAN YU.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+/* Begin PBXProject section */
+		6F9C6C2A2BC64B4BAABA3E82 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					1FACEE77FB4D41DEA98174FF = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = 037CE96B3ACD4C0CBF9AB349 /* Build configuration list for PBXProject "QIAN YU" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 8F5CC6955C204FC8A364BCD2;
+			productRefGroup = 2977D44238E44C018B93BC9A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1FACEE77FB4D41DEA98174FF /* QIAN YU */,
+			);
+		};
+/* End PBXProject section */
+/* Begin PBXResourcesBuildPhase section */
+		8E40640F292749DA8108F6E7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F28AC8AF00B452DA5462CD0 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+/* Begin PBXSourcesBuildPhase section */
+		609727D57EE84AED86BAB78D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47E9582401674B2B947A7967 /* QianYuApp.swift in Sources */,
+				800D9F52529544369409160C /* ChatMessage.swift in Sources */,
+				335B1A15091D4A3EA0999B0E /* CourseItem.swift in Sources */,
+				8194FB8B66224AD19D9A2F8B /* AppSettings.swift in Sources */,
+				1F79DD0317764F6781EE655D /* PersonaEngine.swift in Sources */,
+				82019A74B7F246C79159FB1E /* QianYuDialogueCorpus.swift in Sources */,
+				EE01C925131D4530847E7CFA /* LLMService.swift in Sources */,
+				6DEDB85E5F924662A6B45892 /* NotificationManager.swift in Sources */,
+				918CFD7272C24C8E9296C81F /* CourseReminderService.swift in Sources */,
+				00CA77B950EB4388B0F860BA /* ChatViewModel.swift in Sources */,
+				06074522E9904523BA64DCD5 /* CourseScheduleViewModel.swift in Sources */,
+				41FBE959F808408D94D1E849 /* SettingsViewModel.swift in Sources */,
+				2D7BCB28A64B49418E0B8B73 /* MainView.swift in Sources */,
+				9B3EEA9852CB4F2D92AAD469 /* ChatView.swift in Sources */,
+				A6A36A4D9AE14BE4B2E507EA /* MessageBubbleView.swift in Sources */,
+				C9D1AE87264047728ECCBA0B /* CompanionHeaderView.swift in Sources */,
+				54D6E261E1C0403991890A0D /* NextClassBannerView.swift in Sources */,
+				DE57B8C201AA49D2A12153BC /* QuickActionChipsView.swift in Sources */,
+				C47208BAC5014A78BDD0B8B2 /* CourseScheduleView.swift in Sources */,
+				B8796BA22A2B490194DCC81C /* AddCourseSheet.swift in Sources */,
+				4DBE29BE196D4250AC810B12 /* CourseCardView.swift in Sources */,
+				ABF38EA924C64C2C9B71C7B8 /* DailyPushSettingsView.swift in Sources */,
+				E869EAA2A7A3444584103183 /* SettingsView.swift in Sources */,
+				E91A1DB8BA514FF0A43DBE8F /* PersonaDocView.swift in Sources */,
+				FED540FDE5B44AA7ACCBCDF1 /* MenuBarCompanionView.swift in Sources */,
+				B77100E245EB4C16BB10A4D0 /* ICSParserService.swift in Sources */,
+				7FF12AD661F54A0E960CE65E /* ImportCoursesPreviewSheet.swift in Sources */,
+				C1B01100D0014D88A1230001 /* CalendarSyncService.swift in Sources */,
+				C1B01100D0014D88A1230002 /* AICourseParserService.swift in Sources */,
+				C1B01100D0014D88A1230003 /* AICourseImportSheet.swift in Sources */,
+				C2B01100D0014D88A1230001 /* PomodoroTimerViewModel.swift in Sources */,
+				C2B01100D0014D88A1230002 /* PomodoroActivityAttributes.swift in Sources */,
+				C2B01100D0014D88A1230003 /* LiveActivityManager.swift in Sources */,
+				C2B01100D0014D88A1230004 /* PomodoroTimerView.swift in Sources */,
+				C2B01100D0014D88A1230005 /* QianYuDynamicIslandView.swift in Sources */,
+				C2B01100D0014D88A1230006 /* QianYuCourseWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+/* Begin XCBuildConfiguration section */
+		9F08F7FA2BB945AD889B7938 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C8FE3018746243DDA46B4558 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = "wholemodule";
+			};
+			name = Release;
+		};
+		3D93F5E610024FF39DA9F38B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "QIAN_YU/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.qianyu.companion";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		41728424F2FB478CBC9C5131 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "QIAN_YU/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.qianyu.companion";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+/* Begin XCConfigurationList section */
+		037CE96B3ACD4C0CBF9AB349 /* Build configuration list for PBXProject "QIAN YU" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9F08F7FA2BB945AD889B7938 /* Debug */,
+				C8FE3018746243DDA46B4558 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A39060ABA235436995235185 /* Build configuration list for PBXNativeTarget "QIAN YU" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3D93F5E610024FF39DA9F38B /* Debug */,
+				41728424F2FB478CBC9C5131 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6F9C6C2A2BC64B4BAABA3E82 /* Project object */;
+}
