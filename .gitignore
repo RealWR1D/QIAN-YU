@@ -27,3 +27,21 @@ DerivedData/
 
 ## Crashlytics
 crashlytics-build.properties
+
+# Private Reference & Persona Docs
+千语伴行_iOS_macOS开发参考指南.md
+陈千语_完整人设设定.md
+
+# Roadmaps, Temporary Notes & Planning
+*ROADMAP*.md
+*roadmap*.md
+*.tmp
+*.temp
+*plan*.md
+*TODO*.md
+
+# Root Loose Images & Intermediate Assets
+/*.png
+/*.jpg
+/*.jpeg
+/*.webp
