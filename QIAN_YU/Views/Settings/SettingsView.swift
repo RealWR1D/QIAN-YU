@@ -79,7 +79,55 @@ public struct SettingsView: View {
                     }
                 }
 
-                // 3. 大模型服务端配置
+                // 3. 每日提醒与通知设置入口
+                VStack(alignment: .leading, spacing: 8) {
+                    SettingsSectionHeader(title: "每日提醒与通知", icon: "bell.badge.fill")
+
+                    SettingsCardContainer {
+                        NavigationLink {
+                            DailyPushSettingsView(viewModel: viewModel)
+                        } label: {
+                            HStack(spacing: 14) {
+                                ZStack {
+                                    Circle()
+                                        .fill(Color.orange.opacity(0.15))
+                                        .frame(width: 36, height: 36)
+                                    Image(systemName: "bell.fill")
+                                        .font(.system(size: 16))
+                                        .foregroundColor(.orange)
+                                }
+
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("每日提醒与上课通知")
+                                        .font(.system(size: 14, weight: .semibold))
+                                        .foregroundColor(.primary)
+
+                                    Text("清晨唤醒 · 饭点提醒 · 穴位放松 · 深夜关怀 · 课前预警")
+                                        .font(.system(size: 12))
+                                        .foregroundColor(.secondary)
+                                        .lineLimit(1)
+                                }
+
+                                Spacer()
+
+                                Image(systemName: "chevron.right")
+                                    .font(.system(size: 13, weight: .semibold))
+                                    .foregroundColor(.secondary.opacity(0.6))
+                            }
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 12)
+                            .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                    }
+
+                    Text("点击进入配置清晨、午休、傍晚等四大定点陪伴推送与课前课后提醒时间。")
+                        .font(.system(size: 12))
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal, 4)
+                }
+
+                // 4. 大模型服务端配置
                 VStack(alignment: .leading, spacing: 8) {
                     SettingsSectionHeader(title: "AI 模型驱动 (OpenAI 协议兼容)", icon: "sparkles")
 

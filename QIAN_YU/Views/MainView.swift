@@ -12,7 +12,6 @@ public enum AppTab: String, CaseIterable, Identifiable {
     case companion = "千语伴行"
     case schedule = "课程表"
     case focus = "专注番茄钟"
-    case reminders = "每日推送"
     case settings = "设置"
 
     public var id: String { rawValue }
@@ -22,7 +21,6 @@ public enum AppTab: String, CaseIterable, Identifiable {
         case .companion: return "sparkles"
         case .schedule: return "calendar"
         case .focus: return "timer"
-        case .reminders: return "bell.fill"
         case .settings: return "gearshape.fill"
         }
     }
@@ -64,14 +62,6 @@ public struct MainView: View {
                 Label(AppTab.focus.rawValue, systemImage: AppTab.focus.iconName)
             }
             .tag(AppTab.focus)
-
-            NavigationStack {
-                DailyPushSettingsView(viewModel: settingsViewModel)
-            }
-            .tabItem {
-                Label(AppTab.reminders.rawValue, systemImage: AppTab.reminders.iconName)
-            }
-            .tag(AppTab.reminders)
 
             NavigationStack {
                 SettingsView(viewModel: settingsViewModel)
@@ -192,10 +182,10 @@ public struct MainView: View {
                     CourseScheduleView(viewModel: scheduleViewModel)
                 case .focus:
                     PomodoroTimerView()
-                case .reminders:
-                    DailyPushSettingsView(viewModel: settingsViewModel)
                 case .settings:
-                    SettingsView(viewModel: settingsViewModel)
+                    NavigationStack {
+                        SettingsView(viewModel: settingsViewModel)
+                    }
                 }
             }
             .frame(minWidth: 500, minHeight: 450)
