@@ -1,6 +1,6 @@
 # QIAN YU 千语
 
-> 一款支持 iOS 和 macOS 的千语陪伴应用。
+> 一款支持 iOS 和 macOS 的千语陪伴应用。icon : Bilibili@唐可可为什么是神
 
 ---
 
