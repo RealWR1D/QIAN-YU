@@ -34,6 +34,19 @@ public final class NotificationManager: NSObject, UNUserNotificationCenterDelega
         return settings.authorizationStatus == .authorized || settings.authorizationStatus == .provisional
     }
 
+    /// 仅首次运行时请求权限；已授权或已拒绝时尊重系统中的选择。
+    public func requestAuthorizationIfNeeded() async -> Bool {
+        let settings = await UNUserNotificationCenter.current().notificationSettings()
+        switch settings.authorizationStatus {
+        case .notDetermined:
+            return await requestAuthorization()
+        case .authorized, .provisional:
+            return true
+        default:
+            return false
+        }
+    }
+
     /// 根据 AppSettings 重新排布每日四大定点陪伴推送
     public func scheduleDailyNotifications() {
         let center = UNUserNotificationCenter.current()
@@ -132,10 +145,6 @@ public final class NotificationManager: NSObject, UNUserNotificationCenterDelega
         _ center: UNUserNotificationCenter,
         willPresent notification: UNNotification
     ) async -> UNNotificationPresentationOptions {
-        #if os(macOS)
         return [.banner, .sound, .badge, .list]
-        #else
-        return [.banner, .sound, .badge, .list]
-        #endif
     }
 }

@@ -28,9 +28,19 @@ public final class LiveActivityManager {
         #endif
     }
 
-    public func startPomodoro(sessionTitle: String, totalSeconds: Int, remainingSeconds: Int) {
+    @discardableResult
+    public func startPomodoro(
+        sessionTitle: String,
+        totalSeconds: Int,
+        remainingSeconds: Int,
+        quote: String = "当破即破，冲冲冲！"
+    ) -> Bool {
         #if canImport(ActivityKit) && os(iOS)
-        guard ActivityAuthorizationInfo().areActivitiesEnabled else { return }
+        let areEnabled = ActivityAuthorizationInfo().areActivitiesEnabled
+        NSLog("📢 [LiveActivityManager] startPomodoro called. areActivitiesEnabled = %d", areEnabled ? 1 : 0)
+        if !areEnabled {
+            NSLog("⚠️ [LiveActivityManager] 警告: areActivitiesEnabled 为 false，但仍尝试启动实时活动")
+        }
 
         // 先清理可能残存的旧活动
         endPomodoro()
@@ -40,7 +50,8 @@ public final class LiveActivityManager {
             remainingSeconds: remainingSeconds,
             totalSeconds: totalSeconds,
             isPaused: false,
-            sessionTitle: sessionTitle
+            sessionTitle: sessionTitle,
+            quote: quote
         )
 
         do {
@@ -50,23 +61,35 @@ public final class LiveActivityManager {
                 pushType: nil
             )
             self.currentActivity = activity
+            NSLog("✅ [LiveActivityManager] 灵动岛实时活动已成功启动: %@", activity.id)
+            return true
         } catch {
-            print("启动灵动岛实时活动失败: \(error)")
+            NSLog("❌ [LiveActivityManager] 启动灵动岛实时活动失败: %@", error.localizedDescription)
+            return false
         }
+        #else
+        return false
         #endif
     }
 
-    public func updatePomodoro(remainingSeconds: Int, isPaused: Bool, sessionTitle: String) {
+    public func updatePomodoro(
+        remainingSeconds: Int,
+        isPaused: Bool,
+        sessionTitle: String,
+        quote: String? = nil
+    ) {
         #if canImport(ActivityKit) && os(iOS)
         let activity = currentActivity ?? Activity<PomodoroActivityAttributes>.activities.first
         guard let activeActivity = activity else { return }
         self.currentActivity = activeActivity
 
+        let finalQuote = quote ?? activeActivity.content.state.quote
         let updatedState = PomodoroActivityAttributes.ContentState(
             remainingSeconds: remainingSeconds,
             totalSeconds: activeActivity.content.state.totalSeconds,
             isPaused: isPaused,
-            sessionTitle: sessionTitle
+            sessionTitle: sessionTitle,
+            quote: finalQuote
         )
 
         Task {
@@ -77,12 +100,15 @@ public final class LiveActivityManager {
 
     public func endPomodoro() {
         #if canImport(ActivityKit) && os(iOS)
+        // 在启动下一次活动前捕获当前集合；不要在异步 Task 执行时重新读取，
+        // 否则刚创建的新活动也可能被这次清理结束。
+        let activitiesToEnd = Activity<PomodoroActivityAttributes>.activities
+        self.currentActivity = nil
         Task {
-            for activity in Activity<PomodoroActivityAttributes>.activities {
+            for activity in activitiesToEnd {
                 await activity.end(nil, dismissalPolicy: .immediate)
             }
         }
-        self.currentActivity = nil
         #endif
     }
 }

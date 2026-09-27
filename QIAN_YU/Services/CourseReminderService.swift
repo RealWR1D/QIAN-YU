@@ -7,133 +7,260 @@
 
 import Foundation
 import UserNotifications
+#if os(iOS)
+import BackgroundTasks
+import SwiftData
+#endif
 
 public final class CourseReminderService {
     public static let shared = CourseReminderService()
 
+    private static let courseIdentifierPrefix = "qianyu_course_"
+    private static let notificationLimit = 64
+
+    private struct ReminderCandidate {
+        let identifier: String
+        let title: String
+        let body: String
+        let category: String
+        let fireDate: Date
+    }
+
     private init() {}
 
-    /// 同步所有启用的课程提醒到系统通知中心
-    public func syncAllCourseReminders(courses: [CourseItem]) {
-        let center = UNUserNotificationCenter.current()
+    /// 按课程的实际教学周生成一次性提醒，并保留每日通知的名额。
+    /// iOS 每个 App 最多保留 64 个待处理本地通知；回到前台时重新排程后续场次。
+    public func syncAllCourseReminders(courses: [CourseItem], completion: (() -> Void)? = nil) {
+        let now = Date()
+        let settings = AppSettings.shared
+        let classReminderEnabled = settings.classReminderEnabled
+        let postClassReminderEnabled = settings.postClassReminderEnabled
+        let semesterStartDate = settings.semesterStartDate
+        let configuredDailyCount = [settings.morningEnabled, settings.lunchEnabled, settings.afternoonEnabled, settings.eveningEnabled]
+            .filter { $0 }
+            .count
+        let candidates = courses
+            .filter(\.isEnabled)
+            .flatMap {
+                reminderCandidates(
+                    for: $0,
+                    allCourses: courses,
+                    now: now,
+                    semesterStartDate: semesterStartDate,
+                    needsPreClass: classReminderEnabled,
+                    needsPostClass: postClassReminderEnabled
+                )
+            }
+            .sorted { $0.fireDate < $1.fireDate }
 
-        // 首先获取所有现存的课程提醒 ID
+        let center = UNUserNotificationCenter.current()
         center.getPendingNotificationRequests { requests in
-            let courseIds = requests
-                .map { $0.identifier }
-                .filter { $0.hasPrefix("qianyu_course_") }
-            center.removePendingNotificationRequests(withIdentifiers: courseIds)
+            let oldCourseIDs = requests
+                .map(\.identifier)
+                .filter { $0.hasPrefix(Self.courseIdentifierPrefix) }
+            let pendingNonCourseCount = requests.count - oldCourseIDs.count
+            let nonCourseRequestCount = max(pendingNonCourseCount, configuredDailyCount)
+            center.removePendingNotificationRequests(withIdentifiers: oldCourseIDs)
 
-            guard AppSettings.shared.classReminderEnabled else { return }
-
-            // 重新安排所有启用的课程
-            for course in courses where course.isEnabled {
-                self.scheduleCourseReminder(course: course)
+            guard classReminderEnabled || postClassReminderEnabled else {
+                completion?()
+                return
             }
+
+            let availableSlots = max(0, Self.notificationLimit - nonCourseRequestCount)
+            let currentlyEnabledCandidates = candidates.filter { candidate in
+                candidate.category == "QIANYU_COURSE_REMINDER"
+                    ? classReminderEnabled
+                    : postClassReminderEnabled
+            }
+            let group = DispatchGroup()
+            for candidate in currentlyEnabledCandidates.prefix(availableSlots) {
+                let content = UNMutableNotificationContent()
+                content.title = candidate.title
+                content.body = candidate.body
+                content.sound = .default
+                content.categoryIdentifier = candidate.category
+
+                var calendar = Calendar(identifier: .gregorian)
+                calendar.timeZone = .current
+                var components = calendar.dateComponents(
+                    [.year, .month, .day, .hour, .minute],
+                    from: candidate.fireDate
+                )
+                components.calendar = calendar
+                components.timeZone = calendar.timeZone
+
+                let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+                let request = UNNotificationRequest(
+                    identifier: candidate.identifier,
+                    content: content,
+                    trigger: trigger
+                )
+                group.enter()
+                center.add(request) { error in
+                    if let error {
+                        NSLog("安排课程提醒失败：%@", error.localizedDescription)
+                    }
+                    group.leave()
+                }
+            }
+            group.notify(queue: .main) { completion?() }
         }
     }
 
-    /// 安排单个课程的周期性通知
-    public func scheduleCourseReminder(course: CourseItem) {
-        guard course.isEnabled, AppSettings.shared.classReminderEnabled else { return }
-
-        let center = UNUserNotificationCenter.current()
-        let identifier = "qianyu_course_\(course.id.uuidString)"
-
-        let content = UNMutableNotificationContent()
-        content.title = "上课提醒 · \(course.name)"
-        content.body = course.qianyuReminderMessage
-        content.sound = .default
-        content.categoryIdentifier = "QIANYU_COURSE_REMINDER"
-
-        // 计算提前提醒后的具体小时与分钟
-        let totalStartMinutes = course.startTotalMinutes
-        var remindTotalMinutes = totalStartMinutes - course.remindBeforeMinutes
-        var targetWeekday = course.weekday
-        if remindTotalMinutes < 0 {
-            remindTotalMinutes += 24 * 60
-            targetWeekday = (targetWeekday == 1) ? 7 : targetWeekday - 1
-        }
-
-        let remindHour = remindTotalMinutes / 60
-        let remindMinute = remindTotalMinutes % 60
-
-        // 转换 weekday 为 Apple 系统规范 (1=周日, 2=周一 ... 7=周六)
-        let appleWeekday = (targetWeekday % 7) + 1
-
-        var components = DateComponents()
-        components.weekday = appleWeekday
-        components.hour = remindHour
-        components.minute = remindMinute
-
-        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
-        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
-
-        center.add(request) { error in
-            if let error = error {
-                print("安排课程提醒 \(course.name) 失败: \(error)")
-            }
-        }
-
-        // 下课收尾贴心关怀通知
-        if AppSettings.shared.postClassReminderEnabled {
-            schedulePostClassReminder(course: course)
-        }
-    }
-
-    /// 安排下课收尾时的千语舒缓贴心问候
-    public func schedulePostClassReminder(course: CourseItem) {
-        let center = UNUserNotificationCenter.current()
-        let identifier = "qianyu_course_post_\(course.id.uuidString)"
-
-        let content = UNMutableNotificationContent()
-        content.title = "下课啦 · \(course.name)"
-        content.body = course.postClassReminderMessage()
-        content.sound = .default
-        content.categoryIdentifier = "QIANYU_COURSE_POST_REMINDER"
-
-        let appleWeekday = (course.weekday % 7) + 1
-        var components = DateComponents()
-        components.weekday = appleWeekday
-        components.hour = course.endHour
-        components.minute = course.endMinute
-
-        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
-        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
-
-        center.add(request) { error in
-            if let error = error {
-                print("安排下课关怀提醒 \(course.name) 失败: \(error)")
-            }
-        }
-    }
-
-    /// 取消单个课程提醒 (包括课前预警与下课关怀)
+    /// 取消单个课程提醒（包括课前预警与下课关怀）。
     public func cancelCourseReminder(course: CourseItem) {
-        let preId = "qianyu_course_\(course.id.uuidString)"
-        let postId = "qianyu_course_post_\(course.id.uuidString)"
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [preId, postId])
-    }
-
-    /// 清空所有课前与课后系统通知
-    public func removeAllCourseReminders() {
-        let center = UNUserNotificationCenter.current()
-        center.getPendingNotificationRequests { requests in
-            let courseIds = requests
-                .map { $0.identifier }
-                .filter { $0.hasPrefix("qianyu_course_") }
-            center.removePendingNotificationRequests(withIdentifiers: courseIds)
+        UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+            let courseID = "_\(course.id.uuidString)_"
+            let identifiers = requests.map(\.identifier).filter {
+                $0 == "qianyu_course_\(course.id.uuidString)" ||
+                $0 == "qianyu_course_post_\(course.id.uuidString)" ||
+                (($0.hasPrefix("qianyu_course_pre") || $0.hasPrefix("qianyu_course_post")) && $0.contains(courseID))
+            }
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifiers)
         }
     }
 
-    /// 清空所有课后关怀系统通知
+    /// 清空所有课前与课后系统通知。
+    public func removeAllCourseReminders() {
+        removeCourseRequests { _ in true }
+    }
+
+    /// 清空所有课后关怀系统通知。
     public func removeAllPostClassReminders() {
+        removeCourseRequests { $0.hasPrefix("qianyu_course_post_") }
+    }
+
+    private func removeCourseRequests(where shouldRemove: @escaping (String) -> Bool) {
         let center = UNUserNotificationCenter.current()
         center.getPendingNotificationRequests { requests in
-            let postIds = requests
-                .map { $0.identifier }
-                .filter { $0.hasPrefix("qianyu_course_post_") }
-            center.removePendingNotificationRequests(withIdentifiers: postIds)
+            let identifiers = requests
+                .map(\.identifier)
+                .filter(shouldRemove)
+            center.removePendingNotificationRequests(withIdentifiers: identifiers)
+        }
+    }
+
+    private func reminderCandidates(
+        for course: CourseItem,
+        allCourses: [CourseItem],
+        now: Date,
+        semesterStartDate: Date,
+        needsPreClass: Bool,
+        needsPostClass: Bool
+    ) -> [ReminderCandidate] {
+        guard needsPreClass || needsPostClass else { return [] }
+
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.firstWeekday = 2
+        calendar.timeZone = .current
+        guard let semesterMonday = calendar.dateInterval(
+            of: .weekOfYear,
+            for: semesterStartDate
+        )?.start else {
+            return []
+        }
+
+        let weeks: [Int]
+        if !course.activeWeeks.isEmpty {
+            weeks = course.activeWeeks.filter { $0 > 0 }.sorted()
+        } else {
+            guard course.startWeek > 0,
+                  course.endWeek >= course.startWeek,
+                  course.endWeek - course.startWeek <= 100 else {
+                return []
+            }
+            weeks = (course.startWeek...course.endWeek).filter { course.isActive(inWeek: $0) }
+        }
+
+        guard (1...7).contains(course.weekday) else { return [] }
+        var result: [ReminderCandidate] = []
+
+        for week in weeks {
+            let (weekOffset, overflow) = (week - 1).multipliedReportingOverflow(by: 7)
+            let (dayOffset, additionOverflow) = weekOffset.addingReportingOverflow(course.weekday - 1)
+            guard !overflow, !additionOverflow,
+                  let classDate = calendar.date(
+                    byAdding: .day,
+                    value: dayOffset,
+                    to: semesterMonday
+                  ) else {
+                continue
+            }
+
+            var startComponents = calendar.dateComponents([.year, .month, .day], from: classDate)
+            startComponents.hour = course.startHour
+            startComponents.minute = course.startMinute
+            guard let classStart = calendar.date(from: startComponents) else { continue }
+
+            var endComponents = calendar.dateComponents([.year, .month, .day], from: classDate)
+            endComponents.hour = course.endHour
+            endComponents.minute = course.endMinute
+            guard let classEnd = calendar.date(from: endComponents) else { continue }
+
+            let weekSuffix = "\(course.id.uuidString)_\(week)"
+            if needsPreClass,
+               let fireDate = calendar.date(byAdding: .minute, value: -course.remindBeforeMinutes, to: classStart),
+               fireDate > now {
+                result.append(
+                    ReminderCandidate(
+                        identifier: "qianyu_course_pre_\(weekSuffix)",
+                        title: "上课提醒 · \(course.name)",
+                        body: course.qianyuReminderMessage,
+                        category: "QIANYU_COURSE_REMINDER",
+                        fireDate: fireDate
+                    )
+                )
+            }
+
+            if needsPostClass, classEnd > now {
+                let nextCourse = allCourses
+                    .filter { $0.isEnabled && $0.weekday == course.weekday && $0.id != course.id
+                        && $0.isActive(inWeek: week) && $0.startTotalMinutes >= course.endTotalMinutes }
+                    .min { $0.startTotalMinutes < $1.startTotalMinutes }
+                result.append(
+                    ReminderCandidate(
+                        identifier: "qianyu_course_post_\(weekSuffix)",
+                        title: "下课啦 · \(course.name)",
+                        body: course.postClassReminderMessage(nextCourse: nextCourse),
+                        category: "QIANYU_COURSE_POST_REMINDER",
+                        fireDate: classEnd
+                    )
+                )
+            }
+        }
+        return result
+    }
+}
+
+#if os(iOS)
+/// 在系统允许后台刷新时补排后续课程。iOS 决定实际执行时间，前台激活仍会立即补排。
+public enum CourseReminderBackgroundRefresh {
+    private static let identifier = "com.qianyu.companion.course-reminder-refresh"
+
+    @MainActor
+    public static func refresh(container: ModelContainer) async {
+        do {
+            let courses = try container.mainContext.fetch(FetchDescriptor<CourseItem>())
+            await withCheckedContinuation { continuation in
+                CourseReminderService.shared.syncAllCourseReminders(courses: courses) {
+                    continuation.resume()
+                }
+            }
+        } catch {
+            NSLog("后台补排课程提醒失败：%@", error.localizedDescription)
+        }
+    }
+
+    public static func schedule() {
+        BGTaskScheduler.shared.cancel(taskRequestWithIdentifier: identifier)
+        let request = BGAppRefreshTaskRequest(identifier: identifier)
+        request.earliestBeginDate = Date().addingTimeInterval(12 * 60 * 60)
+        do {
+            try BGTaskScheduler.shared.submit(request)
+        } catch {
+            NSLog("提交课程提醒后台补排任务失败：%@", error.localizedDescription)
         }
     }
 }
+#endif

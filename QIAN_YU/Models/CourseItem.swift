@@ -28,6 +28,8 @@ public final class CourseItem: Identifiable {
     public var weekModeRaw: String = "all"
     public var startWeek: Int = 1
     public var endWeek: Int = 16
+    /// 包含的具体周数（逗号分隔，如 "2,3,4,5,7,8,10,11,12"）。非空时最高优先级生效
+    public var activeWeeksRaw: String = ""
 
     public init(
         id: UUID = UUID(),
@@ -44,7 +46,8 @@ public final class CourseItem: Identifiable {
         colorHex: String = "#FF9500",
         weekModeRaw: String = "all",
         startWeek: Int = 1,
-        endWeek: Int = 16
+        endWeek: Int = 16,
+        activeWeeksRaw: String = ""
     ) {
         self.id = id
         self.name = name
@@ -61,6 +64,7 @@ public final class CourseItem: Identifiable {
         self.weekModeRaw = weekModeRaw
         self.startWeek = startWeek
         self.endWeek = endWeek
+        self.activeWeeksRaw = activeWeeksRaw
     }
 
     public var weekdayName: String {
@@ -92,6 +96,7 @@ public final class CourseItem: Identifiable {
 
     /// 计算指定日期是否是该课程所在的星期几且当前教学周生效
     public func isScheduledForToday(on date: Date = Date(), calendar: Calendar = .current) -> Bool {
+        guard isEnabled else { return false }
         let weekdayIndex = calendar.component(.weekday, from: date)
         // 转为 1=周一 ... 7=周日
         let customWeekday = weekdayIndex == 1 ? 7 : weekdayIndex - 1
@@ -130,8 +135,25 @@ public final class CourseItem: Identifiable {
         set { weekModeRaw = newValue.rawValue }
     }
 
-    /// 判断课程在指定周数是否生效（考虑单双周与起止周范围）
+    /// 具体生效的周数集合（如 [2, 3, 4, 5, 7, 8, 10, 11, 12]）
+    public var activeWeeks: Set<Int> {
+        get {
+            guard !activeWeeksRaw.isEmpty else { return [] }
+            let nums = activeWeeksRaw.components(separatedBy: ",")
+                .compactMap { Int($0.trimmingCharacters(in: .whitespaces)) }
+            return Set(nums)
+        }
+        set {
+            activeWeeksRaw = newValue.sorted().map(String.init).joined(separator: ",")
+        }
+    }
+
+    /// 判断课程在指定周数是否生效（优先依照具体周数集合，否则依照起止周与单双周范围）
     public func isActive(inWeek week: Int) -> Bool {
+        let explicit = activeWeeks
+        if !explicit.isEmpty {
+            return explicit.contains(week)
+        }
         guard week >= startWeek && week <= endWeek else { return false }
         switch weekMode {
         case .all:
@@ -144,12 +166,49 @@ public final class CourseItem: Identifiable {
     }
 
     public var weekModeDisplay: String {
+        let explicit = activeWeeks
+        if !explicit.isEmpty {
+            return Self.formatWeeksSummary(explicit)
+        }
         let span = "\(startWeek)-\(endWeek)周"
         switch weekMode {
         case .all: return "\(span) · 每周"
         case .oddOnly: return "\(span) · 仅单周"
         case .evenOnly: return "\(span) · 仅双周"
         }
+    }
+
+    /// 将周数集合格式化为优雅的中文字符串，如 "第2-5, 7-8, 10-12周"、"第9周 (单次)"、"第6, 8, 12周 · 双周"
+    public static func formatWeeksSummary(_ weeks: Set<Int>) -> String {
+        let sorted = weeks.sorted()
+        guard !sorted.isEmpty else { return "无周次" }
+        if sorted.count == 1 {
+            return "第\(sorted[0])周 (单次)"
+        }
+        var ranges: [String] = []
+        var rStart = sorted[0]
+        var rPrev = sorted[0]
+        for w in sorted.dropFirst() {
+            if w == rPrev + 1 {
+                rPrev = w
+            } else {
+                ranges.append(rStart == rPrev ? "\(rStart)" : "\(rStart)-\(rPrev)")
+                rStart = w
+                rPrev = w
+            }
+        }
+        ranges.append(rStart == rPrev ? "\(rStart)" : "\(rStart)-\(rPrev)")
+
+        let isAllOdd = sorted.allSatisfy { $0 % 2 != 0 }
+        let isAllEven = sorted.allSatisfy { $0 % 2 == 0 }
+        var tag = ""
+        if isAllOdd && sorted.count > 1 && ranges.count > 1 {
+            tag = " · 单周"
+        } else if isAllEven && sorted.count > 1 && ranges.count > 1 {
+            tag = " · 双周"
+        }
+
+        return "第\(ranges.joined(separator: ", "))周\(tag)"
     }
 
     /// 课后贴心关怀与收尾提醒语

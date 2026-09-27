@@ -27,6 +27,8 @@ public final class ChatViewModel {
     public var currentStatus: String = QianYuDialogueCorpus.randomStatus()
 
     private var modelContext: ModelContext?
+    private var generationTask: Task<Void, Never>?
+    private var generationID: UUID?
 
     public init(modelContext: ModelContext? = nil) {
         self.modelContext = modelContext
@@ -95,13 +97,16 @@ public final class ChatViewModel {
         currentSessionMessages.append(assistantMsg)
         modelContext?.insert(assistantMsg) // 解决小陈回复未持久化保存的关键修复
         isGenerating = true
+        let currentGenerationID = UUID()
+        generationID = currentGenerationID
 
         let settings = AppSettings.shared
 
         // 3. 判断是否配置了云端 API Key
         if !settings.apiKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             // 云端 LLM 流式调用
-            Task {
+            generationTask = Task { [weak self] in
+                guard let self else { return }
                 do {
                     let systemPrompt = PersonaEngine.shared.buildSystemPrompt(
                         userName: settings.userName,
@@ -124,6 +129,8 @@ public final class ChatViewModel {
                     )
 
                     for try await chunk in stream {
+                        guard self.isCurrentGeneration(currentGenerationID, assistantMessageID: assistantMsg.id),
+                              !Task.isCancelled else { return }
                         switch chunk {
                         case .content(let text):
                             assistantMsg.content += text
@@ -135,19 +142,29 @@ public final class ChatViewModel {
                             assistantMsg.reasoningContent? += reasoningText
                         }
                     }
+                    guard self.isCurrentGeneration(currentGenerationID, assistantMessageID: assistantMsg.id),
+                          !Task.isCancelled else { return }
+                    if assistantMsg.content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                        assistantMsg.content = "模型没有返回可显示的回复，请重试。"
+                    }
                     assistantMsg.isStreaming = false
-                    try? modelContext?.save() // 成功保存小陈的回复到 SwiftData 数据库
+                    try? self.modelContext?.save()
+                    self.finishGeneration(currentGenerationID)
                 } catch {
-                    assistantMsg.content = "诶呀……通讯信号好像被大风吹断了，不过我一直都在这儿呢！"
+                    guard !Task.isCancelled,
+                          self.isCurrentGeneration(currentGenerationID, assistantMessageID: assistantMsg.id) else {
+                        return
+                    }
+                    assistantMsg.content = "通讯请求失败：\(error.localizedDescription)"
                     assistantMsg.isStreaming = false
-                    try? modelContext?.save()
+                    try? self.modelContext?.save()
+                    self.finishGeneration(currentGenerationID)
                 }
-                isGenerating = false
-                currentStatus = QianYuDialogueCorpus.randomStatus()
             }
         } else {
             // 离线高质量千语原设台词模拟打字机输出
-            Task {
+            generationTask = Task { [weak self] in
+                guard let self else { return }
                 let reply = QianYuDialogueCorpus.matchReply(
                     for: content,
                     userName: settings.userName,
@@ -156,19 +173,56 @@ public final class ChatViewModel {
 
                 // 拟真打字机逐字输出效果
                 for char in reply {
-                    try? await Task.sleep(nanoseconds: 28_000_000) // 28ms 节奏
+                    do {
+                        try await Task.sleep(nanoseconds: 28_000_000) // 28ms 节奏
+                    } catch {
+                        return
+                    }
+                    guard self.isCurrentGeneration(currentGenerationID, assistantMessageID: assistantMsg.id),
+                          !Task.isCancelled else { return }
                     assistantMsg.content.append(char)
                 }
+                guard self.isCurrentGeneration(currentGenerationID, assistantMessageID: assistantMsg.id) else { return }
                 assistantMsg.isStreaming = false
-                try? modelContext?.save() // 保存离线回复
-                isGenerating = false
-                currentStatus = QianYuDialogueCorpus.randomStatus()
+                try? self.modelContext?.save()
+                self.finishGeneration(currentGenerationID)
+            }
+        }
+    }
+
+    private func isCurrentGeneration(_ id: UUID, assistantMessageID: UUID) -> Bool {
+        generationID == id && currentSessionMessages.contains { $0.id == assistantMessageID }
+    }
+
+    private func finishGeneration(_ id: UUID) {
+        guard generationID == id else { return }
+        generationTask = nil
+        generationID = nil
+        isGenerating = false
+        currentStatus = QianYuDialogueCorpus.randomStatus()
+    }
+
+    /// 离开聊天页时保存已生成内容；清空记录时直接取消后删除。
+    public func cancelGeneration(savePartialResponse: Bool = true) {
+        generationTask?.cancel()
+        generationTask = nil
+        generationID = nil
+        isGenerating = false
+
+        if let assistantMessage = currentSessionMessages.last(where: { $0.role == "assistant" && $0.isStreaming }) {
+            assistantMessage.isStreaming = false
+            if savePartialResponse {
+                if assistantMessage.content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    assistantMessage.content = "（回复已中断，请重新发送消息。）"
+                }
+                try? modelContext?.save()
             }
         }
     }
 
     /// 清空所有聊天记录（包括往期历史与当前会话）
     public func clearAllMessages() {
+        cancelGeneration(savePartialResponse: false)
         guard let context = modelContext else { return }
         for msg in historyMessages {
             if msg.modelContext != nil {

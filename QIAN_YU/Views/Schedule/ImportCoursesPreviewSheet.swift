@@ -15,8 +15,9 @@ public struct ImportCoursesPreviewSheet: View {
     @State private var courses: [ParsedCourse] = []
     @State private var importMode: CourseScheduleViewModel.CourseImportMode = .append
     @State private var defaultRemindMinutes: Int = 15
+    @State private var syncSemesterStartDate: Bool = true
     @State private var showSuccessNotice: Bool = false
-    @State private var importedCount: Int = 0
+    @State private var importSummary = CourseScheduleViewModel.CourseImportSummary()
 
     private let reminderOptions = [5, 10, 15, 20, 30, 45, 60]
 
@@ -32,6 +33,23 @@ public struct ImportCoursesPreviewSheet: View {
 
     private var isAllSelected: Bool {
         !courses.isEmpty && courses.allSatisfy { $0.isSelected }
+    }
+
+    private var importResultMessage: String {
+        guard importSummary.didSave else {
+            return "课程表没有保存成功，请重试。"
+        }
+        if importSummary.addedCount == 0 && importSummary.mergedCount == 0 {
+            return "所选 \(importSummary.unchangedCount) 门课程已存在且周次没有变化，没有新增课程。"
+        }
+        var details: [String] = []
+        if importSummary.addedCount > 0 {
+            details.append("新增 \(importSummary.addedCount) 门课程")
+        }
+        if importSummary.mergedCount > 0 {
+            details.append("合并更新 \(importSummary.mergedCount) 门已有课程的周次")
+        }
+        return "千语\(details.joined(separator: "，"))。未变化的重复项 \(importSummary.unchangedCount) 门未重复添加。"
     }
 
     public var body: some View {
@@ -72,12 +90,14 @@ public struct ImportCoursesPreviewSheet: View {
                     .disabled(selectedCount == 0)
                 }
             }
-            .alert("导入成功！", isPresented: $showSuccessNotice) {
-                Button("确定") {
-                    dismiss()
+            .alert(importSummary.didSave ? "导入完成" : "导入失败", isPresented: $showSuccessNotice) {
+                if importSummary.didSave {
+                    Button("确定") { dismiss() }
+                } else {
+                    Button("继续编辑", role: .cancel) {}
                 }
             } message: {
-                Text("千语已为你导入 \(importedCount) 门每周课程，上课前会按时提醒你哦！冲冲冲！")
+                Text(importResultMessage)
             }
         }
     }
@@ -104,6 +124,18 @@ public struct ImportCoursesPreviewSheet: View {
                         .font(.system(size: 12))
                         .foregroundColor(.secondary)
                 }
+            }
+
+            if let semDesc = parseResult.detectedSemesterStartDescription {
+                HStack(spacing: 6) {
+                    Image(systemName: "calendar.badge.checkmark")
+                        .font(.system(size: 11))
+                        .foregroundColor(.orange)
+                    Text("自动识别学期开学：\(semDesc) (第 1 周周一)")
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundColor(.orange)
+                }
+                .padding(.top, 2)
             }
 
             if parseResult.skippedAllDayEventsCount > 0 {
@@ -157,6 +189,20 @@ public struct ImportCoursesPreviewSheet: View {
                 }
                 .pickerStyle(.menu)
             }
+
+            if parseResult.detectedSemesterStartDate != nil {
+                Divider()
+
+                Toggle(isOn: $syncSemesterStartDate) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("自动校准开学日期")
+                            .font(.system(size: 14))
+                        Text("将开学第一周对齐到 \(parseResult.detectedSemesterStartDescription ?? "")，确保单双周和本周课表精准计算。")
+                            .font(.system(size: 11))
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
         }
         .padding(14)
         .background(
@@ -203,13 +249,24 @@ public struct ImportCoursesPreviewSheet: View {
             weekday: course.weekday,
             startTotalMinutes: course.startTotalMinutes,
             endTotalMinutes: course.endTotalMinutes,
-            name: course.name
+            name: course.name,
+            classroom: course.classroom,
+            teacher: course.teacher
         )
         let isConflict = !isDup && viewModel.hasTimeConflict(
             weekday: course.weekday,
             startTotalMinutes: course.startTotalMinutes,
             endTotalMinutes: course.endTotalMinutes,
-            name: course.name
+            name: course.name,
+            activeWeeks: course.activeWeeks.isEmpty
+                ? Set((course.startWeek...course.endWeek).filter { week in
+                    switch course.weekModeRaw {
+                    case "oddOnly": return week % 2 == 1
+                    case "evenOnly": return week % 2 == 0
+                    default: return true
+                    }
+                })
+                : course.activeWeeks
         )
 
         return HStack(spacing: 12) {
@@ -236,15 +293,13 @@ public struct ImportCoursesPreviewSheet: View {
                         .foregroundColor(.primary)
                         .lineLimit(1)
 
-                    if course.occurrencesCount > 1 {
-                        Text("\(course.occurrencesCount)周次")
-                            .font(.system(size: 10, weight: .medium))
-                            .foregroundColor(.orange)
-                            .padding(.horizontal, 6)
-                            .padding(.vertical, 2)
-                            .background(Color.orange.opacity(0.12))
-                            .clipShape(Capsule())
-                    }
+                    Text(course.weekModeDisplay)
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundColor(.orange)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(Color.orange.opacity(0.12))
+                        .clipShape(Capsule())
 
                     Spacer()
 
@@ -290,7 +345,7 @@ public struct ImportCoursesPreviewSheet: View {
                     HStack(spacing: 4) {
                         Image(systemName: "exclamationmark.triangle.fill")
                             .font(.system(size: 10))
-                        Text("当前课表中已有同名同时间课程（追加导入将自动跳过重复项）")
+                        Text("当前课表中已有同名同时间课程（追加导入会合并周次；无变化的重复项不会重复添加）")
                             .font(.system(size: 11))
                     }
                     .foregroundColor(.orange)
@@ -324,9 +379,14 @@ public struct ImportCoursesPreviewSheet: View {
         guard !selectedCourses.isEmpty else { return }
 
         let items = selectedCourses.map { $0.toCourseItem(remindBeforeMinutes: defaultRemindMinutes) }
-        viewModel.importCourses(items, mode: importMode)
-
-        importedCount = items.count
+        importSummary = viewModel.importCourses(items, mode: importMode)
+        if importSummary.didSave, syncSemesterStartDate,
+           let detectedStart = parseResult.detectedSemesterStartDate {
+            AppSettings.shared.semesterStartDate = detectedStart
+            viewModel.selectedWeek = AppSettings.shared.currentWeekNumber()
+            viewModel.updateWidgetSnapshot()
+            CourseReminderService.shared.syncAllCourseReminders(courses: viewModel.courses)
+        }
         showSuccessNotice = true
     }
 }

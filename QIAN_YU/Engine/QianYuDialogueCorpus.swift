@@ -31,6 +31,9 @@ public struct QianYuDialogueCorpus {
         nextCourseSummary: String? = nil
     ) -> String {
         let text = input.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        func containsAny(_ phrases: [String]) -> Bool {
+            phrases.contains { text.contains($0) }
+        }
 
         // 1. 询问上课或课程安排
         if text.contains("课") || text.contains("教室") || text.contains("上课") || text.contains("迟到") {
@@ -41,8 +44,13 @@ public struct QianYuDialogueCorpus {
             }
         }
 
-        // 2. 累了、困了、按摩肩颈
-        if text.contains("累") || text.contains("困") || text.contains("酸") || text.contains("按摩") || text.contains("穴位") || text.contains("肩颈") {
+        // 2. 晚间休息意图优先于一般疲劳，避免“困了”被当成按摩请求。
+        if containsAny(["晚安", "睡了", "困了", "困啦", "睡觉", "洗漱", "该睡", "要睡"]) {
+            return "该收剑入鞘休息啦！心事放一边，被窝钻进去！明天还要出任务呢，可不许熬夜，晚安啦！"
+        }
+
+        // 3. 累了、困倦、按摩肩颈
+        if containsAny(["累", "犯困", "困倦", "困得", "打瞌睡", "酸痛", "腰酸", "肩酸", "按摩", "穴位", "肩颈"]) {
             let replies = [
                 "眼睛发酸了吧？来嘛来嘛，站起来转两圈！我教你按风池穴和肩井穴，管用得很！",
                 "别硬撑着啦！赶紧起来动动脖子，外套一脱，我帮你按两下，包管精神！",
@@ -51,7 +59,7 @@ public struct QianYuDialogueCorpus {
             return replies.randomElement() ?? replies[0]
         }
 
-        // 3. 剑法、武侠、帅气
+        // 4. 剑法、武侠、帅气
         if text.contains("剑") || text.contains("武侠") || text.contains("当破即破") || text.contains("招式") || text.contains("比划") {
             let replies = [
                 "起势——！怎么样，帅不帅？我的独门双剑招式，只要当破即破，啥难题都给你扫平！",
@@ -61,18 +69,13 @@ public struct QianYuDialogueCorpus {
             return replies.randomElement() ?? replies[0]
         }
 
-        // 4. 早晨打招呼
-        if text.contains("早") || text.contains("醒了") || text.contains("起") {
+        // 5. 早晨打招呼。不要用单字“起”匹配“对不起”“一起”等普通表达。
+        if containsAny(["早安", "早上好", "早晨好", "早呀", "早啊", "醒了", "醒啦", "起床", "起了吗"]) {
             return "早呀！醒啦？我已经把剑擦过两遍了！顺手抓个热包子，今天也要当破即破，冲冲冲！"
         }
 
-        // 5. 晚上就寝
-        if text.contains("晚安") || text.contains("睡了") || text.contains("困了") || text.contains("洗漱") {
-            return "该收剑入鞘休息啦！心事放一边，被窝钻进去！明天还要出任务呢，可不许熬夜，晚安啦！"
-        }
-
-        // 6. 夸奖
-        if text.contains("厉害") || text.contains("真棒") || text.contains("帅") || text.contains("可爱") || text.contains("强") {
+        // 6. 夸奖。避免单字“强”误命中“增强”“强迫”等词。
+        if containsAny(["厉害", "真棒", "很棒", "帅", "可爱", "好强", "很强", "超强", "太强", "真强", "强大"]) {
             return "嘿嘿，帅不帅？在那边我一直是第一哦！哎呀夸得我都不好意思啦——再来两句！"
         }
 

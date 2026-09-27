@@ -7,6 +7,31 @@
 
 import SwiftUI
 #if canImport(WidgetKit)
+
+public struct CourseWidgetCourseSnapshot: Codable {
+    public let name: String
+    public let classroom: String
+    public let teacher: String
+    public let weekday: Int
+    public let startMinutes: Int
+    public let endMinutes: Int
+    public let activeWeeks: [Int]
+
+    public init(name: String, classroom: String, teacher: String, weekday: Int, startMinutes: Int, endMinutes: Int, activeWeeks: [Int]) {
+        self.name = name
+        self.classroom = classroom
+        self.teacher = teacher
+        self.weekday = weekday
+        self.startMinutes = startMinutes
+        self.endMinutes = endMinutes
+        self.activeWeeks = activeWeeks
+    }
+}
+
+public struct CourseWidgetScheduleSnapshot: Codable {
+    public let semesterStartDate: Date
+    public let courses: [CourseWidgetCourseSnapshot]
+}
 import WidgetKit
 #endif
 
@@ -48,30 +73,85 @@ public struct CourseWidgetProvider: TimelineProvider {
     }
 
     public func getSnapshot(in context: Context, completion: @escaping (CourseWidgetEntry) -> Void) {
-        completion(fetchCurrentEntry())
+        completion(fetchCurrentEntry(at: Date()))
     }
 
     public func getTimeline(in context: Context, completion: @escaping (Timeline<CourseWidgetEntry>) -> Void) {
-        let currentEntry = fetchCurrentEntry()
-        // 每 15 分钟刷新一次小组件
-        let nextUpdate = Calendar.current.date(byAdding: .minute, value: 15, to: Date()) ?? Date()
-        let timeline = Timeline(entries: [currentEntry], policy: .after(nextUpdate))
+        let now = Date()
+        let calendar = Calendar.current
+        var transitionDates = [now]
+        if let schedule = readSchedule() {
+            for dayOffset in 0...7 {
+                guard let day = calendar.date(byAdding: .day, value: dayOffset, to: calendar.startOfDay(for: now)) else { continue }
+                if day > now { transitionDates.append(day) }
+                for course in schedule.courses {
+                    for minute in [course.startMinutes, course.endMinutes + 1] {
+                        if let transition = calendar.date(byAdding: .minute, value: minute, to: day), transition > now {
+                            transitionDates.append(transition)
+                        }
+                    }
+                }
+            }
+        }
+        let entries = Set(transitionDates).sorted().map { fetchCurrentEntry(at: $0) }
+        let nextUpdate = calendar.date(byAdding: .day, value: 1, to: now) ?? now.addingTimeInterval(86400)
+        let timeline = Timeline(entries: entries, policy: .after(nextUpdate))
         completion(timeline)
     }
 
-    private func fetchCurrentEntry() -> CourseWidgetEntry {
+    private func readSchedule() -> CourseWidgetScheduleSnapshot? {
+        guard let defaults = UserDefaults(suiteName: "group.com.qianyu.companion"),
+              let data = defaults.data(forKey: "widget_schedule_v2") else { return nil }
+        return try? JSONDecoder().decode(CourseWidgetScheduleSnapshot.self, from: data)
+    }
+
+    private func fetchCurrentEntry(at date: Date) -> CourseWidgetEntry {
+        if let schedule = readSchedule() {
+            var calendar = Calendar(identifier: .gregorian)
+            calendar.firstWeekday = 2
+            calendar.timeZone = .current
+            let semesterMonday = calendar.dateInterval(of: .weekOfYear, for: schedule.semesterStartDate)?.start
+                ?? calendar.startOfDay(for: schedule.semesterStartDate)
+            let currentMonday = calendar.dateInterval(of: .weekOfYear, for: date)?.start
+                ?? calendar.startOfDay(for: date)
+            let week = max(1, (calendar.dateComponents([.day], from: semesterMonday, to: currentMonday).day ?? 0) / 7 + 1)
+            let dayIndex = calendar.component(.weekday, from: date)
+            let weekday = dayIndex == 1 ? 7 : dayIndex - 1
+            let currentMinutes = calendar.component(.hour, from: date) * 60 + calendar.component(.minute, from: date)
+            let next = schedule.courses
+                .filter { $0.weekday == weekday && $0.activeWeeks.contains(week) && $0.endMinutes >= currentMinutes }
+                .min { $0.startMinutes < $1.startMinutes }
+            let weekInfo = "第 \(week) 周 · \(week % 2 == 0 ? "双周" : "单周")"
+            guard let next else {
+                return CourseWidgetEntry(date: date, courseName: "今日已无课", classroom: "", timeString: "", teacher: "", weekInfo: weekInfo, isNoClass: true)
+            }
+            let timeString = String(format: "%02d:%02d - %02d:%02d", next.startMinutes / 60, next.startMinutes % 60, next.endMinutes / 60, next.endMinutes % 60)
+            return CourseWidgetEntry(date: date, courseName: next.name, classroom: next.classroom.isEmpty ? "教室未指定" : next.classroom, timeString: timeString, teacher: next.teacher, weekInfo: weekInfo)
+        }
+
         let appGroupID = "group.com.qianyu.companion"
-        let userDefaults = UserDefaults(suiteName: appGroupID) ?? UserDefaults.standard
+        guard let userDefaults = UserDefaults(suiteName: appGroupID) else {
+            NSLog("无法打开 App Group UserDefaults：%@", appGroupID)
+            return CourseWidgetEntry(
+                date: date,
+                courseName: "无法读取共享课表",
+                classroom: "请检查 App Group 配置",
+                timeString: "",
+                teacher: "",
+                weekInfo: "",
+                isNoClass: false
+            )
+        }
 
         let isNoClass = userDefaults.object(forKey: "widget_is_no_class") as? Bool ?? false
         let name = userDefaults.string(forKey: "widget_course_name") ?? "高等数学 (上)"
         let classroom = userDefaults.string(forKey: "widget_classroom") ?? "正心楼 312"
         let timeString = userDefaults.string(forKey: "widget_time_string") ?? "08:30 - 10:05"
         let teacher = userDefaults.string(forKey: "widget_teacher") ?? "张教授"
-        let weekInfo = userDefaults.string(forKey: "widget_week_info") ?? AppSettings.shared.currentWeekDisplay
+        let weekInfo = userDefaults.string(forKey: "widget_week_info") ?? "第 1 周"
 
         return CourseWidgetEntry(
-            date: Date(),
+            date: date,
             courseName: name,
             classroom: classroom,
             timeString: timeString,
@@ -91,12 +171,20 @@ public struct QianYuCourseWidget: Widget {
         StaticConfiguration(kind: kind, provider: CourseWidgetProvider()) { entry in
             CourseWidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("千语课程表")
-        .description("一眼掌握下节上课教室与时间，陈千语全程陪伴。")
+        .configurationDisplayName("千语课表")
+        .description("一眼掌握下节上课教室与时间，陈千语全程随行陪伴。")
         #if os(iOS)
-        .supportedFamilies([.systemSmall, .systemMedium, .accessoryCircular, .accessoryRectangular])
+        .supportedFamilies([
+            .systemSmall,              // 桌面 2x2
+            .systemMedium,             // 桌面 2x4
+            .accessoryCircular,        // 锁屏圆形
+            .accessoryRectangular,     // 锁屏长矩形
+            .accessoryInline           // 锁屏时间上方单行
+        ])
+        .contentMarginsDisabled()
         #else
         .supportedFamilies([.systemSmall, .systemMedium])
+        .contentMarginsDisabled()
         #endif
     }
 }
@@ -110,82 +198,154 @@ public struct CourseWidgetEntryView: View {
     }
 
     public var body: some View {
-        switch family {
-        case .systemSmall:
-            smallView
-        case .systemMedium:
-            mediumView
-        #if os(iOS)
-        case .accessoryCircular:
-            circularLockScreenView
-        case .accessoryRectangular:
-            rectangularLockScreenView
-        #endif
-        default:
-            smallView
+        Group {
+            switch family {
+            case .systemSmall:
+                smallView
+                    .qianYuWidgetContainerBackground()
+            case .systemMedium:
+                mediumView
+                    .qianYuWidgetContainerBackground()
+            #if os(iOS)
+            case .accessoryCircular:
+                circularLockScreenView
+                    .qianYuLockScreenContainerBackground()
+            case .accessoryRectangular:
+                rectangularLockScreenView
+                    .qianYuLockScreenContainerBackground()
+            case .accessoryInline:
+                inlineLockScreenView
+                    .qianYuLockScreenContainerBackground()
+            #endif
+            default:
+                smallView
+                    .qianYuWidgetContainerBackground()
+            }
         }
     }
 
-    // MARK: - 桌面小号小组件 (Small)
-    private var smallView: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                // 小陈微缩插槽 (无剑标)
-                chibiMiniAvatar(size: 24)
+    // MARK: - 桌面 2x2 小号小组件 (SystemSmall - 黄金比例与饱满视觉布局)
+    public var smallView: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            // 1. 顶部栏：小陈头像 + 标题 + 周次胶囊
+            HStack(alignment: .center, spacing: 6) {
+                chibiMiniAvatar(size: 26)
 
-                Text("下节课")
-                    .font(.system(size: 12, weight: .bold))
+                Text("千语课表")
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundColor(.primary)
+
+                Spacer(minLength: 4)
+
+                let weekTag = entry.weekInfo.components(separatedBy: " · ").first ?? "本周"
+                Text(weekTag)
+                    .font(.system(size: 10, weight: .bold))
                     .foregroundColor(.orange)
-
-                Spacer()
-
-                Text(entry.weekInfo.components(separatedBy: " · ").first ?? "")
-                    .font(.system(size: 10, weight: .medium))
-                    .foregroundColor(.secondary)
+                    .padding(.horizontal, 7)
+                    .padding(.vertical, 3)
+                    .background(Color.orange.opacity(0.14))
+                    .clipShape(Capsule())
             }
 
-            Spacer()
+            Spacer(minLength: 6)
 
+            // 2. 中部核心内容：日程卡片
             if entry.isNoClass {
-                Text("今日已无课")
-                    .font(.system(size: 15, weight: .bold))
-                Text("「下课啦！带我去后山转转！」")
-                    .font(.system(size: 11))
-                    .foregroundColor(.secondary)
-            } else {
-                Text(entry.courseName)
-                    .font(.system(size: 15, weight: .bold))
-                    .lineLimit(2)
-
-                HStack(spacing: 4) {
-                    Image(systemName: "clock")
-                        .font(.system(size: 10))
-                    Text(entry.timeString)
-                        .font(.system(size: 11, weight: .medium))
-                }
-                .foregroundColor(.secondary)
-
-                if !entry.classroom.isEmpty {
-                    HStack(spacing: 4) {
-                        Image(systemName: "location.fill")
-                            .font(.system(size: 10))
-                        Text(entry.classroom)
-                            .font(.system(size: 11, weight: .medium))
+                VStack(alignment: .leading, spacing: 5) {
+                    HStack(spacing: 5) {
+                        Image(systemName: "sparkles")
+                            .font(.system(size: 13, weight: .bold))
+                            .foregroundColor(.orange)
+                        Text("今日已无课")
+                            .font(.system(size: 15, weight: .bold))
+                            .foregroundColor(.primary)
                     }
-                    .foregroundColor(.orange)
+
+                    Text("「下课啦！带我去后山转转，或者喝杯奶茶？」")
+                        .font(.system(size: 11))
+                        .foregroundColor(.secondary)
+                        .lineSpacing(2)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            } else {
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack(spacing: 4) {
+                        Circle()
+                            .fill(Color.orange)
+                            .frame(width: 5, height: 5)
+                        Text("下节日程")
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundColor(.orange)
+                        Spacer()
+                        if !entry.teacher.isEmpty {
+                            Text(entry.teacher)
+                                .font(.system(size: 10))
+                                .foregroundColor(.secondary)
+                                .lineLimit(1)
+                        }
+                    }
+
+                    Text(entry.courseName)
+                        .font(.system(size: 15, weight: .bold))
+                        .foregroundColor(.primary)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+
+                    HStack(spacing: 4) {
+                        Image(systemName: "clock")
+                            .font(.system(size: 9.5))
+                        Text(entry.timeString)
+                            .font(.system(size: 11, weight: .medium))
+                            .lineLimit(1)
+                    }
+                    .foregroundColor(.secondary)
+
+                    if !entry.classroom.isEmpty {
+                        HStack(spacing: 3) {
+                            Image(systemName: "location.fill")
+                                .font(.system(size: 9))
+                            Text(entry.classroom)
+                                .font(.system(size: 10.5, weight: .semibold))
+                                .lineLimit(1)
+                        }
+                        .foregroundColor(.orange)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2.5)
+                        .background(Color.orange.opacity(0.12))
+                        .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
+                    }
                 }
             }
+
+            Spacer(minLength: 6)
+
+            // 3. 底部语音气泡卡片：消除尴尬空白，横向撑满
+            HStack(spacing: 4) {
+                Image(systemName: "quote.bubble.fill")
+                    .font(.system(size: 9))
+                    .foregroundColor(.orange.opacity(0.85))
+                Text(entry.isNoClass ? "「随时喊我，我都在呢！」" : "「当破即破，冲冲冲！」")
+                    .font(.system(size: 9.5, weight: .medium))
+                    .foregroundColor(.secondary)
+                    .lineLimit(1)
+                Spacer(minLength: 0)
+            }
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4.5)
+            .background(Color.orange.opacity(0.08))
+            .clipShape(RoundedRectangle(cornerRadius: 7, style: .continuous))
         }
-        .padding(14)
+        .padding(13)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
-    // MARK: - 桌面中号小组件 (Medium)
-    private var mediumView: some View {
+    // MARK: - 桌面 2x4 中号小组件 (SystemMedium)
+    public var mediumView: some View {
         HStack(spacing: 16) {
             // 左侧小陈陪伴立像区
             VStack(alignment: .leading, spacing: 6) {
                 HStack(spacing: 8) {
-                    chibiMiniAvatar(size: 32)
+                    chibiMiniAvatar(size: 34)
                     VStack(alignment: .leading, spacing: 1) {
                         Text("陈千语")
                             .font(.system(size: 13, weight: .bold))
@@ -217,75 +377,148 @@ public struct CourseWidgetEntryView: View {
             // 右侧课程日程详情
             VStack(alignment: .leading, spacing: 6) {
                 HStack {
-                    Text("即将到来的课程")
+                    Text(entry.isNoClass ? "今日课表" : "即将到来的课程")
                         .font(.system(size: 11, weight: .semibold))
                         .foregroundColor(.secondary)
                     Spacer()
                 }
 
-                Text(entry.courseName)
-                    .font(.system(size: 16, weight: .bold))
-                    .foregroundColor(.primary)
-
-                HStack(spacing: 12) {
-                    Label(entry.timeString, systemImage: "clock")
-                        .font(.system(size: 12))
-                        .foregroundColor(.secondary)
-
-                    if !entry.classroom.isEmpty {
-                        Label(entry.classroom, systemImage: "location.fill")
-                            .font(.system(size: 12, weight: .medium))
-                            .foregroundColor(.orange)
+                if entry.isNoClass {
+                    Spacer()
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("今日已无任何课程")
+                            .font(.system(size: 15, weight: .bold))
+                            .foregroundColor(.primary)
+                        Text("「终于可以歇一歇啦！走，管理员，去菈梵朵玛碰碰杯杯喝奶茶！」")
+                            .font(.system(size: 11))
+                            .foregroundColor(.secondary)
                     }
-                }
+                    Spacer()
+                } else {
+                    Text(entry.courseName)
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.primary)
+                        .lineLimit(2)
 
-                if !entry.teacher.isEmpty {
-                    Label("授课：\(entry.teacher)", systemImage: "person")
-                        .font(.system(size: 11))
-                        .foregroundColor(.secondary)
+                    HStack(spacing: 12) {
+                        Label(entry.timeString, systemImage: "clock.fill")
+                            .font(.system(size: 12))
+                            .foregroundColor(.secondary)
+
+                        if !entry.classroom.isEmpty {
+                            Label(entry.classroom, systemImage: "location.fill")
+                                .font(.system(size: 12, weight: .medium))
+                                .foregroundColor(.orange)
+                        }
+                    }
+
+                    if !entry.teacher.isEmpty {
+                        Label("授课教师：\(entry.teacher)", systemImage: "person.fill")
+                            .font(.system(size: 11))
+                            .foregroundColor(.secondary)
+                    }
                 }
             }
         }
         .padding(14)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     #if os(iOS)
-    // MARK: - 锁屏圆形小组件 (Accessory Circular)
-    private var circularLockScreenView: some View {
-        VStack(spacing: 2) {
-            Image(systemName: "calendar")
-                .font(.system(size: 14))
-            Text(entry.courseName.prefix(2))
-                .font(.system(size: 12, weight: .bold))
-            Text(entry.timeString.prefix(5))
-                .font(.system(size: 9))
-                .foregroundColor(.secondary)
+    // MARK: - 锁屏单行小组件 (Accessory Inline)
+    @ViewBuilder
+    public var inlineLockScreenView: some View {
+        if entry.isNoClass {
+            Label("今日已无课 · 享受闲暇", systemImage: "sparkles")
+        } else {
+            let start = entry.timeString.components(separatedBy: " - ").first ?? entry.timeString
+            Label("下节: \(entry.courseName) \(start)", systemImage: "graduationcap.fill")
         }
     }
 
-    // MARK: - 锁屏矩形小组件 (Accessory Rectangular)
-    private var rectangularLockScreenView: some View {
+    // MARK: - 锁屏圆形小组件 (Accessory Circular)
+    @ViewBuilder
+    public var circularLockScreenView: some View {
+        ZStack {
+            #if canImport(WidgetKit)
+            if #available(iOS 16.0, *) {
+                AccessoryWidgetBackground()
+            }
+            #endif
+
+            VStack(spacing: 1) {
+                if entry.isNoClass {
+                    Image(systemName: "sparkles")
+                        .font(.system(size: 14))
+                    Text("无课")
+                        .font(.system(size: 11, weight: .bold))
+                } else {
+                    Text(String(entry.courseName.prefix(2)))
+                        .font(.system(size: 12, weight: .bold))
+                    let start = entry.timeString.components(separatedBy: " - ").first ?? entry.timeString
+                    Text(start)
+                        .font(.system(size: 9, weight: .semibold, design: .monospaced))
+                    if !entry.classroom.isEmpty {
+                        Text(String(entry.classroom.prefix(3)))
+                            .font(.system(size: 8))
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
+        }
+    }
+
+    // MARK: - 锁屏长矩形小组件 (Accessory Rectangular)
+    @ViewBuilder
+    public var rectangularLockScreenView: some View {
         VStack(alignment: .leading, spacing: 2) {
-            HStack {
-                Text("下节: \(entry.courseName)")
-                    .font(.system(size: 13, weight: .bold))
+            if entry.isNoClass {
+                HStack(spacing: 4) {
+                    Image(systemName: "sparkles")
+                        .font(.system(size: 11))
+                    Text("千语课表 · 今日无课")
+                        .font(.system(size: 12, weight: .bold))
+                }
+                Text("「下课啦！带我去后山转转！」")
+                    .font(.system(size: 11))
+                    .foregroundColor(.secondary)
+                Text(entry.weekInfo)
+                    .font(.system(size: 10))
+                    .foregroundColor(.secondary)
+            } else {
+                HStack(spacing: 4) {
+                    Image(systemName: "graduationcap.fill")
+                        .font(.system(size: 11))
+                    Text("下节: \(entry.courseName)")
+                        .font(.system(size: 12, weight: .bold))
+                        .lineLimit(1)
+                }
+
+                HStack(spacing: 6) {
+                    Label(entry.timeString, systemImage: "clock")
+                        .font(.system(size: 10, weight: .medium))
+                    if !entry.classroom.isEmpty {
+                        Text("· \(entry.classroom)")
+                            .font(.system(size: 10, weight: .medium))
+                            .lineLimit(1)
+                    }
+                }
+                .foregroundColor(.secondary)
+
+                Text("\(entry.weekInfo) · \(entry.teacher.isEmpty ? "陈千语随行" : entry.teacher)")
+                    .font(.system(size: 9))
+                    .foregroundColor(.secondary.opacity(0.8))
                     .lineLimit(1)
             }
-            Text("\(entry.timeString) · \(entry.classroom)")
-                .font(.system(size: 11))
-                .foregroundColor(.secondary)
-            Text(entry.weekInfo)
-                .font(.system(size: 10))
-                .foregroundColor(.secondary)
         }
     }
     #endif
 
-    // MARK: - 辅助微缩头像 (无剑标)
-    private func chibiMiniAvatar(size: CGFloat) -> some View {
+    // MARK: - 辅助微缩头像 (严禁剑标)
+    public func chibiMiniAvatar(size: CGFloat) -> some View {
         ZStack {
             #if os(macOS)
-            if let nsImg = NSImage(named: "qianyu_chibi_avatar") ?? NSImage(named: "chen_qianyu_avatar") {
+            if let nsImg = NSImage(named: "qianyu_chibi_avatar") ?? NSImage(named: "QianyuAvatar") {
                 Image(nsImage: nsImg)
                     .resizable()
                     .scaledToFill()
@@ -295,7 +528,7 @@ public struct CourseWidgetEntryView: View {
                 fallbackCircle(size: size)
             }
             #else
-            if let uiImg = UIImage(named: "qianyu_chibi_avatar") ?? UIImage(named: "chen_qianyu_avatar") {
+            if let uiImg = UIImage(named: "qianyu_chibi_avatar") ?? UIImage(named: "QianyuAvatar") {
                 Image(uiImage: uiImg)
                     .resizable()
                     .scaledToFill()
@@ -317,6 +550,79 @@ public struct CourseWidgetEntryView: View {
                 .font(.system(size: max(8, size * 0.55), weight: .bold))
                 .foregroundColor(.white)
         }
+    }
+}
+
+// MARK: - 跨平台 Widget 容器背景修饰符
+public extension View {
+    @ViewBuilder
+    func qianYuWidgetContainerBackground() -> some View {
+        #if os(iOS)
+        if #available(iOSApplicationExtension 17.0, iOS 17.0, *) {
+            self.containerBackground(for: .widget) {
+                LinearGradient(
+                    colors: [
+                        Color.orange.opacity(0.12),
+                        Color.pink.opacity(0.04),
+                        Color(uiColor: .systemBackground)
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            }
+        } else {
+            self.background(
+                LinearGradient(
+                    colors: [
+                        Color.orange.opacity(0.12),
+                        Color.pink.opacity(0.04),
+                        Color(uiColor: .systemBackground)
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
+        }
+        #else
+        if #available(macOSApplicationExtension 14.0, macOS 14.0, *) {
+            self.containerBackground(for: .widget) {
+                LinearGradient(
+                    colors: [
+                        Color.orange.opacity(0.12),
+                        Color.pink.opacity(0.04),
+                        Color(nsColor: .windowBackgroundColor)
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            }
+        } else {
+            self.background(
+                LinearGradient(
+                    colors: [
+                        Color.orange.opacity(0.12),
+                        Color.pink.opacity(0.04),
+                        Color(nsColor: .windowBackgroundColor)
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
+        }
+        #endif
+    }
+
+    @ViewBuilder
+    func qianYuLockScreenContainerBackground() -> some View {
+        #if os(iOS)
+        if #available(iOSApplicationExtension 17.0, iOS 17.0, *) {
+            self.containerBackground(.clear, for: .widget)
+        } else {
+            self
+        }
+        #else
+        self
+        #endif
     }
 }
 #endif

@@ -40,9 +40,58 @@ public final class PomodoroTimerViewModel {
     // MARK: - 内部计时控制
     private var timerTask: Task<Void, Never>?
     private var targetEndDate: Date?
+    private let storagePrefix = "qianyu.pomodoro."
 
     public init() {
-        self.reset()
+        let defaults = UserDefaults.standard
+        if let savedMode = defaults.string(forKey: storagePrefix + "mode"),
+           let restoredMode = SessionMode(rawValue: savedMode) {
+            mode = restoredMode
+        }
+        let savedMinutes = defaults.integer(forKey: storagePrefix + "minutes")
+        if savedMinutes > 0 { selectedMinutes = savedMinutes }
+        totalSeconds = selectedMinutes * 60
+        remainingSeconds = totalSeconds
+        let savedRemaining = defaults.integer(forKey: storagePrefix + "remaining")
+        let savedState = defaults.string(forKey: storagePrefix + "state")
+        if savedState == "paused", savedRemaining > 0 {
+            state = .paused
+            remainingSeconds = savedRemaining
+        } else if savedState == "running" {
+            let end = Date(timeIntervalSince1970: defaults.double(forKey: storagePrefix + "end"))
+            if end > Date() {
+                targetEndDate = end
+                remainingSeconds = Int(ceil(end.timeIntervalSinceNow))
+                state = .running
+                runTimerLoop()
+            } else {
+                remainingSeconds = 0
+                state = .completed
+                persistState()
+                #if os(iOS)
+                LiveActivityManager.shared.endPomodoro()
+                #endif
+            }
+        } else if savedState == "completed" {
+            remainingSeconds = 0
+            state = .completed
+        }
+    }
+
+    private func persistState() {
+        let defaults = UserDefaults.standard
+        defaults.set(mode.rawValue, forKey: storagePrefix + "mode")
+        defaults.set(selectedMinutes, forKey: storagePrefix + "minutes")
+        defaults.set(remainingSeconds, forKey: storagePrefix + "remaining")
+        defaults.set(targetEndDate?.timeIntervalSince1970, forKey: storagePrefix + "end")
+        let stateName: String
+        switch state {
+        case .idle: stateName = "idle"
+        case .running: stateName = "running"
+        case .paused: stateName = "paused"
+        case .completed: stateName = "completed"
+        }
+        defaults.set(stateName, forKey: storagePrefix + "state")
     }
 
     // MARK: - 格式化计算属性
@@ -77,6 +126,7 @@ public final class PomodoroTimerViewModel {
         selectedMinutes = mins
         totalSeconds = mins * 60
         remainingSeconds = totalSeconds
+        persistState()
     }
 
     public func setMode(_ newMode: SessionMode) {
@@ -90,6 +140,7 @@ public final class PomodoroTimerViewModel {
         guard remainingSeconds > 0 else { return }
         state = .running
         targetEndDate = Date().addingTimeInterval(TimeInterval(remainingSeconds))
+        persistState()
 
         // 启动后台/本地通知
         scheduleCompletionNotification()
@@ -108,9 +159,25 @@ public final class PomodoroTimerViewModel {
 
     public func pause() {
         guard state == .running else { return }
+        if let targetEndDate {
+            remainingSeconds = max(0, Int(ceil(targetEndDate.timeIntervalSinceNow)))
+        }
+        if remainingSeconds == 0 {
+            timerTask?.cancel()
+            timerTask = nil
+            targetEndDate = nil
+            state = .completed
+            persistState()
+            #if os(iOS)
+            LiveActivityManager.shared.endPomodoro()
+            #endif
+            return
+        }
         timerTask?.cancel()
         timerTask = nil
+        targetEndDate = nil
         state = .paused
+        persistState()
         cancelCompletionNotification()
 
         #if os(iOS)
@@ -126,6 +193,7 @@ public final class PomodoroTimerViewModel {
         guard state == .paused, remainingSeconds > 0 else { return }
         state = .running
         targetEndDate = Date().addingTimeInterval(TimeInterval(remainingSeconds))
+        persistState()
         scheduleCompletionNotification()
 
         #if os(iOS)
@@ -154,6 +222,7 @@ public final class PomodoroTimerViewModel {
         state = .idle
         totalSeconds = selectedMinutes * 60
         remainingSeconds = totalSeconds
+        persistState()
         cancelCompletionNotification()
 
         #if os(iOS)
@@ -166,6 +235,7 @@ public final class PomodoroTimerViewModel {
         timerTask = Task { [weak self] in
             while !Task.isCancelled {
                 try? await Task.sleep(nanoseconds: 500_000_000) // 0.5s 采样
+                guard !Task.isCancelled else { break }
                 guard let self = self, let target = self.targetEndDate else { break }
 
                 let diff = Int(ceil(target.timeIntervalSinceNow))
@@ -173,6 +243,8 @@ public final class PomodoroTimerViewModel {
                     self.remainingSeconds = 0
                     self.state = .completed
                     self.timerTask = nil
+                    self.targetEndDate = nil
+                    self.persistState()
                     #if os(iOS)
                     LiveActivityManager.shared.endPomodoro()
                     #endif

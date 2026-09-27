@@ -12,6 +12,7 @@ import SwiftData
 struct QianYuApp: App {
     let container: ModelContainer
     @State private var sharedScheduleViewModel = CourseScheduleViewModel()
+    @State private var sharedPomodoroViewModel = PomodoroTimerViewModel()
 
     init() {
         let schema = Schema([
@@ -46,11 +47,12 @@ struct QianYuApp: App {
     }
 
     var body: some Scene {
-        WindowGroup {
-            MainView(scheduleViewModel: sharedScheduleViewModel)
+        WindowGroup(id: "main") {
+            MainView(scheduleViewModel: sharedScheduleViewModel, pomodoroViewModel: sharedPomodoroViewModel)
                 .modelContainer(container)
                 .onAppear {
                     sharedScheduleViewModel.setContext(container.mainContext)
+                    sharedScheduleViewModel.updateWidgetSnapshot()
                     #if os(macOS)
                     let iconPath = Bundle.main.path(forResource: "AppIcon", ofType: "icns")
                     if let path = iconPath, let iconImage = NSImage(contentsOfFile: path) {
@@ -60,7 +62,34 @@ struct QianYuApp: App {
                     }
                     #endif
                 }
+                .onOpenURL { url in
+                    NSLog("📢 [QianYuApp] Received openURL: %@", url.absoluteString)
+                    if url.scheme == "qianyu" {
+                        let host = url.host ?? ""
+                        if host == "startPomodoro" || host == "testLiveActivity" || url.path.contains("startPomodoro") {
+                            #if os(iOS)
+                            let res = LiveActivityManager.shared.startPomodoro(
+                                sessionTitle: "专注中",
+                                totalSeconds: 25 * 60,
+                                remainingSeconds: 25 * 60,
+                                quote: "「当破即破，冲冲冲！」"
+                            )
+                            NSLog("📢 [QianYuApp] startPomodoro result: %d", res ? 1 : 0)
+                            #endif
+                        } else if host == "stopPomodoro" || url.path.contains("stopPomodoro") {
+                            #if os(iOS)
+                            LiveActivityManager.shared.endPomodoro()
+                            #endif
+                        }
+                    }
+                }
         }
+        #if os(iOS)
+        .backgroundTask(.appRefresh("com.qianyu.companion.course-reminder-refresh")) {
+            CourseReminderBackgroundRefresh.schedule()
+            await CourseReminderBackgroundRefresh.refresh(container: container)
+        }
+        #endif
         #if os(macOS)
         .defaultSize(width: 850, height: 620)
         #endif
@@ -70,11 +99,7 @@ struct QianYuApp: App {
             MenuBarCompanionView(scheduleViewModel: sharedScheduleViewModel)
                 .modelContainer(container)
         } label: {
-            Image("QianyuAvatar")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 18, height: 18)
-                .clipShape(Circle())
+            Image("MenuBarIcon")
         }
         .menuBarExtraStyle(.window)
         #endif

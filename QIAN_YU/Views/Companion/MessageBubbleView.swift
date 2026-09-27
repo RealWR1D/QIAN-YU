@@ -109,11 +109,7 @@ public struct MessageBubbleView: View {
                 }
             }
 
-            if isUser {
-                Spacer(minLength: 40)
-            } else {
-                Spacer(minLength: 40)
-            }
+            Spacer(minLength: 40)
         }
         .frame(maxWidth: .infinity, alignment: isUser ? .trailing : .leading)
     }

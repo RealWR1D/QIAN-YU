@@ -157,5 +157,8 @@ public struct ChatView: View {
         .task {
             viewModel.setContext(modelContext)
         }
+        .onDisappear {
+            viewModel.cancelGeneration()
+        }
     }
 }

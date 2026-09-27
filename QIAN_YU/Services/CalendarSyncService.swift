@@ -14,6 +14,9 @@ public final class CalendarSyncService {
     public static let shared = CalendarSyncService()
     private let eventStore = EKEventStore()
     private let calendarTitle = "QIAN YU 课表"
+    private let eventMarker = "QIAN_YU_COURSE_ID:"
+    private let legacyEventMarker = "由「QIAN YU (千语伴行)」同步"
+    private let lastSyncedSemesterKey = "qianyu.calendar.lastSyncedSemesterMonday"
 
     private init() {}
 
@@ -75,114 +78,110 @@ public final class CalendarSyncService {
         }
 
         let calendar = try getOrCreateQianyuCalendar()
+        var committed = false
+        defer {
+            if !committed { eventStore.reset() }
+        }
 
-        // 1. 清理已有该日历中旧的由 QIAN YU 创建的未来日程（避免重复叠加）
-        let oneYearLater = Calendar.current.date(byAdding: .year, value: 1, to: semesterStartDate) ?? Date()
-        let predicate = eventStore.predicateForEvents(withStart: semesterStartDate, end: oneYearLater, calendars: [calendar])
-        let existingEvents = eventStore.events(matching: predicate)
-        for oldEvent in existingEvents {
-            try? eventStore.remove(oldEvent, span: .futureEvents, commit: false)
+        var cal = Calendar(identifier: .gregorian)
+        cal.firstWeekday = 2
+        cal.timeZone = .current
+        guard let semesterMonday = cal.dateInterval(of: .weekOfYear, for: semesterStartDate)?.start else {
+            throw CalendarSyncError.failedToSave
+        }
+
+        // 日期可能已从旧学期切换到新学期。按年度分段检查相邻学期，
+        // 同时覆盖升级前未记录同步日期的课程事件。
+        let previousSyncTimestamp = UserDefaults.standard.double(forKey: lastSyncedSemesterKey)
+        let previousSyncDate = previousSyncTimestamp > 0
+            ? Date(timeIntervalSince1970: previousSyncTimestamp)
+            : semesterMonday
+        let scanOrigin = min(semesterMonday, Date(), previousSyncDate)
+        let scanEnd = max(semesterMonday, Date())
+        guard let firstYear = cal.date(byAdding: .year, value: -2, to: scanOrigin),
+              let lastYear = cal.date(byAdding: .year, value: 2, to: scanEnd) else {
+            throw CalendarSyncError.failedToSave
+        }
+        var cursor = firstYear
+        while cursor < lastYear {
+            guard let next = cal.date(byAdding: .year, value: 1, to: cursor) else { break }
+            let predicate = eventStore.predicateForEvents(withStart: cursor, end: min(next, lastYear), calendars: [calendar])
+            for oldEvent in eventStore.events(matching: predicate) where isOwnedEvent(oldEvent) {
+                try eventStore.remove(oldEvent, span: .thisEvent, commit: false)
+            }
+            cursor = next
         }
 
         var syncedCount = 0
-        let cal = Calendar.current
-
-        // 2. 依次创建每门课的重复事件
+        // 2. 每个实际生效的教学周创建一条独立事件，避免 recurrence 无法表达稀疏周次。
         for course in courses where course.isEnabled {
-            // 计算第一节课的具体日期
-            // course.weekday: 1=周一, 7=周日
-            let firstOccurrenceDate = calculateFirstDate(
-                weekday: course.weekday,
-                semesterStartDate: semesterStartDate,
-                startWeek: course.startWeek,
-                endWeek: course.endWeek,
-                weekMode: course.weekMode
-            )
+            guard (1...7).contains(course.weekday) else { continue }
+            let activeWeeks = resolvedActiveWeeks(for: course)
+            var savedCourseEvents = false
 
-            guard let firstDate = firstOccurrenceDate else { continue }
-
-            var startComp = cal.dateComponents([.year, .month, .day], from: firstDate)
-            startComp.hour = course.startHour
-            startComp.minute = course.startMinute
-            guard let eventStart = cal.date(from: startComp) else { continue }
-
-            var endComp = cal.dateComponents([.year, .month, .day], from: firstDate)
-            endComp.hour = course.endHour
-            endComp.minute = course.endMinute
-            guard let eventEnd = cal.date(from: endComp) else { continue }
-
-            let event = EKEvent(eventStore: eventStore)
-            event.calendar = calendar
-            event.title = course.name
-            event.location = course.classroom.isEmpty ? "教室" : course.classroom
-            event.notes = "授课教师: \(course.teacher.isEmpty ? "未指定" : course.teacher)\n周数规则: \(course.weekModeDisplay)\n—— 由「QIAN YU (千语伴行)」同步"
-            event.startDate = eventStart
-            event.endDate = eventEnd
-
-            // 课前智能闹钟
-            if course.remindBeforeMinutes > 0 {
-                let alarm = EKAlarm(relativeOffset: -Double(course.remindBeforeMinutes * 60))
-                event.addAlarm(alarm)
-            }
-
-            // 设置周期性重复规则 (Recurrence Rule)
-            var repeatCount = 0
-            for w in course.startWeek...course.endWeek {
-                if course.isActive(inWeek: w) {
-                    repeatCount += 1
+            for week in activeWeeks {
+                let (weekOffset, overflow) = (week - 1).multipliedReportingOverflow(by: 7)
+                let (dayOffset, additionOverflow) = weekOffset.addingReportingOverflow(course.weekday - 1)
+                guard !overflow, !additionOverflow,
+                      let classDate = cal.date(
+                        byAdding: .day,
+                        value: dayOffset,
+                        to: semesterMonday
+                      ) else {
+                    continue
                 }
+
+                var startComp = cal.dateComponents([.year, .month, .day], from: classDate)
+                startComp.hour = course.startHour
+                startComp.minute = course.startMinute
+                guard let eventStart = cal.date(from: startComp) else { continue }
+
+                var endComp = cal.dateComponents([.year, .month, .day], from: classDate)
+                endComp.hour = course.endHour
+                endComp.minute = course.endMinute
+                guard let eventEnd = cal.date(from: endComp) else { continue }
+
+                let event = EKEvent(eventStore: eventStore)
+                event.calendar = calendar
+                event.title = course.name
+                event.location = course.classroom.isEmpty ? "教室" : course.classroom
+                event.notes = "授课教师: \(course.teacher.isEmpty ? "未指定" : course.teacher)\n教学周: 第\(week)周\n\(eventMarker)\(course.id.uuidString):\(week)\n—— \(legacyEventMarker)"
+                event.startDate = eventStart
+                event.endDate = eventEnd
+
+                if course.remindBeforeMinutes > 0 {
+                    let alarm = EKAlarm(relativeOffset: -Double(course.remindBeforeMinutes * 60))
+                    event.addAlarm(alarm)
+                }
+
+                try eventStore.save(event, span: .thisEvent, commit: false)
+                savedCourseEvents = true
             }
 
-            if repeatCount > 1 {
-                let interval = (course.weekMode == .all) ? 1 : 2
-                let recurrenceRule = EKRecurrenceRule(
-                    recurrenceWith: .weekly,
-                    interval: interval,
-                    end: EKRecurrenceEnd(occurrenceCount: repeatCount)
-                )
-                event.addRecurrenceRule(recurrenceRule)
-            }
-
-            try eventStore.save(event, span: .futureEvents, commit: false)
-            syncedCount += 1
+            if savedCourseEvents { syncedCount += 1 }
         }
 
         try eventStore.commit()
+        committed = true
+        UserDefaults.standard.set(semesterMonday.timeIntervalSince1970, forKey: lastSyncedSemesterKey)
         return syncedCount
     }
 
-    /// 根据星期几和开学起止周数推算第一节课的具体日期
-    private func calculateFirstDate(
-        weekday: Int,
-        semesterStartDate: Date,
-        startWeek: Int,
-        endWeek: Int,
-        weekMode: CourseWeekMode
-    ) -> Date? {
-        var cal = Calendar(identifier: .gregorian)
-        cal.firstWeekday = 2 // 强制周一为每周第一天，消除不同系统区域的周日起始偏移
+    private func isOwnedEvent(_ event: EKEvent) -> Bool {
+        guard let notes = event.notes else { return false }
+        return notes.contains(eventMarker) || notes.contains(legacyEventMarker)
+    }
 
-        // 确定开学周所在周一
-        guard let semesterMonday = cal.dateInterval(of: .weekOfYear, for: semesterStartDate)?.start else {
-            return nil
+    private func resolvedActiveWeeks(for course: CourseItem) -> [Int] {
+        if !course.activeWeeks.isEmpty {
+            return course.activeWeeks.filter { $0 > 0 }.sorted()
         }
-
-        // 计算目标起止周
-        var targetWeek = startWeek
-        if weekMode == .evenOnly && targetWeek % 2 != 0 {
-            targetWeek += 1 // 仅双周但起始周为单周，顺延一周
-        } else if weekMode == .oddOnly && targetWeek % 2 == 0 {
-            targetWeek += 1 // 仅单周但起始周为双周，顺延一周
+        guard course.startWeek > 0,
+              course.endWeek >= course.startWeek,
+              course.endWeek - course.startWeek <= 100 else {
+            return []
         }
-
-        guard targetWeek <= endWeek else {
-            return nil
-        }
-
-        let weekOffsetDays = (targetWeek - 1) * 7
-        let dayOffset = weekday - 1 // 0=周一, 6=周日
-
-        return cal.date(byAdding: .day, value: weekOffsetDays + dayOffset, to: semesterMonday)
+        return (course.startWeek...course.endWeek).filter { course.isActive(inWeek: $0) }
     }
 }
 

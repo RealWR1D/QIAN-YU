@@ -29,11 +29,14 @@ public enum AppTab: String, CaseIterable, Identifiable {
 public struct MainView: View {
     @State private var selectedTab: AppTab = .companion
     @State public var scheduleViewModel: CourseScheduleViewModel
+    @State public var pomodoroViewModel: PomodoroTimerViewModel
     @State public var settingsViewModel = SettingsViewModel()
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.scenePhase) private var scenePhase
 
-    public init(scheduleViewModel: CourseScheduleViewModel? = nil) {
+    public init(scheduleViewModel: CourseScheduleViewModel? = nil, pomodoroViewModel: PomodoroTimerViewModel? = nil) {
         self._scheduleViewModel = State(initialValue: scheduleViewModel ?? CourseScheduleViewModel())
+        self._pomodoroViewModel = State(initialValue: pomodoroViewModel ?? PomodoroTimerViewModel())
     }
 
     public var body: some View {
@@ -56,7 +59,7 @@ public struct MainView: View {
             .tag(AppTab.schedule)
 
             NavigationStack {
-                PomodoroTimerView()
+                PomodoroTimerView(viewModel: pomodoroViewModel)
             }
             .tabItem {
                 Label(AppTab.focus.rawValue, systemImage: AppTab.focus.iconName)
@@ -64,7 +67,7 @@ public struct MainView: View {
             .tag(AppTab.focus)
 
             NavigationStack {
-                SettingsView(viewModel: settingsViewModel)
+                SettingsView(viewModel: settingsViewModel, scheduleViewModel: scheduleViewModel)
             }
             .tabItem {
                 Label(AppTab.settings.rawValue, systemImage: AppTab.settings.iconName)
@@ -74,8 +77,19 @@ public struct MainView: View {
         .tint(.orange)
         .task {
             scheduleViewModel.setContext(modelContext)
-            _ = await NotificationManager.shared.requestAuthorization()
+            let authorized = await NotificationManager.shared.requestAuthorizationIfNeeded()
             NotificationManager.shared.scheduleDailyNotifications()
+            if authorized {
+                CourseReminderService.shared.syncAllCourseReminders(courses: scheduleViewModel.courses)
+            }
+            CourseReminderBackgroundRefresh.schedule()
+        }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active {
+                CourseReminderService.shared.syncAllCourseReminders(courses: scheduleViewModel.courses)
+            } else if phase == .background {
+                CourseReminderBackgroundRefresh.schedule()
+            }
         }
         #else
         NavigationSplitView {
@@ -181,10 +195,10 @@ public struct MainView: View {
                 case .schedule:
                     CourseScheduleView(viewModel: scheduleViewModel)
                 case .focus:
-                    PomodoroTimerView()
+                    PomodoroTimerView(viewModel: pomodoroViewModel)
                 case .settings:
                     NavigationStack {
-                        SettingsView(viewModel: settingsViewModel)
+                        SettingsView(viewModel: settingsViewModel, scheduleViewModel: scheduleViewModel)
                     }
                 }
             }
@@ -193,8 +207,16 @@ public struct MainView: View {
         .tint(.orange)
         .task {
             scheduleViewModel.setContext(modelContext)
-            _ = await NotificationManager.shared.requestAuthorization()
+            let authorized = await NotificationManager.shared.requestAuthorizationIfNeeded()
             NotificationManager.shared.scheduleDailyNotifications()
+            if authorized {
+                CourseReminderService.shared.syncAllCourseReminders(courses: scheduleViewModel.courses)
+            }
+        }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active {
+                CourseReminderService.shared.syncAllCourseReminders(courses: scheduleViewModel.courses)
+            }
         }
         #endif
     }

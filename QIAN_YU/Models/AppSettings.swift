@@ -7,6 +7,46 @@
 
 import Foundation
 import SwiftUI
+import Security
+
+private enum APIKeyStore {
+    private static let service = "com.qianyu.companion.api"
+    private static let account = "chat-api-key"
+
+    static func read() -> String? {
+        var result: CFTypeRef?
+        let status = SecItemCopyMatching([
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrService: service,
+            kSecAttrAccount: account,
+            kSecReturnData: true,
+            kSecMatchLimit: kSecMatchLimitOne
+        ] as CFDictionary, &result)
+        guard status == errSecSuccess, let data = result as? Data else { return nil }
+        return String(data: data, encoding: .utf8)
+    }
+
+    @discardableResult
+    static func write(_ value: String) -> Bool {
+        let query: [CFString: Any] = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrService: service,
+            kSecAttrAccount: account
+        ]
+        if value.isEmpty {
+            let status = SecItemDelete(query as CFDictionary)
+            return status == errSecSuccess || status == errSecItemNotFound
+        }
+        guard let data = value.data(using: .utf8) else { return false }
+        let status = SecItemUpdate(query as CFDictionary, [kSecValueData: data] as CFDictionary)
+        if status == errSecSuccess { return true }
+        guard status == errSecItemNotFound else { return false }
+        var attributes = query
+        attributes[kSecValueData] = data
+        attributes[kSecAttrAccessible] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
+        return SecItemAdd(attributes as CFDictionary, nil) == errSecSuccess
+    }
+}
 
 @Observable
 public final class AppSettings {
@@ -14,7 +54,9 @@ public final class AppSettings {
 
     // MARK: - 基础与称呼设置
     public var userName: String {
-        didSet { UserDefaults.standard.set(userName, forKey: "qianyu_userName") }
+        didSet {
+            UserDefaults.standard.set(userName, forKey: "qianyu_userName")
+        }
     }
 
     // MARK: - 每日四大定点提醒开关与时间
@@ -74,8 +116,15 @@ public final class AppSettings {
         didSet { UserDefaults.standard.set(apiBaseURL, forKey: "qianyu_api_base_url") }
     }
     public var apiKey: String {
-        didSet { UserDefaults.standard.set(apiKey, forKey: "qianyu_api_key") }
+        didSet {
+            if !APIKeyStore.write(apiKey) {
+                apiKeyStorageError = "API Key 未能保存到钥匙串，请检查系统钥匙串权限后重试。"
+            } else {
+                apiKeyStorageError = nil
+            }
+        }
     }
+    public private(set) var apiKeyStorageError: String? = nil
     public var modelName: String {
         didSet { UserDefaults.standard.set(modelName, forKey: "qianyu_model_name") }
     }
@@ -109,23 +158,36 @@ public final class AppSettings {
         self.classReminderEnabled = defaults.object(forKey: "qianyu_class_reminder_enabled") as? Bool ?? true
         self.postClassReminderEnabled = defaults.object(forKey: "qianyu_post_class_reminder_enabled") as? Bool ?? true
 
-        // 默认开学日期为当年 9 月第一个周一或当前学期起始
+        // 未配置时选择最近一次春季或秋季开学日期。
         let savedSemesterTimestamp = defaults.double(forKey: "qianyu_semester_start_date")
         if savedSemesterTimestamp > 0 {
             self.semesterStartDate = Date(timeIntervalSince1970: savedSemesterTimestamp)
         } else {
-            // 默认设置为当年/最近的 9 月 1 日或 2 月 20 日
-            var comp = Calendar.current.dateComponents([.year], from: Date())
-            comp.month = 9
-            comp.day = 1
-            self.semesterStartDate = Calendar.current.date(from: comp) ?? Date()
+            let now = Date()
+            let year = Calendar.current.component(.year, from: now)
+            let spring = Calendar.current.date(from: DateComponents(year: year, month: 2, day: 20)) ?? now
+            let fall = Calendar.current.date(from: DateComponents(year: year, month: 9, day: 1)) ?? now
+            let previousFall = Calendar.current.date(from: DateComponents(year: year - 1, month: 9, day: 1)) ?? now
+            self.semesterStartDate = now >= fall ? fall : (now >= spring ? spring : previousFall)
         }
 
         self.apiBaseURL = defaults.string(forKey: "qianyu_api_base_url") ?? "https://api.deepseek.com/chat/completions"
-        self.apiKey = defaults.string(forKey: "qianyu_api_key") ?? ""
+        let legacyAPIKey = defaults.string(forKey: "qianyu_api_key") ?? ""
+        if let securedKey = APIKeyStore.read() {
+            self.apiKey = securedKey
+            defaults.removeObject(forKey: "qianyu_api_key")
+        } else if !legacyAPIKey.isEmpty, APIKeyStore.write(legacyAPIKey) {
+            self.apiKey = legacyAPIKey
+            defaults.removeObject(forKey: "qianyu_api_key")
+        } else {
+            self.apiKey = legacyAPIKey
+        }
         self.modelName = defaults.string(forKey: "qianyu_model_name") ?? "deepseek-chat"
         self.thinkingEffort = defaults.string(forKey: "qianyu_thinking_effort") ?? "none"
         self.selectedProviderRaw = defaults.string(forKey: "qianyu_selected_provider") ?? "deepseek"
+        if !legacyAPIKey.isEmpty, defaults.string(forKey: "qianyu_api_key") != nil {
+            self.apiKeyStorageError = "旧 API Key 尚未迁移到钥匙串；请检查系统钥匙串权限。"
+        }
     }
 
     // MARK: - 学期周数与单双周计算
@@ -140,7 +202,7 @@ public final class AppSettings {
             return 1 // 开学前默认当第1周
         }
         let week = (diffDays / 7) + 1
-        return max(1, min(week, 35))
+        return max(1, week)
     }
 
     /// 指定日期是否属于单周

@@ -12,6 +12,7 @@ import SwiftData
 import AppKit
 
 public struct MenuBarCompanionView: View {
+    @Environment(\.openWindow) private var openWindow
     @State private var quickText: String = ""
     @State private var latestReply: String = "在呢在呢！管理员，今天想带我去哪儿练剑，或者有啥课要上？"
     @State private var currentStatus: String = QianYuDialogueCorpus.randomStatus()
@@ -124,6 +125,7 @@ public struct MenuBarCompanionView: View {
             HStack {
                 Button("打开主窗口") {
                     NSApp.activate(ignoringOtherApps: true)
+                    openWindow(id: "main")
                 }
                 .font(.system(size: 12))
 

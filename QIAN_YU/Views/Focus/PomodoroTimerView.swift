@@ -8,9 +8,11 @@
 import SwiftUI
 
 public struct PomodoroTimerView: View {
-    @State private var viewModel = PomodoroTimerViewModel()
+    @Bindable public var viewModel: PomodoroTimerViewModel
 
-    public init() {}
+    public init(viewModel: PomodoroTimerViewModel) {
+        self.viewModel = viewModel
+    }
 
     public var body: some View {
         ScrollView {

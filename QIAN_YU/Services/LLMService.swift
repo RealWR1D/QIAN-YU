@@ -7,6 +7,46 @@
 
 import Foundation
 
+public enum OpenAICompatibleEndpoint {
+    /// 接受服务根地址、/v1 地址或完整 chat/completions 地址，并统一规范路径。
+    public static func chatCompletionsURL(from baseURL: String) throws -> URL {
+        let cleaned = baseURL.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard var components = URLComponents(string: cleaned),
+              let scheme = components.scheme?.lowercased(),
+              ["http", "https"].contains(scheme),
+              components.host != nil else {
+            throw URLError(.badURL)
+        }
+
+        var path = components.path
+        while path.count > 1 && path.hasSuffix("/") {
+            path.removeLast()
+        }
+        if path == "/" { path = "" }
+        if !path.hasSuffix("/chat/completions") {
+            path += "/chat/completions"
+        }
+        components.path = path
+
+        guard let url = components.url else { throw URLError(.badURL) }
+        return url
+    }
+}
+
+public enum LLMServiceError: LocalizedError, Sendable {
+    case http(statusCode: Int, responseBody: String)
+
+    public var errorDescription: String? {
+        switch self {
+        case .http(let statusCode, let responseBody):
+            let detail = responseBody.trimmingCharacters(in: .whitespacesAndNewlines)
+            return detail.isEmpty
+                ? "模型服务返回 HTTP \(statusCode)。"
+                : "模型服务返回 HTTP \(statusCode)：\(detail)"
+        }
+    }
+}
+
 public struct ChatRequestMessage: Codable {
     public let role: String
     public let content: String
@@ -36,18 +76,9 @@ public actor LLMService {
         messages: [ChatRequestMessage]
     ) -> AsyncThrowingStream<StreamChunk, Error> {
         return AsyncThrowingStream { continuation in
-            Task {
+            let task = Task {
                 do {
-                    var cleanURLString = baseURL.trimmingCharacters(in: .whitespacesAndNewlines)
-                    if cleanURLString.hasSuffix("/") {
-                        cleanURLString = String(cleanURLString.dropLast())
-                    }
-                    if !cleanURLString.hasSuffix("/chat/completions") {
-                        cleanURLString += "/chat/completions"
-                    }
-                    guard let url = URL(string: cleanURLString) else {
-                        throw URLError(.badURL)
-                    }
+                    let url = try OpenAICompatibleEndpoint.chatCompletionsURL(from: baseURL)
 
                     var request = URLRequest(url: url)
                     request.httpMethod = "POST"
@@ -76,8 +107,24 @@ public actor LLMService {
                     request.httpBody = try JSONSerialization.data(withJSONObject: payload)
 
                     let (bytes, response) = try await URLSession.shared.bytes(for: request)
-                    guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+                    guard let httpResponse = response as? HTTPURLResponse else {
                         throw URLError(.badServerResponse)
+                    }
+
+                    guard (200...299).contains(httpResponse.statusCode) else {
+                        var responseLines: [String] = []
+                        var responseLength = 0
+                        for try await line in bytes.lines {
+                            let remaining = max(0, 1_200 - responseLength)
+                            guard remaining > 0 else { break }
+                            let piece = String(line.prefix(remaining))
+                            responseLines.append(piece)
+                            responseLength += piece.count
+                        }
+                        throw LLMServiceError.http(
+                            statusCode: httpResponse.statusCode,
+                            responseBody: responseLines.joined(separator: "\n")
+                        )
                     }
 
                     for try await line in bytes.lines {
@@ -111,6 +158,9 @@ public actor LLMService {
                 } catch {
                     continuation.finish(throwing: error)
                 }
+            }
+            continuation.onTermination = { @Sendable _ in
+                task.cancel()
             }
         }
     }

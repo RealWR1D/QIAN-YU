@@ -27,6 +27,13 @@ public struct CourseScheduleView: View {
         return weekdayIndex == 1 ? 7 : weekdayIndex - 1
     }
 
+    private var maximumVisibleWeek: Int {
+        let courseMaximum = viewModel.courses
+            .map { max($0.endWeek, $0.activeWeeks.max() ?? 0) }
+            .max() ?? 0
+        return max(30, max(viewModel.selectedWeek, max(AppSettings.shared.currentWeekNumber(), courseMaximum)))
+    }
+
     private var icsContentTypes: [UTType] {
         var types: [UTType] = []
         if let ics = UTType(filenameExtension: "ics") {
@@ -42,24 +49,63 @@ public struct CourseScheduleView: View {
         VStack(spacing: 0) {
             // 0. 学期教学周横幅与视图过滤
             HStack {
-                HStack(spacing: 6) {
-                    Image(systemName: "graduationcap.fill")
-                        .foregroundColor(.orange)
-                        .font(.system(size: 14))
+                Menu {
+                    Button {
+                        viewModel.selectedWeek = AppSettings.shared.currentWeekNumber()
+                        viewModel.isFilteringCurrentWeek = true
+                    } label: {
+                        Label("回到本周 (第 \(AppSettings.shared.currentWeekNumber()) 周)", systemImage: "arrow.uturn.backward")
+                    }
 
-                    Text(AppSettings.shared.currentWeekDisplay)
-                        .font(.system(size: 13, weight: .bold))
-                        .foregroundColor(.primary)
+                    Divider()
+
+                    ForEach(1...maximumVisibleWeek, id: \.self) { w in
+                        Button {
+                            viewModel.selectedWeek = w
+                            viewModel.isFilteringCurrentWeek = true
+                        } label: {
+                            if viewModel.selectedWeek == w && viewModel.isFilteringCurrentWeek {
+                                Label("第 \(w) 周 (查看中)", systemImage: "checkmark")
+                            } else {
+                                Text("第 \(w) 周")
+                            }
+                        }
+                    }
+                } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: "graduationcap.fill")
+                            .foregroundColor(.orange)
+                            .font(.system(size: 14))
+
+                        if viewModel.isFilteringCurrentWeek {
+                            Text("第 \(viewModel.selectedWeek) 周")
+                                .font(.system(size: 13, weight: .bold))
+                                .foregroundColor(.primary)
+                        } else {
+                            Text("全学期总表")
+                                .font(.system(size: 13, weight: .bold))
+                                .foregroundColor(.primary)
+                        }
+
+                        Image(systemName: "chevron.down")
+                            .font(.system(size: 10, weight: .semibold))
+                            .foregroundColor(.secondary)
+                    }
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 6)
+                    .background(Color.secondary.opacity(0.08))
+                    .clipShape(Capsule())
                 }
+                .buttonStyle(.plain)
 
                 Spacer()
 
                 Picker("", selection: $viewModel.isFilteringCurrentWeek) {
                     Text("全学期").tag(false)
-                    Text("仅本周").tag(true)
+                    Text("按周查看").tag(true)
                 }
                 .pickerStyle(.segmented)
-                .frame(width: 130)
+                .frame(width: 140)
             }
             .padding(.horizontal, 16)
             .padding(.top, 10)
@@ -126,47 +172,32 @@ public struct CourseScheduleView: View {
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 32)
 
-                    VStack(spacing: 10) {
+                    HStack(spacing: 12) {
                         Button {
-                            viewModel.isShowingAICourseImportSheet = true
+                            viewModel.isShowingImportPicker = true
                         } label: {
-                            Label("AI 智能识别排课", systemImage: "sparkles")
-                                .font(.system(size: 14, weight: .semibold))
-                                .foregroundColor(.white)
-                                .frame(maxWidth: 240)
-                                .padding(.vertical, 10)
-                                .background(LinearGradient(colors: [.orange, .purple], startPoint: .leading, endPoint: .trailing))
+                            Label("导入 .ics 课表", systemImage: "calendar.badge.plus")
+                                .font(.system(size: 13, weight: .medium))
+                                .foregroundColor(.primary)
+                                .padding(.horizontal, 14)
+                                .padding(.vertical, 8)
+                                .background(Color.secondary.opacity(0.12))
                                 .clipShape(Capsule())
                         }
                         .buttonStyle(.plain)
 
-                        HStack(spacing: 12) {
-                            Button {
-                                viewModel.isShowingImportPicker = true
-                            } label: {
-                                Label("导入 .ics 课表", systemImage: "calendar.badge.plus")
-                                    .font(.system(size: 13, weight: .medium))
-                                    .foregroundColor(.primary)
-                                    .padding(.horizontal, 14)
-                                    .padding(.vertical, 8)
-                                    .background(Color.secondary.opacity(0.12))
-                                    .clipShape(Capsule())
-                            }
-                            .buttonStyle(.plain)
-
-                            Button {
-                                viewModel.isShowingAddSheet = true
-                            } label: {
-                                Label("手动加课", systemImage: "plus")
-                                    .font(.system(size: 13, weight: .medium))
-                                    .foregroundColor(.primary)
-                                    .padding(.horizontal, 14)
-                                    .padding(.vertical, 8)
-                                    .background(Color.secondary.opacity(0.12))
-                                    .clipShape(Capsule())
-                            }
-                            .buttonStyle(.plain)
+                        Button {
+                            viewModel.isShowingAddSheet = true
+                        } label: {
+                            Label("手动加课", systemImage: "plus")
+                                .font(.system(size: 13, weight: .medium))
+                                .foregroundColor(.primary)
+                                .padding(.horizontal, 14)
+                                .padding(.vertical, 8)
+                                .background(Color.secondary.opacity(0.12))
+                                .clipShape(Capsule())
                         }
+                        .buttonStyle(.plain)
                     }
 
                     Spacer()
@@ -205,12 +236,6 @@ public struct CourseScheduleView: View {
                     }
 
                     Button {
-                        viewModel.isShowingAICourseImportSheet = true
-                    } label: {
-                        Label("AI 智能排课 / 导课", systemImage: "sparkles")
-                    }
-
-                    Button {
                         viewModel.isShowingImportPicker = true
                     } label: {
                         Label("导入 .ics 日历课表", systemImage: "calendar.badge.plus")
@@ -233,9 +258,6 @@ public struct CourseScheduleView: View {
                 viewModel.addCourse(newCourse)
             }
         }
-        .sheet(isPresented: $viewModel.isShowingAICourseImportSheet) {
-            AICourseImportSheet(viewModel: viewModel)
-        }
         .sheet(isPresented: $viewModel.isShowingImportPreview) {
             if let result = viewModel.currentImportResult {
                 ImportCoursesPreviewSheet(viewModel: viewModel, parseResult: result)
@@ -256,6 +278,11 @@ public struct CourseScheduleView: View {
             Button("好的", role: .cancel) {}
         } message: {
             Text(viewModel.calendarSyncAlertMessage ?? "")
+        }
+        .alert("课程保存失败", isPresented: $viewModel.isShowingCourseOperationError) {
+            Button("好的", role: .cancel) {}
+        } message: {
+            Text(viewModel.courseOperationErrorMessage ?? "请稍后重试。")
         }
         .overlay {
             if viewModel.isSyncingCalendar {

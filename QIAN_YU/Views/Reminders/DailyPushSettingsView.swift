@@ -9,9 +9,11 @@ import SwiftUI
 
 public struct DailyPushSettingsView: View {
     @Bindable public var viewModel: SettingsViewModel
+    @Bindable public var scheduleViewModel: CourseScheduleViewModel
 
-    public init(viewModel: SettingsViewModel) {
+    public init(viewModel: SettingsViewModel, scheduleViewModel: CourseScheduleViewModel) {
         self.viewModel = viewModel
+        self.scheduleViewModel = scheduleViewModel
     }
 
     public var body: some View {
@@ -148,9 +150,7 @@ public struct DailyPushSettingsView: View {
                             Toggle("", isOn: $viewModel.settings.classReminderEnabled)
                                 .labelsHidden()
                                 .onChange(of: viewModel.settings.classReminderEnabled) { _, isEnabled in
-                                    if !isEnabled {
-                                        CourseReminderService.shared.removeAllCourseReminders()
-                                    }
+                                    CourseReminderService.shared.syncAllCourseReminders(courses: scheduleViewModel.courses)
                                 }
                         }
                         .padding(16)
@@ -173,9 +173,7 @@ public struct DailyPushSettingsView: View {
                             Toggle("", isOn: $viewModel.settings.postClassReminderEnabled)
                                 .labelsHidden()
                                 .onChange(of: viewModel.settings.postClassReminderEnabled) { _, isEnabled in
-                                    if !isEnabled {
-                                        CourseReminderService.shared.removeAllPostClassReminders()
-                                    }
+                                    CourseReminderService.shared.syncAllCourseReminders(courses: scheduleViewModel.courses)
                                 }
                         }
                         .padding(16)
@@ -203,6 +201,11 @@ public struct DailyPushSettingsView: View {
                             .labelsHidden()
                         }
                         .padding(16)
+                        .onChange(of: viewModel.settings.semesterStartDate) { _, _ in
+                            scheduleViewModel.selectedWeek = AppSettings.shared.currentWeekNumber()
+                            scheduleViewModel.updateWidgetSnapshot()
+                            CourseReminderService.shared.syncAllCourseReminders(courses: scheduleViewModel.courses)
+                        }
                     }
                 }
 

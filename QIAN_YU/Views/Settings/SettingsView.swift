@@ -9,10 +9,13 @@ import SwiftUI
 
 public struct SettingsView: View {
     @Bindable public var viewModel: SettingsViewModel
+    @Bindable public var scheduleViewModel: CourseScheduleViewModel
     @State private var isShowingAPIKey: Bool = false
+    @State private var nameNotificationRefresh: Task<Void, Never>?
 
-    public init(viewModel: SettingsViewModel) {
+    public init(viewModel: SettingsViewModel, scheduleViewModel: CourseScheduleViewModel) {
         self.viewModel = viewModel
+        self.scheduleViewModel = scheduleViewModel
     }
 
     public var body: some View {
@@ -26,6 +29,14 @@ public struct SettingsView: View {
                         SettingsRow(label: "称呼") {
                             TextField("例如：管理员", text: $viewModel.settings.userName)
                                 .textFieldStyle(.roundedBorder)
+                                .onChange(of: viewModel.settings.userName) { _, _ in
+                                    nameNotificationRefresh?.cancel()
+                                    nameNotificationRefresh = Task {
+                                        try? await Task.sleep(for: .milliseconds(400))
+                                        guard !Task.isCancelled else { return }
+                                        NotificationManager.shared.scheduleDailyNotifications()
+                                    }
+                                }
                         }
                     }
 
@@ -85,7 +96,7 @@ public struct SettingsView: View {
 
                     SettingsCardContainer {
                         NavigationLink {
-                            DailyPushSettingsView(viewModel: viewModel)
+                            DailyPushSettingsView(viewModel: viewModel, scheduleViewModel: scheduleViewModel)
                         } label: {
                             HStack(spacing: 14) {
                                 ZStack {
@@ -127,7 +138,55 @@ public struct SettingsView: View {
                         .padding(.horizontal, 4)
                 }
 
-                // 4. 大模型服务端配置
+                // 4. 小组件与灵动岛入口
+                VStack(alignment: .leading, spacing: 8) {
+                    SettingsSectionHeader(title: "小组件与灵动岛", icon: "square.grid.2x2.fill")
+
+                    SettingsCardContainer {
+                        NavigationLink {
+                            WidgetPreviewSettingView()
+                        } label: {
+                            HStack(spacing: 14) {
+                                ZStack {
+                                    Circle()
+                                        .fill(Color.orange.opacity(0.15))
+                                        .frame(width: 36, height: 36)
+                                    Image(systemName: "square.grid.2x2.fill")
+                                        .font(.system(size: 16))
+                                        .foregroundColor(.orange)
+                                }
+
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("小组件与灵动岛全览")
+                                        .font(.system(size: 14, weight: .semibold))
+                                        .foregroundColor(.primary)
+
+                                    Text("桌面 2x2 小组件 · 锁屏单行/圆形/长条 · 灵动岛 4 种实时伴读形态")
+                                        .font(.system(size: 12))
+                                        .foregroundColor(.secondary)
+                                        .lineLimit(1)
+                                }
+
+                                Spacer()
+
+                                Image(systemName: "chevron.right")
+                                    .font(.system(size: 13, weight: .semibold))
+                                    .foregroundColor(.secondary.opacity(0.6))
+                            }
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 12)
+                            .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                    }
+
+                    Text("即时查看 2x2 桌面组件与锁屏组件显示效果，并可真机一键拉起灵动岛实时伴读测试。")
+                        .font(.system(size: 12))
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal, 4)
+                }
+
+                // 5. 大模型服务端配置
                 VStack(alignment: .leading, spacing: 8) {
                     SettingsSectionHeader(title: "AI 模型驱动 (OpenAI 协议兼容)", icon: "sparkles")
 
@@ -198,31 +257,42 @@ public struct SettingsView: View {
 
                         // 5. API Key
                         SettingsRow(label: "API Key") {
-                            HStack(spacing: 8) {
-                                if isShowingAPIKey {
-                                    TextField("如 sk-...", text: $viewModel.settings.apiKey)
-                                        .textFieldStyle(.roundedBorder)
-                                        .autocorrectionDisabled()
-                                        #if os(iOS)
-                                        .textInputAutocapitalization(.never)
-                                        #endif
-                                } else {
-                                    SecureField("已加密保存在本地设备", text: $viewModel.settings.apiKey)
-                                        .textFieldStyle(.roundedBorder)
+                            VStack(alignment: .leading, spacing: 6) {
+                                HStack(spacing: 8) {
+                                    if isShowingAPIKey {
+                                        TextField("如 sk-...", text: $viewModel.settings.apiKey)
+                                            .textFieldStyle(.roundedBorder)
+                                            .autocorrectionDisabled()
+                                            #if os(iOS)
+                                            .textInputAutocapitalization(.never)
+                                            #endif
+                                    } else {
+                                        SecureField("输入 API Key", text: $viewModel.settings.apiKey)
+                                            .textFieldStyle(.roundedBorder)
+                                    }
+
+                                    Button {
+                                        isShowingAPIKey.toggle()
+                                    } label: {
+                                        Image(systemName: isShowingAPIKey ? "eye.slash" : "eye")
+                                            .font(.system(size: 13))
+                                            .foregroundColor(.secondary)
+                                            .frame(width: 28, height: 28)
+                                            .background(Color.secondary.opacity(0.08))
+                                            .clipShape(RoundedRectangle(cornerRadius: 6))
+                                    }
+                                    .buttonStyle(.plain)
+                                    .help(isShowingAPIKey ? "隐藏 API Key" : "显示 API Key")
                                 }
 
-                                Button {
-                                    isShowingAPIKey.toggle()
-                                } label: {
-                                    Image(systemName: isShowingAPIKey ? "eye.slash" : "eye")
-                                        .font(.system(size: 13))
-                                        .foregroundColor(.secondary)
-                                        .frame(width: 28, height: 28)
-                                        .background(Color.secondary.opacity(0.08))
-                                        .clipShape(RoundedRectangle(cornerRadius: 6))
+                                Text("API Key 保存在本机系统钥匙串中。")
+                                    .font(.system(size: 11))
+                                    .foregroundColor(.secondary)
+                                if let storageError = viewModel.settings.apiKeyStorageError {
+                                    Text(storageError)
+                                        .font(.system(size: 11))
+                                        .foregroundColor(.red)
                                 }
-                                .buttonStyle(.plain)
-                                .help(isShowingAPIKey ? "隐藏 API Key" : "显示 API Key")
                             }
                         }
 
