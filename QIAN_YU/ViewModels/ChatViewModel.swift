@@ -49,7 +49,7 @@ public final class ChatViewModel {
             for msg in saved where msg.isStreaming {
                 msg.isStreaming = false
                 if msg.content.isEmpty {
-                    msg.content = "（回信时通讯中断，不过我一直都在这儿呢！）"
+                    msg.content = EditorialCopy.text("dialogue.interrupted")
                 }
                 needsSave = true
             }
@@ -65,7 +65,7 @@ public final class ChatViewModel {
         // 初始化当前会话的千语首句问候
         let welcome = ChatMessage(
             role: "assistant",
-            content: "在呢在呢！管理员，佩剑擦拭完毕！今天想带我去哪儿练剑，或者有啥课要上？随时喊我！"
+            content: EditorialCopy.text("dialogue.welcome")
         )
         self.currentSessionMessages = [welcome]
     }
@@ -102,8 +102,8 @@ public final class ChatViewModel {
 
         let settings = AppSettings.shared
 
-        // 3. 判断是否配置了云端 API Key
-        if !settings.apiKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+        // 3. 本地兼容接口可无密钥；其余接口需要已配置的 API Key。
+        if settings.isAPIConfigured {
             // 云端 LLM 流式调用
             generationTask = Task { [weak self] in
                 guard let self else { return }
@@ -145,7 +145,7 @@ public final class ChatViewModel {
                     guard self.isCurrentGeneration(currentGenerationID, assistantMessageID: assistantMsg.id),
                           !Task.isCancelled else { return }
                     if assistantMsg.content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                        assistantMsg.content = "模型没有返回可显示的回复，请重试。"
+                        assistantMsg.content = EditorialCopy.text("dialogue.emptyModelReply")
                     }
                     assistantMsg.isStreaming = false
                     try? self.modelContext?.save()
@@ -155,7 +155,7 @@ public final class ChatViewModel {
                           self.isCurrentGeneration(currentGenerationID, assistantMessageID: assistantMsg.id) else {
                         return
                     }
-                    assistantMsg.content = "通讯请求失败：\(error.localizedDescription)"
+                    assistantMsg.content = EditorialCopy.text("dialogue.requestFailed", ["error": error.localizedDescription])
                     assistantMsg.isStreaming = false
                     try? self.modelContext?.save()
                     self.finishGeneration(currentGenerationID)
@@ -213,7 +213,7 @@ public final class ChatViewModel {
             assistantMessage.isStreaming = false
             if savePartialResponse {
                 if assistantMessage.content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                    assistantMessage.content = "（回复已中断，请重新发送消息。）"
+                    assistantMessage.content = EditorialCopy.text("dialogue.cancelled")
                 }
                 try? modelContext?.save()
             }

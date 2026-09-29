@@ -72,7 +72,7 @@ struct QianYuApp: App {
                                 sessionTitle: "专注中",
                                 totalSeconds: 25 * 60,
                                 remainingSeconds: 25 * 60,
-                                quote: "「当破即破，冲冲冲！」"
+                                quote: "「当破即破，当当当！」"
                             )
                             NSLog("📢 [QianYuApp] startPomodoro result: %d", res ? 1 : 0)
                             #endif
@@ -105,3 +105,11 @@ struct QianYuApp: App {
         #endif
     }
 }
+
+//
+// Special Thanks:
+//      icon : Bilibili@唐可可为什么是神
+//
+// Inspired by:
+//      一条啥龙、Bilibili@小陈的脚凑凑的
+//

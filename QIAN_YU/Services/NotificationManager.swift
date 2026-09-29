@@ -126,8 +126,8 @@ public final class NotificationManager: NSObject, UNUserNotificationCenterDelega
     /// 发送即时测试通知（5秒后触发），方便用户验证推送效果
     public func sendTestNotification(completion: @escaping (Bool) -> Void) {
         let content = UNMutableNotificationContent()
-        content.title = "陈千语来信啦！"
-        content.body = "「在呢在呢！测试推送成功啦！今天不管上课还是练剑，我都准备好啦，冲冲冲！」"
+        content.title = EditorialCopy.text("notification.test.title")
+        content.body = EditorialCopy.text("notification.test.body")
         content.sound = .default
 
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)

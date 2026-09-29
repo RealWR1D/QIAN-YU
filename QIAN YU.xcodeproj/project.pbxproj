@@ -10,9 +10,13 @@
 		00CA77B950EB4388B0F860BA /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE9364011674E7BB4B60FE3 /* ChatViewModel.swift */; };
 		06074522E9904523BA64DCD5 /* CourseScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF443555EF04EC196AA9574 /* CourseScheduleViewModel.swift */; };
 		1F79DD0317764F6781EE655D /* PersonaEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089EE8855582444898BCEE7C /* PersonaEngine.swift */; };
+		D5B01100D0014D88A1230003 /* EditorialCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A01100D0014D88A1230003 /* EditorialCopy.swift */; };
+		D5B01100D0014D88A1230004 /* EditorialContent.json in Resources */ = {isa = PBXBuildFile; fileRef = D5A01100D0014D88A1230004 /* EditorialContent.json */; };
 		2D7BCB28A64B49418E0B8B73 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2ECF536EAE444FFBC13804E /* MainView.swift */; };
 		335B1A15091D4A3EA0999B0E /* CourseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DAD27A7891468F9B85B703 /* CourseItem.swift */; };
 		3F28AC8AF00B452DA5462CD0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCA5D11ED32546FA9D904316 /* Assets.xcassets */; };
+		D5B01100D0014D88A1230001 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = D5A01100D0014D88A1230001 /* Localizable.xcstrings */; };
+		D5B01100D0014D88A1230002 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = D5A01100D0014D88A1230002 /* Localizable.xcstrings */; };
 		41FBE959F808408D94D1E849 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420FE9B7DD3C4520832FF6AA /* SettingsViewModel.swift */; };
 		47E9582401674B2B947A7967 /* QianYuApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D8A37183A74B719C5904BC /* QianYuApp.swift */; };
 		4DBE29BE196D4250AC810B12 /* CourseCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C640C2E5FB6348BBB35E38A1 /* CourseCardView.swift */; };
@@ -49,6 +53,7 @@
 		E91A1DB8BA514FF0A43DBE8F /* PersonaDocView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6CE63FC40B46EFABB09718 /* PersonaDocView.swift */; };
 		EE01C925131D4530847E7CFA /* LLMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A667035134A1432796AB99B7 /* LLMService.swift */; };
 		FED540FDE5B44AA7ACCBCDF1 /* MenuBarCompanionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF31D93F8A8B4DBC85B32BF9 /* MenuBarCompanionView.swift */; };
+		D6B01100D0014D88A1230001 /* CourseManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A01100D0014D88A1230001 /* CourseManagementView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,11 +119,16 @@
 		CDC6F13D95154CA9A0713B63 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D4A01100D0014D88A1230001 /* QIAN_YU.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QIAN_YU.entitlements; sourceTree = "<group>"; };
 		D4A01100D0014D88A1230002 /* QianYuWidgets.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QianYuWidgets.entitlements; sourceTree = "<group>"; };
+		D5A01100D0014D88A1230001 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		D5A01100D0014D88A1230002 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		D5A01100D0014D88A1230003 /* EditorialCopy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorialCopy.swift; sourceTree = "<group>"; };
+		D5A01100D0014D88A1230004 /* EditorialContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = EditorialContent.json; sourceTree = "<group>"; };
 		DCE9364011674E7BB4B60FE3 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		E4769137462B46C6A4C89DDA /* ICSParserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICSParserService.swift; sourceTree = "<group>"; };
 		F2ECF536EAE444FFBC13804E /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		F9D8A37183A74B719C5904BC /* QianYuApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QianYuApp.swift; sourceTree = "<group>"; };
 		FBF443555EF04EC196AA9574 /* CourseScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseScheduleViewModel.swift; sourceTree = "<group>"; };
+		D6A01100D0014D88A1230001 /* CourseManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseManagementView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +152,7 @@
 		112AEF505E1644678F93A289 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
+				D5A01100D0014D88A1230003 /* EditorialCopy.swift */,
 				089EE8855582444898BCEE7C /* PersonaEngine.swift */,
 				2AA818FC8727463DB50DED01 /* QianYuDialogueCorpus.swift */,
 			);
@@ -225,6 +236,8 @@
 			isa = PBXGroup;
 			children = (
 				BCA5D11ED32546FA9D904316 /* Assets.xcassets */,
+				D5A01100D0014D88A1230001 /* Localizable.xcstrings */,
+				D5A01100D0014D88A1230004 /* EditorialContent.json */,
 				5103F1DE65594684BC8649D6 /* Info.plist */,
 			);
 			path = Resources;
@@ -234,6 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				D4A01100D0014D88A1230002 /* QianYuWidgets.entitlements */,
+				D5A01100D0014D88A1230002 /* Localizable.xcstrings */,
 				C4A01100D0014D88A1230001 /* QianYuWidgetBundle.swift */,
 				C2A01100D0014D88A1230005 /* QianYuDynamicIslandView.swift */,
 				C2A01100D0014D88A1230006 /* QianYuCourseWidget.swift */,
@@ -246,6 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				C1EC5F6FC6974023A8EE504C /* CourseScheduleView.swift */,
+				D6A01100D0014D88A1230001 /* CourseManagementView.swift */,
 				568C531E37E246DFA618FD7E /* AddCourseSheet.swift */,
 				C640C2E5FB6348BBB35E38A1 /* CourseCardView.swift */,
 				876EAA338CF44ABB8DE34B5F /* ImportCoursesPreviewSheet.swift */,
@@ -372,6 +387,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hans",
 				Base,
 			);
 			mainGroup = 8F5CC6955C204FC8A364BCD2;
@@ -391,6 +407,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F28AC8AF00B452DA5462CD0 /* Assets.xcassets in Resources */,
+				D5B01100D0014D88A1230001 /* Localizable.xcstrings in Resources */,
+				D5B01100D0014D88A1230004 /* EditorialContent.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,6 +417,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4B01100D0014D88A1230006 /* Assets.xcassets in Resources */,
+				D5B01100D0014D88A1230002 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,6 +433,7 @@
 				335B1A15091D4A3EA0999B0E /* CourseItem.swift in Sources */,
 				8194FB8B66224AD19D9A2F8B /* AppSettings.swift in Sources */,
 				1F79DD0317764F6781EE655D /* PersonaEngine.swift in Sources */,
+				D5B01100D0014D88A1230003 /* EditorialCopy.swift in Sources */,
 				82019A74B7F246C79159FB1E /* QianYuDialogueCorpus.swift in Sources */,
 				EE01C925131D4530847E7CFA /* LLMService.swift in Sources */,
 				6DEDB85E5F924662A6B45892 /* NotificationManager.swift in Sources */,
@@ -428,6 +448,7 @@
 				54D6E261E1C0403991890A0D /* NextClassBannerView.swift in Sources */,
 				DE57B8C201AA49D2A12153BC /* QuickActionChipsView.swift in Sources */,
 				C47208BAC5014A78BDD0B8B2 /* CourseScheduleView.swift in Sources */,
+				D6B01100D0014D88A1230001 /* CourseManagementView.swift in Sources */,
 				B8796BA22A2B490194DCC81C /* AddCourseSheet.swift in Sources */,
 				4DBE29BE196D4250AC810B12 /* CourseCardView.swift in Sources */,
 				ABF38EA924C64C2C9B71C7B8 /* DailyPushSettingsView.swift in Sources */,

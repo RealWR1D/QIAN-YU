@@ -26,7 +26,7 @@ public struct PomodoroTimerView: View {
                                 viewModel.setMode(mode)
                             }
                         } label: {
-                            Text(mode.rawValue)
+                            Text(mode.displayName)
                                 .font(.system(size: 14, weight: isSelected ? .bold : .medium))
                                 .foregroundColor(isSelected ? .white : .primary)
                                 .padding(.horizontal, 24)

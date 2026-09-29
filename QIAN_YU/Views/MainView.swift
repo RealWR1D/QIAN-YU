@@ -9,12 +9,21 @@ import SwiftUI
 import SwiftData
 
 public enum AppTab: String, CaseIterable, Identifiable {
-    case companion = "千语伴行"
+    case companion = "千语"
     case schedule = "课程表"
     case focus = "专注番茄钟"
     case settings = "设置"
 
     public var id: String { rawValue }
+
+    public var displayName: String {
+        switch self {
+        case .companion: return String(localized: "千语")
+        case .schedule: return String(localized: "课程表")
+        case .focus: return String(localized: "专注番茄钟")
+        case .settings: return String(localized: "设置")
+        }
+    }
 
     public var iconName: String {
         switch self {
@@ -46,7 +55,7 @@ public struct MainView: View {
                 ChatView(scheduleViewModel: scheduleViewModel)
             }
             .tabItem {
-                Label(AppTab.companion.rawValue, systemImage: AppTab.companion.iconName)
+                Label(AppTab.companion.displayName, systemImage: AppTab.companion.iconName)
             }
             .tag(AppTab.companion)
 
@@ -54,7 +63,7 @@ public struct MainView: View {
                 CourseScheduleView(viewModel: scheduleViewModel)
             }
             .tabItem {
-                Label(AppTab.schedule.rawValue, systemImage: AppTab.schedule.iconName)
+                Label(AppTab.schedule.displayName, systemImage: AppTab.schedule.iconName)
             }
             .tag(AppTab.schedule)
 
@@ -62,7 +71,7 @@ public struct MainView: View {
                 PomodoroTimerView(viewModel: pomodoroViewModel)
             }
             .tabItem {
-                Label(AppTab.focus.rawValue, systemImage: AppTab.focus.iconName)
+                Label(AppTab.focus.displayName, systemImage: AppTab.focus.iconName)
             }
             .tag(AppTab.focus)
 
@@ -70,7 +79,7 @@ public struct MainView: View {
                 SettingsView(viewModel: settingsViewModel, scheduleViewModel: scheduleViewModel)
             }
             .tabItem {
-                Label(AppTab.settings.rawValue, systemImage: AppTab.settings.iconName)
+                Label(AppTab.settings.displayName, systemImage: AppTab.settings.iconName)
             }
             .tag(AppTab.settings)
         }
@@ -102,7 +111,7 @@ public struct MainView: View {
                                 .foregroundColor(selectedTab == tab ? .orange : .secondary)
                                 .frame(width: 24, height: 24, alignment: .center)
 
-                            Text(tab.rawValue)
+                            Text(tab.displayName)
                                 .font(.system(size: 13, weight: selectedTab == tab ? .semibold : .regular))
                                 .foregroundColor(selectedTab == tab ? .primary : .primary.opacity(0.85))
 
@@ -115,7 +124,7 @@ public struct MainView: View {
                 }
             }
             .listStyle(.sidebar)
-            .navigationTitle("千语伴行")
+            .navigationTitle("千语")
             .navigationSplitViewColumnWidth(min: 200, ideal: 220, max: 260)
             .safeAreaInset(edge: .bottom) {
                 VStack(spacing: 0) {

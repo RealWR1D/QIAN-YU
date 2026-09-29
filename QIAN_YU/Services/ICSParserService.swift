@@ -71,14 +71,14 @@ public struct ParsedCourse: Identifiable, Hashable {
 
     public var weekdayName: String {
         switch weekday {
-        case 1: return "周一"
-        case 2: return "周二"
-        case 3: return "周三"
-        case 4: return "周四"
-        case 5: return "周五"
-        case 6: return "周六"
-        case 7: return "周日"
-        default: return "周一"
+        case 1: return String(localized: "周一")
+        case 2: return String(localized: "周二")
+        case 3: return String(localized: "周三")
+        case 4: return String(localized: "周四")
+        case 5: return String(localized: "周五")
+        case 6: return String(localized: "周六")
+        case 7: return String(localized: "周日")
+        default: return String(localized: "周一")
         }
     }
 
@@ -100,7 +100,7 @@ public struct ParsedCourse: Identifiable, Hashable {
         if !activeWeeks.isEmpty {
             return CourseItem.formatWeeksSummary(activeWeeks)
         }
-        return "\(startWeek)-\(endWeek)周"
+        return String(localized: "\(startWeek)-\(endWeek)周")
     }
 
     public func toCourseItem(remindBeforeMinutes: Int = 15) -> CourseItem {
@@ -145,9 +145,9 @@ public enum ICSParserError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .fileCannotBeRead:
-            return "无法读取日历文件，文件可能已损坏或编码不受支持。"
+            return String(localized: "无法读取日历文件，文件可能已损坏或编码不受支持。")
         case .noValidEventsFound:
-            return "未能从该日历文件中识别出有效的上课日程事件。"
+            return String(localized: "未能从该日历文件中识别出有效的上课日程事件。")
         }
     }
 }
@@ -457,7 +457,7 @@ public final class ICSParserService {
         let endHour = cal.component(.hour, from: resolvedEndDate)
         let endMinute = cal.component(.minute, from: resolvedEndDate)
 
-        let rawSummary = unescapeICSText(props["SUMMARY"]?.value ?? "未命名课程")
+        let rawSummary = unescapeICSText(props["SUMMARY"]?.value ?? String(localized: "未命名课程"))
         let cleanName = cleanCourseName(rawSummary)
 
         let rawDesc = unescapeICSText(props["DESCRIPTION"]?.value ?? "")
@@ -509,7 +509,7 @@ public final class ICSParserService {
             let isAllEven = !activeWeeks.isEmpty && activeWeeks.allSatisfy { $0 % 2 == 0 }
             let weekMode: String = isAllOdd ? "oddOnly" : (isAllEven ? "evenOnly" : "all")
             let draft = ParsedCourse(
-                name: cleanName.isEmpty ? "未命名课程" : cleanName,
+                name: cleanName.isEmpty ? String(localized: "未命名课程") : cleanName,
                 classroom: classroom,
                 teacher: teacher,
                 weekday: day,

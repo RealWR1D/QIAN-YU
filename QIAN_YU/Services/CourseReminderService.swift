@@ -205,7 +205,7 @@ public final class CourseReminderService {
                 result.append(
                     ReminderCandidate(
                         identifier: "qianyu_course_pre_\(weekSuffix)",
-                        title: "上课提醒 · \(course.name)",
+                        title: EditorialCopy.text("notification.course.pre.title", ["courseName": course.name]),
                         body: course.qianyuReminderMessage,
                         category: "QIANYU_COURSE_REMINDER",
                         fireDate: fireDate
@@ -221,7 +221,7 @@ public final class CourseReminderService {
                 result.append(
                     ReminderCandidate(
                         identifier: "qianyu_course_post_\(weekSuffix)",
-                        title: "下课啦 · \(course.name)",
+                        title: EditorialCopy.text("notification.course.post.title", ["courseName": course.name]),
                         body: course.postClassReminderMessage(nextCourse: nextCourse),
                         category: "QIANYU_COURSE_POST_REMINDER",
                         fireDate: classEnd

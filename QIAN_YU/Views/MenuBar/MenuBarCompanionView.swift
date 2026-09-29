@@ -14,7 +14,7 @@ import AppKit
 public struct MenuBarCompanionView: View {
     @Environment(\.openWindow) private var openWindow
     @State private var quickText: String = ""
-    @State private var latestReply: String = "在呢在呢！管理员，今天想带我去哪儿练剑，或者有啥课要上？"
+    @State private var latestReply: String = EditorialCopy.text("dialogue.menuWelcome")
     @State private var currentStatus: String = QianYuDialogueCorpus.randomStatus()
     public let scheduleViewModel: CourseScheduleViewModel
 

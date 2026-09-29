@@ -24,6 +24,9 @@ public final class PomodoroTimerViewModel {
         case breakTime = "小憩"
 
         public var id: String { rawValue }
+        public var displayName: String {
+            EditorialCopy.text(self == .focus ? "focus.mode.focus" : "focus.mode.break")
+        }
     }
 
     // MARK: - 公开属性
@@ -110,14 +113,18 @@ public final class PomodoroTimerViewModel {
     public var statusCaption: String {
         switch state {
         case .idle:
-            return mode == .focus ? "准备好开始专注了吗？" : "准备好休息放松了吗？"
+            return EditorialCopy.text(mode == .focus ? "focus.idle.focus" : "focus.idle.break")
         case .running:
-            return mode == .focus ? "保持专注中……" : "好好放松一下吧~"
+            return EditorialCopy.text(mode == .focus ? "focus.running.focus" : "focus.running.break")
         case .paused:
-            return "计时已暂停"
+            return EditorialCopy.text("focus.paused")
         case .completed:
-            return mode == .focus ? "🎉 本轮专注达成！" : "✨ 休息结束，精力满满！"
+            return EditorialCopy.text(mode == .focus ? "focus.completed.focus" : "focus.completed.break")
         }
+    }
+
+    private var activityTitle: String {
+        EditorialCopy.text(mode == .focus ? "focus.activity.focus" : "focus.activity.break")
     }
 
     // MARK: - 计时器操作
@@ -148,7 +155,7 @@ public final class PomodoroTimerViewModel {
         #if os(iOS)
         // 联动灵动岛 / 实时活动
         LiveActivityManager.shared.startPomodoro(
-            sessionTitle: mode == .focus ? "专注中" : "小憩中",
+            sessionTitle: activityTitle,
             totalSeconds: totalSeconds,
             remainingSeconds: remainingSeconds
         )
@@ -184,7 +191,7 @@ public final class PomodoroTimerViewModel {
         LiveActivityManager.shared.updatePomodoro(
             remainingSeconds: remainingSeconds,
             isPaused: true,
-            sessionTitle: mode == .focus ? "专注暂停" : "休息暂停"
+            sessionTitle: EditorialCopy.text(mode == .focus ? "focus.activity.focusPaused" : "focus.activity.breakPaused")
         )
         #endif
     }
@@ -201,11 +208,11 @@ public final class PomodoroTimerViewModel {
             LiveActivityManager.shared.updatePomodoro(
                 remainingSeconds: remainingSeconds,
                 isPaused: false,
-                sessionTitle: mode == .focus ? "专注中" : "小憩中"
+                sessionTitle: activityTitle
             )
         } else {
             LiveActivityManager.shared.startPomodoro(
-                sessionTitle: mode == .focus ? "专注中" : "小憩中",
+                sessionTitle: activityTitle,
                 totalSeconds: totalSeconds,
                 remainingSeconds: remainingSeconds
             )
@@ -256,7 +263,7 @@ public final class PomodoroTimerViewModel {
                         LiveActivityManager.shared.updatePomodoro(
                             remainingSeconds: diff,
                             isPaused: false,
-                            sessionTitle: self.mode == .focus ? "专注中" : "小憩中"
+                            sessionTitle: self.activityTitle
                         )
                     }
                     #endif
@@ -268,8 +275,9 @@ public final class PomodoroTimerViewModel {
     // MARK: - 本地通知提示
     private func scheduleCompletionNotification() {
         let content = UNMutableNotificationContent()
-        content.title = mode == .focus ? "专注时间达成！" : "小憩时间结束！"
-        content.body = mode == .focus ? "本轮专注顺利完成，喝口水活动一下吧！" : "休息好了吗？准备开启下一轮挑战！"
+        let key = mode == .focus ? "focus.notification.focus" : "focus.notification.break"
+        content.title = EditorialCopy.text("\(key).title")
+        content.body = EditorialCopy.text("\(key).body")
         content.sound = .default
 
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: max(1, Double(remainingSeconds)), repeats: false)

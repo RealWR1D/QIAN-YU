@@ -10,6 +10,10 @@ import SwiftUI
 public struct AddCourseSheet: View {
     @Environment(\.dismiss) private var dismiss
 
+    @State private var isEnabled = true
+    private let isEditing: Bool
+    private let maximumWeek: Int
+
     @State private var name: String = ""
     @State private var classroom: String = ""
     @State private var teacher: String = ""
@@ -29,8 +33,10 @@ public struct AddCourseSheet: View {
     public var onSave: (CourseItem) -> String?
 
     private let weekdays = [
-        (1, "周一"), (2, "周二"), (3, "周三"), (4, "周四"),
-        (5, "周五"), (6, "周六"), (7, "周日")
+        (1, String(localized: "周一")), (2, String(localized: "周二")),
+        (3, String(localized: "周三")), (4, String(localized: "周四")),
+        (5, String(localized: "周五")), (6, String(localized: "周六")),
+        (7, String(localized: "周日"))
     ]
 
     private let reminderOptions = [5, 10, 15, 20, 30, 45, 60]
@@ -44,19 +50,34 @@ public struct AddCourseSheet: View {
         "#FFCC00"  // 黄
     ]
 
-    public init(initialWeekday: Int = 1, onSave: @escaping (CourseItem) -> String?) {
-        self._weekday = State(initialValue: initialWeekday)
+    public init(initialWeekday: Int = 1, course: CourseItem? = nil, onSave: @escaping (CourseItem) -> String?) {
+        self.isEditing = course != nil
+        self.maximumWeek = max(30, max(course?.endWeek ?? 0, course?.activeWeeks.max() ?? 0))
+        self._weekday = State(initialValue: course?.weekday ?? initialWeekday)
+        if let course {
+            _name = State(initialValue: course.name)
+            _classroom = State(initialValue: course.classroom)
+            _teacher = State(initialValue: course.teacher)
+            _isEnabled = State(initialValue: course.isEnabled)
+            _remindBeforeMinutes = State(initialValue: course.remindBeforeMinutes)
+            _selectedColorHex = State(initialValue: course.colorHex)
+            _weekMode = State(initialValue: course.weekMode)
+            _startWeek = State(initialValue: course.startWeek)
+            _endWeek = State(initialValue: course.endWeek)
+            _usesSpecificWeeks = State(initialValue: !course.activeWeeks.isEmpty)
+            _specificWeeksText = State(initialValue: course.activeWeeks.sorted().map(String.init).joined(separator: ", "))
+        }
         self.onSave = onSave
 
         // 默认上课时间 08:30 - 10:05
         let cal = Calendar.current
         var comp = cal.dateComponents([.year, .month, .day], from: Date())
-        comp.hour = 8
-        comp.minute = 30
+        comp.hour = course?.startHour ?? 8
+        comp.minute = course?.startMinute ?? 30
         let start = cal.date(from: comp) ?? Date()
 
-        comp.hour = 10
-        comp.minute = 5
+        comp.hour = course?.endHour ?? 10
+        comp.minute = course?.endMinute ?? 5
         let end = cal.date(from: comp) ?? Date()
 
         self._startTime = State(initialValue: start)
@@ -81,14 +102,14 @@ public struct AddCourseSheet: View {
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
             .filter { !$0.isEmpty }
         guard !tokens.isEmpty,
-              tokens.allSatisfy({ Int($0).map { (1...30).contains($0) } ?? false }) else {
+              tokens.allSatisfy({ Int($0).map { (1...maximumWeek).contains($0) } ?? false }) else {
             return nil
         }
         return Array(Set(tokens.compactMap(Int.init))).sorted()
     }
 
     private var isWeekSelectionValid: Bool {
-        !usesSpecificWeeks || selectedSpecificWeeks != nil
+        usesSpecificWeeks ? selectedSpecificWeeks != nil : !defaultSpecificWeekText().isEmpty
     }
 
     private func defaultSpecificWeekText() -> String {
@@ -138,11 +159,11 @@ public struct AddCourseSheet: View {
                             #if os(iOS)
                             .keyboardType(.numbersAndPunctuation)
                             #endif
-                        Text("输入 1–30 的周数，用逗号分隔；可用于间断周或单次课程。")
+                        Text("输入 1–\(maximumWeek) 的周数，用逗号分隔；可用于间断周或单次课程。")
                             .font(.system(size: 12))
                             .foregroundColor(.secondary)
                         if selectedSpecificWeeks == nil {
-                            Text("请输入至少一个 1–30 之间的周数。")
+                            Text("请输入至少一个 1–\(maximumWeek) 之间的周数。")
                                 .font(.system(size: 12))
                                 .foregroundColor(.red)
                         }
@@ -154,13 +175,14 @@ public struct AddCourseSheet: View {
                         }
 
                         Stepper("起始周数: 第 \(startWeek) 周", value: $startWeek, in: 1...endWeek)
-                        Stepper("结束周数: 第 \(endWeek) 周", value: $endWeek, in: startWeek...30)
+                        Stepper("结束周数: 第 \(endWeek) 周", value: $endWeek, in: startWeek...maximumWeek)
                     }
                 }
 
                 Section(header: Text("千语提醒偏好")) {
+                    Toggle("启用课程提醒", isOn: $isEnabled)
                     Picker("提前提醒时间", selection: $remindBeforeMinutes) {
-                        ForEach(reminderOptions, id: \.self) { mins in
+                        ForEach(Array(Set(reminderOptions + [remindBeforeMinutes])).sorted(), id: \.self) { mins in
                             Text("提前 \(mins) 分钟").tag(mins)
                         }
                     }
@@ -185,7 +207,11 @@ public struct AddCourseSheet: View {
                     }
                 }
             }
-            .navigationTitle("添加新课程")
+            .navigationTitle(isEditing ? String(localized: "编辑上课安排") : String(localized: "添加新课程"))
+            #if os(macOS)
+            .formStyle(.grouped)
+            .frame(minWidth: 520, minHeight: 620)
+            #endif
             .onChange(of: usesSpecificWeeks) { _, isEnabled in
                 if isEnabled && specificWeeksText.isEmpty {
                     specificWeeksText = defaultSpecificWeekText()
@@ -210,7 +236,7 @@ public struct AddCourseSheet: View {
             .alert("保存课程失败", isPresented: $isShowingSaveError) {
                 Button("继续编辑", role: .cancel) {}
             } message: {
-                Text(saveErrorMessage ?? "请稍后重试。")
+                Text(saveErrorMessage ?? String(localized: "请稍后重试。"))
             }
         }
     }
@@ -233,7 +259,7 @@ public struct AddCourseSheet: View {
             endHour: eHour,
             endMinute: eMin,
             remindBeforeMinutes: remindBeforeMinutes,
-            isEnabled: true,
+            isEnabled: isEnabled,
             colorHex: selectedColorHex,
             weekModeRaw: usesSpecificWeeks ? CourseWeekMode.all.rawValue : weekMode.rawValue,
             startWeek: specificWeeks.first ?? startWeek,

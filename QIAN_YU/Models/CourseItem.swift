@@ -69,14 +69,14 @@ public final class CourseItem: Identifiable {
 
     public var weekdayName: String {
         switch weekday {
-        case 1: return "周一"
-        case 2: return "周二"
-        case 3: return "周三"
-        case 4: return "周四"
-        case 5: return "周五"
-        case 6: return "周六"
-        case 7: return "周日"
-        default: return "周一"
+        case 1: return String(localized: "周一")
+        case 2: return String(localized: "周二")
+        case 3: return String(localized: "周三")
+        case 4: return String(localized: "周四")
+        case 5: return String(localized: "周五")
+        case 6: return String(localized: "周六")
+        case 7: return String(localized: "周日")
+        default: return String(localized: "周一")
         }
     }
 
@@ -122,8 +122,10 @@ public final class CourseItem: Identifiable {
 
     /// 生成适合在通知和陪伴界面展示的千语提示语
     public var qianyuReminderMessage: String {
-        let loc = classroom.isEmpty ? "教室" : classroom
-        return "管理员！下节是【\(name)】在【\(loc)】，还有 \(remindBeforeMinutes) 分钟！课本和笔带齐没？走走走，冲冲冲！"
+        let loc = classroom.isEmpty ? String(localized: "教室") : classroom
+        return EditorialCopy.text("notification.course.pre.body", [
+            "courseName": name, "classroom": loc, "minutes": remindBeforeMinutes
+        ])
     }
 
     public var swiftUIColor: Color {
@@ -170,20 +172,20 @@ public final class CourseItem: Identifiable {
         if !explicit.isEmpty {
             return Self.formatWeeksSummary(explicit)
         }
-        let span = "\(startWeek)-\(endWeek)周"
+        let span = String(localized: "\(startWeek)-\(endWeek)周")
         switch weekMode {
-        case .all: return "\(span) · 每周"
-        case .oddOnly: return "\(span) · 仅单周"
-        case .evenOnly: return "\(span) · 仅双周"
+        case .all: return String(localized: "\(span) · 每周")
+        case .oddOnly: return String(localized: "\(span) · 仅单周")
+        case .evenOnly: return String(localized: "\(span) · 仅双周")
         }
     }
 
     /// 将周数集合格式化为优雅的中文字符串，如 "第2-5, 7-8, 10-12周"、"第9周 (单次)"、"第6, 8, 12周 · 双周"
     public static func formatWeeksSummary(_ weeks: Set<Int>) -> String {
         let sorted = weeks.sorted()
-        guard !sorted.isEmpty else { return "无周次" }
+        guard !sorted.isEmpty else { return String(localized: "无周次") }
         if sorted.count == 1 {
-            return "第\(sorted[0])周 (单次)"
+            return String(localized: "第\(sorted[0])周 (单次)")
         }
         var ranges: [String] = []
         var rStart = sorted[0]
@@ -203,22 +205,24 @@ public final class CourseItem: Identifiable {
         let isAllEven = sorted.allSatisfy { $0 % 2 == 0 }
         var tag = ""
         if isAllOdd && sorted.count > 1 && ranges.count > 1 {
-            tag = " · 单周"
+            tag = String(localized: " · 单周")
         } else if isAllEven && sorted.count > 1 && ranges.count > 1 {
-            tag = " · 双周"
+            tag = String(localized: " · 双周")
         }
 
-        return "第\(ranges.joined(separator: ", "))周\(tag)"
+        return String(localized: "第\(ranges.joined(separator: ", "))周\(tag)")
     }
 
     /// 课后贴心关怀与收尾提醒语
     public func postClassReminderMessage(nextCourse: CourseItem? = nil) -> String {
-        let base = "「\(name)」下课啦！站起来伸个懒腰接杯水，放松一下肩颈。"
+        let base = EditorialCopy.text("notification.course.post.base", ["courseName": name])
         if let next = nextCourse {
-            let nextLoc = next.classroom.isEmpty ? "下个教室" : next.classroom
-            return "\(base)下节课是【\(next.name)】，在【\(nextLoc)】，别走错教学楼咯！"
+            let nextLoc = next.classroom.isEmpty ? String(localized: "下个教室") : next.classroom
+            return EditorialCopy.text("notification.course.post.next", [
+                "base": base, "nextCourseName": next.name, "classroom": nextLoc
+            ])
         } else {
-            return "\(base)今天后续没有课啦，任务完成！佩剑归鞘，随时喊我闲聊！"
+            return EditorialCopy.text("notification.course.post.done", ["base": base])
         }
     }
 }
@@ -232,17 +236,17 @@ public enum CourseWeekMode: String, CaseIterable, Identifiable, Codable {
 
     public var displayName: String {
         switch self {
-        case .all: return "每周 (单双周均上)"
-        case .oddOnly: return "仅单周"
-        case .evenOnly: return "仅双周"
+        case .all: return String(localized: "每周 (单双周均上)")
+        case .oddOnly: return String(localized: "仅单周")
+        case .evenOnly: return String(localized: "仅双周")
         }
     }
 
     public var shortBadge: String {
         switch self {
-        case .all: return "全周"
-        case .oddOnly: return "单周"
-        case .evenOnly: return "双周"
+        case .all: return String(localized: "全周")
+        case .oddOnly: return String(localized: "单周")
+        case .evenOnly: return String(localized: "双周")
         }
     }
 }

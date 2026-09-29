@@ -27,7 +27,7 @@ public struct ChatView: View {
                 nextCourse: scheduleViewModel.nextUpcomingCourse,
                 onAskQianyu: {
                     viewModel.sendQuickPrompt(
-                        "千语，我下一节课快到了，帮我提个醒、打打气呗！",
+                        String(localized: "千语，我下一节课快到了，帮我提个醒、打打气呗！"),
                         upcomingCourseHint: scheduleViewModel.nextCourseSummary
                     )
                 }
@@ -137,7 +137,7 @@ public struct ChatView: View {
             .padding(.vertical, 10)
             .background(.bar)
         }
-        .navigationTitle("千语伴行")
+        .navigationTitle("千语")
         #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif

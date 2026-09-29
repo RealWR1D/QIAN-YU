@@ -11,11 +11,14 @@ import UniformTypeIdentifiers
 
 public struct CourseScheduleView: View {
     @Bindable public var viewModel: CourseScheduleViewModel
+    @State private var isShowingCourseManagement = false
     @Environment(\.modelContext) private var modelContext
 
     private let weekdays = [
-        (1, "周一"), (2, "周二"), (3, "周三"), (4, "周四"),
-        (5, "周五"), (6, "周六"), (7, "周日")
+        (1, String(localized: "周一")), (2, String(localized: "周二")),
+        (3, String(localized: "周三")), (4, String(localized: "周四")),
+        (5, String(localized: "周五")), (6, String(localized: "周六")),
+        (7, String(localized: "周日"))
     ]
 
     public init(viewModel: CourseScheduleViewModel) {
@@ -227,7 +230,14 @@ public struct CourseScheduleView: View {
         .navigationBarTitleDisplayMode(.inline)
         #endif
         .toolbar {
-            ToolbarItem(placement: .primaryAction) {
+            ToolbarItemGroup(placement: .primaryAction) {
+                Button {
+                    isShowingCourseManagement = true
+                } label: {
+                    Label("课程管理", systemImage: "books.vertical")
+                }
+                .help("课程管理")
+
                 Menu {
                     Button {
                         viewModel.isShowingAddSheet = true
@@ -253,6 +263,9 @@ public struct CourseScheduleView: View {
                 }
             }
         }
+        .sheet(isPresented: $isShowingCourseManagement) {
+            CourseManagementView(viewModel: viewModel)
+        }
         .sheet(isPresented: $viewModel.isShowingAddSheet) {
             AddCourseSheet(initialWeekday: viewModel.selectedWeekday) { newCourse in
                 viewModel.addCourse(newCourse)
@@ -272,7 +285,7 @@ public struct CourseScheduleView: View {
         .alert("导入提示", isPresented: $viewModel.isShowingImportErrorAlert) {
             Button("好的", role: .cancel) {}
         } message: {
-            Text(viewModel.importErrorMessage ?? "未能成功解析日历文件")
+            Text(viewModel.importErrorMessage ?? String(localized: "未能成功解析日历文件"))
         }
         .alert("系统日历同步", isPresented: $viewModel.isShowingCalendarAlert) {
             Button("好的", role: .cancel) {}
@@ -282,7 +295,7 @@ public struct CourseScheduleView: View {
         .alert("课程保存失败", isPresented: $viewModel.isShowingCourseOperationError) {
             Button("好的", role: .cancel) {}
         } message: {
-            Text(viewModel.courseOperationErrorMessage ?? "请稍后重试。")
+            Text(viewModel.courseOperationErrorMessage ?? String(localized: "请稍后重试。"))
         }
         .overlay {
             if viewModel.isSyncingCalendar {

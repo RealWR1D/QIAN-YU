@@ -26,6 +26,13 @@ public struct WidgetPreviewSettingView: View {
         case dynamicIsland = "灵动岛"
 
         public var id: String { rawValue }
+        public var displayName: String {
+            switch self {
+            case .homeSmall: return String(localized: "桌面 2x2")
+            case .lockScreen: return String(localized: "锁屏组件")
+            case .dynamicIsland: return String(localized: "灵动岛")
+            }
+        }
     }
 
     public init() {}
@@ -44,11 +51,11 @@ public struct WidgetPreviewSettingView: View {
         } else {
             return CourseWidgetEntry(
                 date: Date(),
-                courseName: "高等数学 (上)",
-                classroom: "正心楼 312",
+                courseName: String(localized: "高等数学 (上)"),
+                classroom: String(localized: "正心楼 312"),
                 timeString: "08:30 - 10:05",
-                teacher: "张教授",
-                weekInfo: "第 4 周 · 双周",
+                teacher: String(localized: "张教授"),
+                weekInfo: String(localized: "第 4 周 · 双周"),
                 isNoClass: false
             )
         }
@@ -60,7 +67,7 @@ public struct WidgetPreviewSettingView: View {
                 // 1. 顶部模式选择器
                 Picker("组件类型", selection: $previewMode) {
                     ForEach(PreviewCategory.allCases) { cat in
-                        Text(cat.rawValue).tag(cat)
+                        Text(cat.displayName).tag(cat)
                     }
                 }
                 .pickerStyle(.segmented)
@@ -418,10 +425,10 @@ public struct WidgetPreviewSettingView: View {
                     )
                     if success {
                         isLiveActivityActive = true
-                        feedbackText = "✅ 灵动岛已成功升起！退回桌面或锁屏即可看到陈千语伴读浮岛。"
+                        feedbackText = String(localized: "✅ 灵动岛已成功升起！退回桌面或锁屏即可看到陈千语伴读浮岛。")
                     } else {
                         isLiveActivityActive = false
-                        feedbackText = "⚠️ 未能升起：请前往 iPhone「设置 -> QIAN YU -> 实时活动」确认开关已开启。"
+                        feedbackText = String(localized: "⚠️ 未能升起：请前往 iPhone「设置 -> QIAN YU -> 实时活动」确认开关已开启。")
                     }
                 } label: {
                     Label("启动灵动岛", systemImage: "play.circle.fill")
@@ -437,7 +444,7 @@ public struct WidgetPreviewSettingView: View {
                 Button {
                     LiveActivityManager.shared.endPomodoro()
                     isLiveActivityActive = false
-                    feedbackText = "已收回灵动岛实时活动。"
+                    feedbackText = String(localized: "已收回灵动岛实时活动。")
                 } label: {
                     Label("收回灵动岛", systemImage: "stop.circle.fill")
                         .font(.system(size: 13, weight: .semibold))
@@ -480,20 +487,20 @@ public struct WidgetPreviewSettingView: View {
             VStack(alignment: .leading, spacing: 10) {
                 GuideStepRow(
                     step: "1",
-                    title: "添加桌面 2x2 小组件",
-                    desc: "在 iPhone 主屏幕长按空白区域至应用图标抖动 -> 点击左上角「+」-> 搜索「QIAN YU」-> 选择 2x2 尺寸卡片点击「添加小组件」。"
+                    title: String(localized: "添加桌面 2x2 小组件"),
+                    desc: String(localized: "在 iPhone 主屏幕长按空白区域至应用图标抖动 -> 点击左上角「+」-> 搜索「QIAN YU」-> 选择 2x2 尺寸卡片点击「添加小组件」。")
                 )
 
                 GuideStepRow(
                     step: "2",
-                    title: "添加锁屏小组件",
-                    desc: "在锁屏状态下长按屏幕 -> 点击「自定」-> 选择「锁定屏幕」-> 点击时钟下方或上方的小组件插槽 -> 添加「QIAN YU」课程表或专注组件。"
+                    title: String(localized: "添加锁屏小组件"),
+                    desc: String(localized: "在锁屏状态下长按屏幕 -> 点击「自定」-> 选择「锁定屏幕」-> 点击时钟下方或上方的小组件插槽 -> 添加「QIAN YU」课程表或专注组件。")
                 )
 
                 GuideStepRow(
                     step: "3",
-                    title: "开启灵动岛实时活动",
-                    desc: "确保在 iPhone「系统设置 -> QIAN YU」中将「实时活动」开关保持打开。开启番茄钟专注后，灵动岛将自动升起伴读。"
+                    title: String(localized: "开启灵动岛实时活动"),
+                    desc: String(localized: "确保在 iPhone「系统设置 -> QIAN YU」中将「实时活动」开关保持打开。开启番茄钟专注后，灵动岛将自动升起伴读。")
                 )
             }
         }

@@ -37,19 +37,19 @@ public struct ImportCoursesPreviewSheet: View {
 
     private var importResultMessage: String {
         guard importSummary.didSave else {
-            return "课程表没有保存成功，请重试。"
+            return String(localized: "课程表没有保存成功，请重试。")
         }
         if importSummary.addedCount == 0 && importSummary.mergedCount == 0 {
-            return "所选 \(importSummary.unchangedCount) 门课程已存在且周次没有变化，没有新增课程。"
+            return String(localized: "所选 \(importSummary.unchangedCount) 门课程已存在且周次没有变化，没有新增课程。")
         }
         var details: [String] = []
         if importSummary.addedCount > 0 {
-            details.append("新增 \(importSummary.addedCount) 门课程")
+            details.append(String(localized: "新增 \(importSummary.addedCount) 门课程"))
         }
         if importSummary.mergedCount > 0 {
-            details.append("合并更新 \(importSummary.mergedCount) 门已有课程的周次")
+            details.append(String(localized: "合并更新 \(importSummary.mergedCount) 门已有课程的周次"))
         }
-        return "千语\(details.joined(separator: "，"))。未变化的重复项 \(importSummary.unchangedCount) 门未重复添加。"
+        return String(localized: "千语\(details.joined(separator: "，"))。未变化的重复项 \(importSummary.unchangedCount) 门未重复添加。")
     }
 
     public var body: some View {
@@ -116,7 +116,7 @@ public struct ImportCoursesPreviewSheet: View {
                 }
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(parseResult.calendarName ?? "日历课表文件")
+                    Text(parseResult.calendarName ?? String(localized: "日历课表文件"))
                         .font(.system(size: 16, weight: .bold))
                         .lineLimit(1)
 
@@ -168,7 +168,7 @@ public struct ImportCoursesPreviewSheet: View {
 
                 Picker("导入模式", selection: $importMode) {
                     ForEach(CourseScheduleViewModel.CourseImportMode.allCases) { mode in
-                        Text(mode.rawValue).tag(mode)
+                        Text(mode.displayName).tag(mode)
                     }
                 }
                 .pickerStyle(.segmented)

@@ -48,11 +48,11 @@ public struct CourseWidgetEntry: TimelineEntry {
 
     public init(
         date: Date = Date(),
-        courseName: String = "高等数学 (上)",
-        classroom: String = "正心楼 312",
+        courseName: String = String(localized: "高等数学 (上)"),
+        classroom: String = String(localized: "正心楼 312"),
         timeString: String = "08:30 - 10:05",
-        teacher: String = "张教授",
-        weekInfo: String = "第 4 周 · 双周",
+        teacher: String = String(localized: "张教授"),
+        weekInfo: String = String(localized: "第 4 周 · 双周"),
         isNoClass: Bool = false
     ) {
         self.date = date
@@ -121,12 +121,13 @@ public struct CourseWidgetProvider: TimelineProvider {
             let next = schedule.courses
                 .filter { $0.weekday == weekday && $0.activeWeeks.contains(week) && $0.endMinutes >= currentMinutes }
                 .min { $0.startMinutes < $1.startMinutes }
-            let weekInfo = "第 \(week) 周 · \(week % 2 == 0 ? "双周" : "单周")"
+            let weekType = week % 2 == 0 ? String(localized: "双周") : String(localized: "单周")
+            let weekInfo = String(localized: "第 \(week) 周 · \(weekType)")
             guard let next else {
                 return CourseWidgetEntry(date: date, courseName: "今日已无课", classroom: "", timeString: "", teacher: "", weekInfo: weekInfo, isNoClass: true)
             }
             let timeString = String(format: "%02d:%02d - %02d:%02d", next.startMinutes / 60, next.startMinutes % 60, next.endMinutes / 60, next.endMinutes % 60)
-            return CourseWidgetEntry(date: date, courseName: next.name, classroom: next.classroom.isEmpty ? "教室未指定" : next.classroom, timeString: timeString, teacher: next.teacher, weekInfo: weekInfo)
+            return CourseWidgetEntry(date: date, courseName: next.name, classroom: next.classroom.isEmpty ? String(localized: "教室未指定") : next.classroom, timeString: timeString, teacher: next.teacher, weekInfo: weekInfo)
         }
 
         let appGroupID = "group.com.qianyu.companion"
@@ -134,8 +135,8 @@ public struct CourseWidgetProvider: TimelineProvider {
             NSLog("无法打开 App Group UserDefaults：%@", appGroupID)
             return CourseWidgetEntry(
                 date: date,
-                courseName: "无法读取共享课表",
-                classroom: "请检查 App Group 配置",
+                courseName: String(localized: "无法读取共享课表"),
+                classroom: String(localized: "请检查 App Group 配置"),
                 timeString: "",
                 teacher: "",
                 weekInfo: "",
@@ -144,11 +145,11 @@ public struct CourseWidgetProvider: TimelineProvider {
         }
 
         let isNoClass = userDefaults.object(forKey: "widget_is_no_class") as? Bool ?? false
-        let name = userDefaults.string(forKey: "widget_course_name") ?? "高等数学 (上)"
-        let classroom = userDefaults.string(forKey: "widget_classroom") ?? "正心楼 312"
+        let name = userDefaults.string(forKey: "widget_course_name") ?? String(localized: "高等数学 (上)")
+        let classroom = userDefaults.string(forKey: "widget_classroom") ?? String(localized: "正心楼 312")
         let timeString = userDefaults.string(forKey: "widget_time_string") ?? "08:30 - 10:05"
-        let teacher = userDefaults.string(forKey: "widget_teacher") ?? "张教授"
-        let weekInfo = userDefaults.string(forKey: "widget_week_info") ?? "第 1 周"
+        let teacher = userDefaults.string(forKey: "widget_teacher") ?? String(localized: "张教授")
+        let weekInfo = userDefaults.string(forKey: "widget_week_info") ?? String(localized: "第 1 周")
 
         return CourseWidgetEntry(
             date: date,
@@ -237,7 +238,7 @@ public struct CourseWidgetEntryView: View {
 
                 Spacer(minLength: 4)
 
-                let weekTag = entry.weekInfo.components(separatedBy: " · ").first ?? "本周"
+                let weekTag = entry.weekInfo.components(separatedBy: " · ").first ?? String(localized: "本周")
                 Text(weekTag)
                     .font(.system(size: 10, weight: .bold))
                     .foregroundColor(.orange)

@@ -16,14 +16,9 @@ public struct QuickActionChip: Identifiable {
 public struct QuickActionChipsView: View {
     public var onSelect: (String) -> Void
 
-    private let chips: [QuickActionChip] = [
-        QuickActionChip(title: "💆 按按肩颈", prompt: "千语，最近低头看书看电脑肩膀好酸，教我按按穴位呗！"),
-        QuickActionChip(title: "🏫 下节什么课？", prompt: "千语，帮我瞧一眼课表，下一节是什么课在哪个教室？"),
-        QuickActionChip(title: "📖 讲讲大院故事", prompt: "千语，给我讲讲你小时候在宏山大院的趣事呗！"),
-        QuickActionChip(title: "⚡️ 当破即破！", prompt: "千语，今天遇到点卡壳的事，借你的大侠豪气用用！"),
-        QuickActionChip(title: "🧋 碰碰杯杯", prompt: "听说你在菈梵朵玛碰碰杯杯奶茶店待过三个月？"),
-        QuickActionChip(title: "✨ 随行日常", prompt: "今天又在后山琢磨出什么厉害的新招式没有？")
-    ]
+    private var chips: [QuickActionChip] {
+        EditorialCopy.quickActions.map { QuickActionChip(title: $0.title, prompt: $0.prompt) }
+    }
 
     public init(onSelect: @escaping (String) -> Void) {
         self.onSelect = onSelect

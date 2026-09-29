@@ -57,17 +57,17 @@ public struct DailyPushSettingsView: View {
 
                 // 2. 每日四大定点陪伴推送
                 VStack(alignment: .leading, spacing: 8) {
-                    SettingsSectionHeader(title: "千语每日陪伴定点推送", icon: "clock.badge.checkmark")
+                    SettingsSectionHeader(title: String(localized: "千语每日陪伴定点推送"), icon: "clock.badge.checkmark")
 
                     SettingsCardContainer {
                         // 晨醒
                         DailyPushRow(
                             icon: "🌅",
-                            title: "清晨唤醒",
+                            title: String(localized: "清晨唤醒"),
                             isEnabled: $viewModel.settings.morningEnabled,
                             hour: viewModel.settings.morningHour,
                             minute: viewModel.settings.morningMinute,
-                            quote: "醒啦？我已经把剑擦过两遍了！下楼顺手抓个热包子，今天当破即破，冲冲冲！",
+                            quote: EditorialCopy.text("notification.morning.body"),
                             onTimeChange: { date in
                                 viewModel.settings.update(type: .morning, from: date)
                                 viewModel.updateDailySchedules()
@@ -79,11 +79,11 @@ public struct DailyPushSettingsView: View {
                         // 午饭
                         DailyPushRow(
                             icon: "🍱",
-                            title: "午饭提醒",
+                            title: String(localized: "午饭提醒"),
                             isEnabled: $viewModel.settings.lunchEnabled,
                             hour: viewModel.settings.lunchHour,
                             minute: viewModel.settings.lunchMinute,
-                            quote: "饭点到啦！吃好午饭下午才有劲头嘛！今天吃点啥好吃的？走走走，先填饱肚子再说！",
+                            quote: EditorialCopy.text("notification.lunch.body"),
                             onTimeChange: { date in
                                 viewModel.settings.update(type: .lunch, from: date)
                                 viewModel.updateDailySchedules()
@@ -95,11 +95,11 @@ public struct DailyPushSettingsView: View {
                         // 午后放松
                         DailyPushRow(
                             icon: "💆",
-                            title: "午后防困与穴位放松",
+                            title: String(localized: "午后防困与穴位放松"),
                             isEnabled: $viewModel.settings.afternoonEnabled,
                             hour: viewModel.settings.afternoonHour,
                             minute: viewModel.settings.afternoonMinute,
-                            quote: "眼睛发酸了吧？来嘛来嘛，站起来转两圈！我教你按肩颈穴位，管用得很！",
+                            quote: EditorialCopy.text("notification.afternoon.body"),
                             onTimeChange: { date in
                                 viewModel.settings.update(type: .afternoon, from: date)
                                 viewModel.updateDailySchedules()
@@ -111,11 +111,11 @@ public struct DailyPushSettingsView: View {
                         // 晚间就寝
                         DailyPushRow(
                             icon: "🌙",
-                            title: "深夜就寝",
+                            title: String(localized: "深夜就寝"),
                             isEnabled: $viewModel.settings.eveningEnabled,
                             hour: viewModel.settings.eveningHour,
                             minute: viewModel.settings.eveningMinute,
-                            quote: "心事放一边，被窝钻进去！明天还要出任务呢，可不许熬夜，晚安啦！",
+                            quote: EditorialCopy.text("notification.evening.body"),
                             onTimeChange: { date in
                                 viewModel.settings.update(type: .evening, from: date)
                                 viewModel.updateDailySchedules()
@@ -131,7 +131,7 @@ public struct DailyPushSettingsView: View {
 
                 // 3. 上课提醒与学期周数
                 VStack(alignment: .leading, spacing: 8) {
-                    SettingsSectionHeader(title: "上课提醒与学期教学周", icon: "book.closed")
+                    SettingsSectionHeader(title: String(localized: "上课提醒与学期教学周"), icon: "book.closed")
 
                     SettingsCardContainer {
                         // 课前预警
@@ -211,7 +211,7 @@ public struct DailyPushSettingsView: View {
 
                 // 4. 即刻体验测试
                 VStack(alignment: .leading, spacing: 8) {
-                    SettingsSectionHeader(title: "推送测试", icon: "paperplane")
+                    SettingsSectionHeader(title: String(localized: "推送测试"), icon: "paperplane")
 
                     SettingsCardContainer {
                         VStack(alignment: .leading, spacing: 10) {
@@ -314,7 +314,7 @@ struct DailyPushRow: View {
                     }
             }
 
-            Text("「\(quote)」")
+            Text(quote)
                 .font(.system(size: 12))
                 .foregroundColor(.secondary)
                 .lineLimit(2)

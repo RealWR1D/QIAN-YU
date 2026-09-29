@@ -33,7 +33,7 @@ public final class LiveActivityManager {
         sessionTitle: String,
         totalSeconds: Int,
         remainingSeconds: Int,
-        quote: String = "当破即破，冲冲冲！"
+        quote: String = EditorialCopy.text("focus.activity.defaultQuote")
     ) -> Bool {
         #if canImport(ActivityKit) && os(iOS)
         let areEnabled = ActivityAuthorizationInfo().areActivitiesEnabled
@@ -45,7 +45,7 @@ public final class LiveActivityManager {
         // 先清理可能残存的旧活动
         endPomodoro()
 
-        let attributes = PomodoroActivityAttributes(sessionName: "千语伴读专注")
+        let attributes = PomodoroActivityAttributes(sessionName: EditorialCopy.text("focus.activity.name"))
         let initialState = PomodoroActivityAttributes.ContentState(
             remainingSeconds: remainingSeconds,
             totalSeconds: totalSeconds,

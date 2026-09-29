@@ -1,0 +1,442 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "· %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "· %@"
+          }
+        }
+      }
+    },
+    "「下课啦！带我去后山转转，或者喝杯奶茶？」": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「下课啦！带我去后山转转，或者喝杯奶茶？」"
+          }
+        }
+      }
+    },
+    "「下课啦！带我去后山转转！」": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「下课啦！带我去后山转转！」"
+          }
+        }
+      }
+    },
+    "「当破即破，冲冲冲！」": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「当破即破，冲冲冲！」"
+          }
+        }
+      }
+    },
+    "「终于可以歇一歇啦！走，管理员，去菈梵朵玛碰碰杯杯喝奶茶！」": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「终于可以歇一歇啦！走，管理员，去菈梵朵玛碰碰杯杯喝奶茶！」"
+          }
+        }
+      }
+    },
+    "「随时喊我，我都在呢！」": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「随时喊我，我都在呢！」"
+          }
+        }
+      }
+    },
+    "%@ · %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · %2$@"
+          }
+        }
+      }
+    },
+    "%lld%%": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld%%"
+          }
+        }
+      }
+    },
+    "一眼掌握下节上课教室与时间，陈千语全程随行陪伴。": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一眼掌握下节上课教室与时间，陈千语全程随行陪伴。"
+          }
+        }
+      }
+    },
+    "下节: %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "下节: %@"
+          }
+        }
+      }
+    },
+    "下节: %@ %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "下节: %1$@ %2$@"
+          }
+        }
+      }
+    },
+    "下节日程": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "下节日程"
+          }
+        }
+      }
+    },
+    "专注进行中": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "专注进行中"
+          }
+        }
+      }
+    },
+    "今日已无任何课程": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日已无任何课程"
+          }
+        }
+      }
+    },
+    "今日已无课": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日已无课"
+          }
+        }
+      }
+    },
+    "今日已无课 · 享受闲暇": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日已无课 · 享受闲暇"
+          }
+        }
+      }
+    },
+    "今日课表": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日课表"
+          }
+        }
+      }
+    },
+    "保持专注": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保持专注"
+          }
+        }
+      }
+    },
+    "千": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "千"
+          }
+        }
+      }
+    },
+    "千语伴读 · %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "千语伴读 · %@"
+          }
+        }
+      }
+    },
+    "千语课表": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "千语课表"
+          }
+        }
+      }
+    },
+    "千语课表 · 今日无课": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "千语课表 · 今日无课"
+          }
+        }
+      }
+    },
+    "单周": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "单周"
+          }
+        }
+      }
+    },
+    "即将到来的课程": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "即将到来的课程"
+          }
+        }
+      }
+    },
+    "双周": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "双周"
+          }
+        }
+      }
+    },
+    "已完成 %lld%%": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已完成 %lld%%"
+          }
+        }
+      }
+    },
+    "已暂停": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已暂停"
+          }
+        }
+      }
+    },
+    "张教授": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "张教授"
+          }
+        }
+      }
+    },
+    "总轮次 %lld 分钟": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "总轮次 %lld 分钟"
+          }
+        }
+      }
+    },
+    "授课教师：%@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "授课教师：%@"
+          }
+        }
+      }
+    },
+    "教室未指定": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "教室未指定"
+          }
+        }
+      }
+    },
+    "无法读取共享课表": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法读取共享课表"
+          }
+        }
+      }
+    },
+    "无课": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无课"
+          }
+        }
+      }
+    },
+    "本周": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "本周"
+          }
+        }
+      }
+    },
+    "正心楼 312": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正心楼 312"
+          }
+        }
+      }
+    },
+    "特勤干员 · 随行": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "特勤干员 · 随行"
+          }
+        }
+      }
+    },
+    "第 %lld 周 · %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "第 %1$lld 周 · %2$@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "第 %1$lld 周 · %2$@"
+          }
+        }
+      }
+    },
+    "第 1 周": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "第 1 周"
+          }
+        }
+      }
+    },
+    "第 4 周 · 双周": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "第 4 周 · 双周"
+          }
+        }
+      }
+    },
+    "请检查 App Group 配置": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请检查 App Group 配置"
+          }
+        }
+      }
+    },
+    "陈千语": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "陈千语"
+          }
+        }
+      }
+    },
+    "陈千语 · 随行伴读": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "陈千语 · 随行伴读"
+          }
+        }
+      }
+    },
+    "高等数学 (上)": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "高等数学 (上)"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

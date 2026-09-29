@@ -95,9 +95,9 @@ public final class CourseScheduleViewModel {
 
     private func createSampleCourses(in context: ModelContext) throws {
         let sample1 = CourseItem(
-            name: "高等数学 (上)",
-            classroom: "正心楼 312",
-            teacher: "张教授",
+            name: String(localized: "高等数学 (上)"),
+            classroom: String(localized: "正心楼 312"),
+            teacher: String(localized: "张教授"),
             weekday: 1, // 周一
             startHour: 8,
             startMinute: 30,
@@ -107,9 +107,9 @@ public final class CourseScheduleViewModel {
             colorHex: "#FF9500"
         )
         let sample2 = CourseItem(
-            name: "数据结构与算法",
-            classroom: "实验楼 A408",
-            teacher: "李老师",
+            name: String(localized: "数据结构与算法"),
+            classroom: String(localized: "实验楼 A408"),
+            teacher: String(localized: "李老师"),
             weekday: 1, // 周一
             startHour: 14,
             startMinute: 0,
@@ -119,9 +119,9 @@ public final class CourseScheduleViewModel {
             colorHex: "#34C759"
         )
         let sample3 = CourseItem(
-            name: "剑术体能与形体",
-            classroom: "北区风雨操场",
-            teacher: "陈教练",
+            name: String(localized: "剑术体能与形体"),
+            classroom: String(localized: "北区风雨操场"),
+            teacher: String(localized: "陈教练"),
             weekday: 3, // 周三
             startHour: 10,
             startMinute: 15,
@@ -190,15 +190,20 @@ public final class CourseScheduleViewModel {
         let diff = next.startTotalMinutes - currentMinutes
 
         if diff > 0 {
-            return "距离下节【\(next.name)】(在\(next.classroom.isEmpty ? "教室" : next.classroom))还有约\(diff)分钟"
+            return EditorialCopy.text("course.next.soon", [
+                "courseName": next.name, "classroom": next.classroom.isEmpty ? "教室" : next.classroom,
+                "minutes": diff
+            ])
         } else {
-            return "【\(next.name)】当前正在上课中 (在\(next.classroom.isEmpty ? "教室" : next.classroom))"
+            return EditorialCopy.text("course.next.ongoing", [
+                "courseName": next.name, "classroom": next.classroom.isEmpty ? "教室" : next.classroom
+            ])
         }
     }
 
     public func addCourse(_ course: CourseItem) -> String? {
         guard let context = modelContext else {
-            return "课程数据库尚未就绪，请稍后重试。"
+            return EditorialCopy.text("course.databaseNotReady")
         }
         context.insert(course)
         do {
@@ -206,7 +211,55 @@ public final class CourseScheduleViewModel {
         } catch {
             context.rollback()
             loadCourses()
-            return "添加课程失败：\(error.localizedDescription)"
+            return EditorialCopy.text("course.addFailed", ["error": error.localizedDescription])
+        }
+        loadCourses()
+        return nil
+    }
+
+    /// Save an editor draft into the existing record, preserving its identity.
+    public func updateCourse(_ course: CourseItem, from draft: CourseItem) -> String? {
+        guard let context = modelContext else {
+            return EditorialCopy.text("course.databaseNotReady")
+        }
+        course.name = draft.name
+        course.classroom = draft.classroom
+        course.teacher = draft.teacher
+        course.weekday = draft.weekday
+        course.startHour = draft.startHour
+        course.startMinute = draft.startMinute
+        course.endHour = draft.endHour
+        course.endMinute = draft.endMinute
+        course.remindBeforeMinutes = draft.remindBeforeMinutes
+        course.isEnabled = draft.isEnabled
+        course.colorHex = draft.colorHex
+        course.weekModeRaw = draft.weekModeRaw
+        course.startWeek = draft.startWeek
+        course.endWeek = draft.endWeek
+        course.activeWeeksRaw = draft.activeWeeksRaw
+        do {
+            try context.save()
+        } catch {
+            context.rollback()
+            loadCourses()
+            return String(localized: "保存课程失败：\(error.localizedDescription)")
+        }
+        loadCourses()
+        return nil
+    }
+
+    /// Delete every selected arrangement in one transaction, including all its weeks.
+    public func deleteCourses(_ selected: [CourseItem]) -> String? {
+        guard let context = modelContext else {
+            return EditorialCopy.text("course.databaseNotReady")
+        }
+        for course in selected { context.delete(course) }
+        do {
+            try context.save()
+        } catch {
+            context.rollback()
+            loadCourses()
+            return EditorialCopy.text("course.deleteFailed", ["error": error.localizedDescription])
         }
         loadCourses()
         return nil
@@ -214,7 +267,7 @@ public final class CourseScheduleViewModel {
 
     public func deleteCourse(_ course: CourseItem) {
         guard let context = modelContext else {
-            showCourseOperationError("课程数据库尚未就绪，请稍后重试。")
+            showCourseOperationError(EditorialCopy.text("course.databaseNotReady"))
             return
         }
         context.delete(course)
@@ -222,14 +275,14 @@ public final class CourseScheduleViewModel {
             try context.save()
         } catch {
             context.rollback()
-            showCourseOperationError("删除课程失败：\(error.localizedDescription)")
+            showCourseOperationError(EditorialCopy.text("course.deleteFailed", ["error": error.localizedDescription]))
         }
         loadCourses()
     }
 
     public func toggleCourseEnabled(_ course: CourseItem) {
         guard let context = modelContext else {
-            showCourseOperationError("课程数据库尚未就绪，请稍后重试。")
+            showCourseOperationError(EditorialCopy.text("course.databaseNotReady"))
             return
         }
         course.isEnabled.toggle()
@@ -238,7 +291,7 @@ public final class CourseScheduleViewModel {
         } catch {
             context.rollback()
             loadCourses()
-            showCourseOperationError("更改课程状态失败：\(error.localizedDescription)")
+            showCourseOperationError(EditorialCopy.text("course.toggleFailed", ["error": error.localizedDescription]))
             return
         }
         CourseReminderService.shared.syncAllCourseReminders(courses: courses)
@@ -257,6 +310,12 @@ public final class CourseScheduleViewModel {
         case replace = "清空并覆盖现有课表"
 
         public var id: String { rawValue }
+        public var displayName: String {
+            switch self {
+            case .append: return String(localized: "追加到现有课表")
+            case .replace: return String(localized: "清空并覆盖现有课表")
+            }
+        }
     }
 
     public struct CourseImportSummary {
@@ -407,7 +466,7 @@ public final class CourseScheduleViewModel {
             let parseResult = try ICSParserService.shared.parse(data: data)
 
             if parseResult.courses.isEmpty {
-                self.importErrorMessage = "该日历文件中未找到任何有效的上课日程。"
+                self.importErrorMessage = EditorialCopy.text("course.importEmpty")
                 self.isShowingImportErrorAlert = true
             } else {
                 self.currentImportResult = parseResult
@@ -431,11 +490,11 @@ public final class CourseScheduleViewModel {
                     semesterStartDate: AppSettings.shared.semesterStartDate
                 )
                 self.isSyncingCalendar = false
-                self.calendarSyncAlertMessage = "🎉 已成功同步 \(count) 门课程至 Apple 系统日历！\n可在系统「日历」App 中查看「QIAN YU 课表」专项目录。"
+                self.calendarSyncAlertMessage = EditorialCopy.text("course.calendarSyncSuccess", ["count": count])
                 self.isShowingCalendarAlert = true
             } catch {
                 self.isSyncingCalendar = false
-                self.calendarSyncAlertMessage = "系统日历同步失败：\(error.localizedDescription)"
+                self.calendarSyncAlertMessage = EditorialCopy.text("course.calendarSyncFailed", ["error": error.localizedDescription])
                 self.isShowingCalendarAlert = true
             }
         }
@@ -469,13 +528,13 @@ public final class CourseScheduleViewModel {
 
         if let course = self.nextUpcomingCourse {
             userDefaults.set(course.name, forKey: "widget_course_name")
-            userDefaults.set(course.classroom.isEmpty ? "教室未指定" : course.classroom, forKey: "widget_classroom")
+            userDefaults.set(course.classroom.isEmpty ? EditorialCopy.text("course.widget.noClassroom") : course.classroom, forKey: "widget_classroom")
             userDefaults.set(course.formattedTime, forKey: "widget_time_string")
             userDefaults.set(course.teacher, forKey: "widget_teacher")
             userDefaults.set(AppSettings.shared.currentWeekDisplay, forKey: "widget_week_info")
             userDefaults.set(false, forKey: "widget_is_no_class")
         } else {
-            userDefaults.set("今日已无课", forKey: "widget_course_name")
+            userDefaults.set(EditorialCopy.text("course.widget.noClass"), forKey: "widget_course_name")
             userDefaults.set("", forKey: "widget_classroom")
             userDefaults.set("", forKey: "widget_time_string")
             userDefaults.set("", forKey: "widget_teacher")

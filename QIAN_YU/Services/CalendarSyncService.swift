@@ -144,8 +144,10 @@ public final class CalendarSyncService {
                 let event = EKEvent(eventStore: eventStore)
                 event.calendar = calendar
                 event.title = course.name
-                event.location = course.classroom.isEmpty ? "教室" : course.classroom
-                event.notes = "授课教师: \(course.teacher.isEmpty ? "未指定" : course.teacher)\n教学周: 第\(week)周\n\(eventMarker)\(course.id.uuidString):\(week)\n—— \(legacyEventMarker)"
+                event.location = course.classroom.isEmpty ? String(localized: "教室") : course.classroom
+                let teacher = course.teacher.isEmpty ? String(localized: "未指定") : course.teacher
+                let noteSummary = String(localized: "授课教师: \(teacher)\n教学周: 第\(week)周")
+                event.notes = "\(noteSummary)\n\(eventMarker)\(course.id.uuidString):\(week)\n—— \(legacyEventMarker)"
                 event.startDate = eventStart
                 event.endDate = eventEnd
 
@@ -192,9 +194,9 @@ public enum CalendarSyncError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .permissionDenied:
-            return "未能获取日历访问权限。请前往系统「设置」->「隐私与安全性」->「日历」中允许 QIAN YU 访问。"
+            return String(localized: "未能获取日历访问权限。请前往系统「设置」->「隐私与安全性」->「日历」中允许 QIAN YU 访问。")
         case .failedToSave:
-            return "保存日历事件失败，请稍后重试。"
+            return String(localized: "保存日历事件失败，请稍后重试。")
         }
     }
 }
