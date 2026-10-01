@@ -1,9 +1,12 @@
 #!/bin/sh
 set -eu
 root_dir=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
-output_file=$(mktemp /private/tmp/qianyu-api-check.XXXXXX)
-trap 'rm -f "$output_file"' EXIT
+check_dir=$(mktemp -d /private/tmp/qianyu-api-check.XXXXXX)
+output_file="$check_dir/check"
+trap 'rm -rf "$check_dir"' EXIT
+cp "$root_dir/QIAN_YU/Resources/EditorialContent.json" "$check_dir/EditorialContent.json"
 swiftc -o "$output_file" \
+    "$root_dir/QIAN_YU/Engine/EditorialCopy.swift" \
     "$root_dir/QIAN_YU/Models/AppSettings.swift" \
     "$root_dir/QIAN_YU/Services/LLMService.swift" \
     "$root_dir/QIAN_YU/ViewModels/SettingsViewModel.swift" \

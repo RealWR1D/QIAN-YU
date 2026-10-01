@@ -14,7 +14,7 @@ struct QianYuApp: App {
     @State private var sharedScheduleViewModel = CourseScheduleViewModel()
     @State private var sharedPomodoroViewModel = PomodoroTimerViewModel()
 
-    init() {
+    @MainActor static let sharedContainer: ModelContainer = {
         let schema = Schema([
             ChatMessage.self,
             CourseItem.self
@@ -25,15 +25,20 @@ struct QianYuApp: App {
             for: schema,
             configurations: [ModelConfiguration(schema: schema, isStoredInMemoryOnly: false, cloudKitDatabase: .automatic)]
         ) {
-            self.container = cloudContainer
+            return cloudContainer
         } else {
             do {
                 let localConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-                self.container = try ModelContainer(for: schema, configurations: [localConfiguration])
+                return try ModelContainer(for: schema, configurations: [localConfiguration])
             } catch {
                 fatalError("无法初始化 SwiftData ModelContainer: \(error)")
             }
         }
+
+    }()
+
+    init() {
+        self.container = Self.sharedContainer
 
         #if os(macOS)
         // 动态强制应用 Dock 官方圆角图标（带标准 macOS 连续曲率圆角与微阴影）
@@ -53,6 +58,12 @@ struct QianYuApp: App {
                 .onAppear {
                     sharedScheduleViewModel.setContext(container.mainContext)
                     sharedScheduleViewModel.updateWidgetSnapshot()
+                    #if DEBUG && os(iOS)
+                    if ProcessInfo.processInfo.arguments.contains("--qianyu-test-pomodoro") {
+                        sharedPomodoroViewModel.reset()
+                        sharedPomodoroViewModel.start()
+                    }
+                    #endif
                     #if os(macOS)
                     let iconPath = Bundle.main.path(forResource: "AppIcon", ofType: "icns")
                     if let path = iconPath, let iconImage = NSImage(contentsOfFile: path) {
@@ -63,6 +74,9 @@ struct QianYuApp: App {
                     #endif
                 }
                 .onOpenURL { url in
+                    if sharedScheduleViewModel.handleExternalCalendarURL(url) {
+                        return
+                    }
                     NSLog("📢 [QianYuApp] Received openURL: %@", url.absoluteString)
                     if url.scheme == "qianyu" {
                         let host = url.host ?? ""
@@ -72,6 +86,7 @@ struct QianYuApp: App {
                                 sessionTitle: "专注中",
                                 totalSeconds: 25 * 60,
                                 remainingSeconds: 25 * 60,
+                                endDate: Date().addingTimeInterval(TimeInterval(25 * 60)),
                                 quote: "「当破即破，当当当！」"
                             )
                             NSLog("📢 [QianYuApp] startPomodoro result: %d", res ? 1 : 0)
@@ -112,4 +127,7 @@ struct QianYuApp: App {
 //
 // Inspired by:
 //      一条啥龙、Bilibili@小陈的脚凑凑的
+//
+// Bulit by:
+//      RealWRLD @ cloud.lorra
 //

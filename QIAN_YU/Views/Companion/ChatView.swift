@@ -137,7 +137,7 @@ public struct ChatView: View {
             .padding(.vertical, 10)
             .background(.bar)
         }
-        .navigationTitle("千语")
+        .navigationTitle("QIAN YU")
         #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif

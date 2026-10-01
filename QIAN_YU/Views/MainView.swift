@@ -84,10 +84,15 @@ public struct MainView: View {
             .tag(AppTab.settings)
         }
         .tint(.orange)
+        .font(.body)
+        .fontDesign(.default)
+        .onChange(of: scheduleViewModel.externalImportRequestID, initial: true) { _, requestID in
+            if requestID != nil { selectedTab = .schedule }
+        }
         .task {
+            pomodoroViewModel.synchronizeAfterSuspension()
             scheduleViewModel.setContext(modelContext)
             let authorized = await NotificationManager.shared.requestAuthorizationIfNeeded()
-            NotificationManager.shared.scheduleDailyNotifications()
             if authorized {
                 CourseReminderService.shared.syncAllCourseReminders(courses: scheduleViewModel.courses)
             }
@@ -95,6 +100,7 @@ public struct MainView: View {
         }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active {
+                pomodoroViewModel.synchronizeAfterSuspension()
                 CourseReminderService.shared.syncAllCourseReminders(courses: scheduleViewModel.courses)
             } else if phase == .background {
                 CourseReminderBackgroundRefresh.schedule()
@@ -124,7 +130,7 @@ public struct MainView: View {
                 }
             }
             .listStyle(.sidebar)
-            .navigationTitle("千语")
+            .navigationTitle("QIAN YU")
             .navigationSplitViewColumnWidth(min: 200, ideal: 220, max: 260)
             .safeAreaInset(edge: .bottom) {
                 VStack(spacing: 0) {
@@ -214,16 +220,20 @@ public struct MainView: View {
             .frame(minWidth: 500, minHeight: 450)
         }
         .tint(.orange)
+        .onChange(of: scheduleViewModel.externalImportRequestID, initial: true) { _, requestID in
+            if requestID != nil { selectedTab = .schedule }
+        }
         .task {
+            pomodoroViewModel.synchronizeAfterSuspension()
             scheduleViewModel.setContext(modelContext)
             let authorized = await NotificationManager.shared.requestAuthorizationIfNeeded()
-            NotificationManager.shared.scheduleDailyNotifications()
             if authorized {
                 CourseReminderService.shared.syncAllCourseReminders(courses: scheduleViewModel.courses)
             }
         }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active {
+                pomodoroViewModel.synchronizeAfterSuspension()
                 CourseReminderService.shared.syncAllCourseReminders(courses: scheduleViewModel.courses)
             }
         }

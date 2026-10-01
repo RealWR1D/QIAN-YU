@@ -8,6 +8,7 @@
 import Foundation
 import UserNotifications
 
+@MainActor
 public final class NotificationManager: NSObject, UNUserNotificationCenterDelegate {
     public static let shared = NotificationManager()
 
@@ -47,83 +48,134 @@ public final class NotificationManager: NSObject, UNUserNotificationCenterDelega
         }
     }
 
-    /// 根据 AppSettings 重新排布每日四大定点陪伴推送
+    private let dailyContent = DailyPushContentService()
+    private var cachedCourses: [CourseItem] = []
+    private var mutationTask: Task<Void, Never>?
+    private let sentKey = "qianyu_daily_sent_v1"
+
+    /// 所有排程和睡眠动作共享队列，避免改设置与自动化同时运行时重复发送。
+    @discardableResult
+    func enqueue(_ operation: @escaping @MainActor () async -> Void) -> Task<Void, Never> {
+        let previous = mutationTask
+        let task = Task { @MainActor in
+            await previous?.value
+            await operation()
+        }
+        mutationTask = task
+        return task
+    }
+
+    func cache(courses: [CourseItem]) { cachedCourses = courses }
+
     public func scheduleDailyNotifications() {
-        let center = UNUserNotificationCenter.current()
+        CourseReminderService.shared.syncAllCourseReminders(courses: cachedCourses)
+    }
+
+    private var sentIdentifiers: Set<String> {
+        let cutoff = Date().addingTimeInterval(-8 * 24 * 60 * 60).timeIntervalSince1970
+        let saved = (UserDefaults.standard.dictionary(forKey: sentKey) as? [String: Double] ?? [:])
+            .filter { $0.value >= cutoff }
+        UserDefaults.standard.set(saved, forKey: sentKey)
+        return Set(saved.keys)
+    }
+
+    var dailyConfiguration: DailyPushPlanner.Configuration {
         let settings = AppSettings.shared
+        return .init(
+            morning: settings.morningEnabled ? settings.morningHour * 60 + settings.morningMinute : nil,
+            lunch: settings.lunchEnabled ? settings.lunchHour * 60 + settings.lunchMinute : nil,
+            afternoon: settings.afternoonEnabled ? settings.afternoonHour * 60 + settings.afternoonMinute : nil,
+            dusk: settings.duskEnabled ? settings.duskHour * 60 + settings.duskMinute : nil,
+            evening: settings.eveningEnabled ? settings.eveningHour * 60 + settings.eveningMinute : nil,
+            followsSleep: settings.sleepAutomationEnabled,
+            semesterStart: settings.semesterStartDate
+        )
+    }
 
-        // 移除旧的每日定点通知
-        let dailyIds = [
-            "qianyu_daily_morning",
-            "qianyu_daily_lunch",
-            "qianyu_daily_afternoon",
-            "qianyu_daily_evening"
-        ]
-        center.removePendingNotificationRequests(withIdentifiers: dailyIds)
-
-        if settings.morningEnabled {
-            scheduleNotification(
-                id: "qianyu_daily_morning",
-                type: .morning,
-                hour: settings.morningHour,
-                minute: settings.morningMinute
-            )
-        }
-
-        if settings.lunchEnabled {
-            scheduleNotification(
-                id: "qianyu_daily_lunch",
-                type: .lunch,
-                hour: settings.lunchHour,
-                minute: settings.lunchMinute
-            )
-        }
-
-        if settings.afternoonEnabled {
-            scheduleNotification(
-                id: "qianyu_daily_afternoon",
-                type: .afternoon,
-                hour: settings.afternoonHour,
-                minute: settings.afternoonMinute
-            )
-        }
-
-        if settings.eveningEnabled {
-            scheduleNotification(
-                id: "qianyu_daily_evening",
-                type: .evening,
-                hour: settings.eveningHour,
-                minute: settings.eveningMinute
-            )
+    func dailyCourseSnapshots(courses: [CourseItem]) -> [DailyPushPlanner.Course] {
+        courses.filter(\.isEnabled).map { course in
+            let weeks: Set<Int>
+            if !course.activeWeeks.isEmpty { weeks = course.activeWeeks }
+            else if course.startWeek > 0, course.endWeek >= course.startWeek,
+                    course.endWeek - course.startWeek <= 100 {
+                weeks = Set((course.startWeek...course.endWeek).filter { course.isActive(inWeek: $0) })
+            } else { weeks = [] }
+            return DailyPushPlanner.Course(weekday: course.weekday, startMinutes: course.startTotalMinutes,
+                                           endMinutes: course.endTotalMinutes, weeks: weeks)
         }
     }
 
-    private func scheduleNotification(id: String, type: PushType, hour: Int, minute: Int) {
-        let content = UNMutableNotificationContent()
-        let (title, body) = PersonaEngine.shared.fallbackNotification(
-            for: type,
-            userName: AppSettings.shared.userName
-        )
-        content.title = title
-        content.body = body
-        content.sound = .default
-        content.categoryIdentifier = "QIANYU_DAILY_MESSAGE"
+    func primeDailyContent(courses: [CourseItem]) {
+        cache(courses: courses)
+        let snapshots = dailyCourseSnapshots(courses: courses)
+        let entries = DailyPushPlanner.entries(now: Date(), configuration: dailyConfiguration, courses: snapshots,
+                                              sentIdentifiers: sentIdentifiers)
+        dailyContent.setPlan(entries: entries, courses: snapshots)
+    }
 
-        var components = DateComponents()
-        components.hour = hour
-        components.minute = minute
+    func dailyRequests(courses: [DailyPushPlanner.Course]) -> [UNNotificationRequest] {
+        let entries = DailyPushPlanner.entries(now: Date(), configuration: dailyConfiguration, courses: courses,
+                                              sentIdentifiers: sentIdentifiers)
+        dailyContent.setPlan(entries: entries, courses: courses)
+        return entries.map { request(for: $0, immediate: false) }
+    }
 
-        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
-        let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
+    func waitForDailyContentRefresh() async {
+        await dailyContent.waitForRefresh()
+        await mutationTask?.value
+    }
 
-        UNUserNotificationCenter.current().add(request) { error in
-            if let error = error {
-                print("安排通知 \(id) 失败: \(error)")
+    func refreshDailyContent() {
+        dailyContent.refresh { entries in
+            self.enqueue {
+                let center = UNUserNotificationCenter.current()
+                let pending = Dictionary(uniqueKeysWithValues: await center.pendingNotificationRequests().map { ($0.identifier, $0) })
+                for entry in entries where entry.date > Date() && (pending[entry.identifier]?.trigger as? UNCalendarNotificationTrigger)?.nextTriggerDate() == entry.date
+                    && !self.sentIdentifiers.contains(entry.identifier) {
+                    do { try await center.add(self.request(for: entry, immediate: false)) }
+                    catch { NSLog("更新每日通知文案失败，保留原通知。") }
+                }
             }
         }
     }
 
-    /// 发送即时测试通知（5秒后触发），方便用户验证推送效果
+    private func request(for entry: DailyPushPlanner.Entry, immediate: Bool) -> UNNotificationRequest {
+        let content = UNMutableNotificationContent()
+        let message = dailyContent.message(for: entry)
+        content.title = message.title
+        content.body = message.body
+        content.sound = .default
+        content.categoryIdentifier = "QIANYU_DAILY_MESSAGE"
+        if immediate { return UNNotificationRequest(identifier: entry.identifier, content: content, trigger: nil) }
+        var calendar = Calendar.current
+        calendar.timeZone = .current
+        var parts = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: entry.date)
+        parts.calendar = calendar
+        parts.timeZone = calendar.timeZone
+        return UNNotificationRequest(identifier: entry.identifier, content: content,
+                                     trigger: UNCalendarNotificationTrigger(dateMatching: parts, repeats: false))
+    }
+
+    /// 快捷指令在后台调用；允许一次提前通知，并替换当天的兜底请求。
+    func handleSleepTransition(entering: Bool) async throws {
+        var failure: Error?
+        let task = enqueue {
+            let now = Date()
+            guard let entry = DailyPushPlanner.sleepEntry(entering: entering, now: now,
+                                                         configuration: self.dailyConfiguration),
+                  !self.sentIdentifiers.contains(entry.identifier) else { return }
+            do {
+                try await UNUserNotificationCenter.current().add(self.request(for: entry, immediate: true))
+                var saved = UserDefaults.standard.dictionary(forKey: self.sentKey) as? [String: Double] ?? [:]
+                saved[entry.identifier] = now.timeIntervalSince1970
+                UserDefaults.standard.set(saved, forKey: self.sentKey)
+            } catch { failure = error }
+        }
+        await task.value
+        if let failure { throw failure }
+    }
+
+    /// 发送即时测试通知（3秒后触发），方便用户验证推送效果
     public func sendTestNotification(completion: @escaping (Bool) -> Void) {
         let content = UNMutableNotificationContent()
         content.title = EditorialCopy.text("notification.test.title")
@@ -131,7 +183,7 @@ public final class NotificationManager: NSObject, UNUserNotificationCenterDelega
         content.sound = .default
 
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)
-        let request = UNNotificationRequest(identifier: "qianyu_test_\(UUID().uuidString)", content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: "qianyu_test", content: content, trigger: trigger)
 
         UNUserNotificationCenter.current().add(request) { error in
             DispatchQueue.main.async {
@@ -141,7 +193,7 @@ public final class NotificationManager: NSObject, UNUserNotificationCenterDelega
     }
 
     // MARK: - 前台接收通知展示设置
-    public func userNotificationCenter(
+    nonisolated public func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         willPresent notification: UNNotification
     ) async -> UNNotificationPresentationOptions {

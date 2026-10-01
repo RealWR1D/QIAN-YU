@@ -23,6 +23,9 @@ public final class CourseScheduleViewModel {
     public var isShowingImportPicker: Bool = false
     public var isShowingImportPreview: Bool = false
     public var currentImportResult: ICSParseResult? = nil
+    /// 外部文件唤起应用时，即使尚未显示课程页，也能恢复导航和导入预览。
+    public private(set) var externalImportRequestID: UUID? = nil
+    public private(set) var importPresentationID = UUID()
     public var importErrorMessage: String? = nil
     public var isShowingImportErrorAlert: Bool = false
 
@@ -451,8 +454,23 @@ public final class CourseScheduleViewModel {
         )
     }
 
-    /// 处理文档选择器返回的 .ics 文件
+    /// 接收系统“分享/用其他应用打开”传来的日历文件。
+    @discardableResult
+    public func handleExternalCalendarURL(_ url: URL) -> Bool {
+        guard url.isFileURL, url.pathExtension.lowercased() == "ics" else { return false }
+        isShowingAddSheet = false
+        isShowingImportPicker = false
+        externalImportRequestID = UUID()
+        handleFileImportResult(.success(url))
+        return true
+    }
+
+    /// 文档选择器与系统文件入口共用解析和权限释放流程。
     public func handleFileImportResult(_ result: Result<URL, Error>) {
+        currentImportResult = nil
+        isShowingImportPreview = false
+        importErrorMessage = nil
+        isShowingImportErrorAlert = false
         do {
             let selectedURL = try result.get()
             let isAccessing = selectedURL.startAccessingSecurityScopedResource()
@@ -469,6 +487,7 @@ public final class CourseScheduleViewModel {
                 self.importErrorMessage = EditorialCopy.text("course.importEmpty")
                 self.isShowingImportErrorAlert = true
             } else {
+                self.importPresentationID = UUID()
                 self.currentImportResult = parseResult
                 self.isShowingImportPreview = true
             }

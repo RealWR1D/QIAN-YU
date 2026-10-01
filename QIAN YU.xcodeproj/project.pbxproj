@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F6A914C93D414ADCB7149FA1 /* DailyPushPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A914C93D414ADCB7149FA2 /* DailyPushPlanner.swift */; };
 		00CA77B950EB4388B0F860BA /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE9364011674E7BB4B60FE3 /* ChatViewModel.swift */; };
 		06074522E9904523BA64DCD5 /* CourseScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF443555EF04EC196AA9574 /* CourseScheduleViewModel.swift */; };
 		1F79DD0317764F6781EE655D /* PersonaEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089EE8855582444898BCEE7C /* PersonaEngine.swift */; };
@@ -54,6 +55,10 @@
 		EE01C925131D4530847E7CFA /* LLMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A667035134A1432796AB99B7 /* LLMService.swift */; };
 		FED540FDE5B44AA7ACCBCDF1 /* MenuBarCompanionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF31D93F8A8B4DBC85B32BF9 /* MenuBarCompanionView.swift */; };
 		D6B01100D0014D88A1230001 /* CourseManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A01100D0014D88A1230001 /* CourseManagementView.swift */; };
+		D6A120000000000000000001 /* SleepNotificationIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A110000000000000000001 /* SleepNotificationIntents.swift */; };
+		D6A320000000000000000000 /* DailyPushContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A310000000000000000000 /* DailyPushContent.swift */; };
+		D6A320000000000000000001 /* DailyPushContentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A310000000000000000001 /* DailyPushContentService.swift */; };
+		D6A320000000000000000002 /* DailyWeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A310000000000000000002 /* DailyWeatherService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +86,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F6A914C93D414ADCB7149FA2 /* DailyPushPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPushPlanner.swift; sourceTree = "<group>"; };
 		004FCB660B9449889CB0C13F /* QuickActionChipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickActionChipsView.swift; sourceTree = "<group>"; };
 		089EE8855582444898BCEE7C /* PersonaEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonaEngine.swift; sourceTree = "<group>"; };
 		10A47FCE42194EBA8432A37D /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
@@ -129,6 +135,10 @@
 		F9D8A37183A74B719C5904BC /* QianYuApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QianYuApp.swift; sourceTree = "<group>"; };
 		FBF443555EF04EC196AA9574 /* CourseScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseScheduleViewModel.swift; sourceTree = "<group>"; };
 		D6A01100D0014D88A1230001 /* CourseManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseManagementView.swift; sourceTree = "<group>"; };
+		D6A110000000000000000001 /* SleepNotificationIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepNotificationIntents.swift; sourceTree = "<group>"; };
+		D6A310000000000000000000 /* DailyPushContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPushContent.swift; sourceTree = "<group>"; };
+		D6A310000000000000000001 /* DailyPushContentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPushContentService.swift; sourceTree = "<group>"; };
+		D6A310000000000000000002 /* DailyWeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -307,6 +317,11 @@
 			children = (
 				A667035134A1432796AB99B7 /* LLMService.swift */,
 				11593F6DCCBF4F779A00EED9 /* NotificationManager.swift */,
+				D6A310000000000000000002 /* DailyWeatherService.swift */,
+				D6A310000000000000000001 /* DailyPushContentService.swift */,
+				D6A310000000000000000000 /* DailyPushContent.swift */,
+				D6A110000000000000000001 /* SleepNotificationIntents.swift */,
+				F6A914C93D414ADCB7149FA2 /* DailyPushPlanner.swift */,
 				7B1F18C209624FC2886E9AE2 /* CourseReminderService.swift */,
 				E4769137462B46C6A4C89DDA /* ICSParserService.swift */,
 				C1A01100D0014D88A1230001 /* CalendarSyncService.swift */,
@@ -437,6 +452,11 @@
 				82019A74B7F246C79159FB1E /* QianYuDialogueCorpus.swift in Sources */,
 				EE01C925131D4530847E7CFA /* LLMService.swift in Sources */,
 				6DEDB85E5F924662A6B45892 /* NotificationManager.swift in Sources */,
+				D6A320000000000000000002 /* DailyWeatherService.swift in Sources */,
+				D6A320000000000000000001 /* DailyPushContentService.swift in Sources */,
+				D6A320000000000000000000 /* DailyPushContent.swift in Sources */,
+				D6A120000000000000000001 /* SleepNotificationIntents.swift in Sources */,
+				F6A914C93D414ADCB7149FA1 /* DailyPushPlanner.swift in Sources */,
 				918CFD7272C24C8E9296C81F /* CourseReminderService.swift in Sources */,
 				00CA77B950EB4388B0F860BA /* ChatViewModel.swift in Sources */,
 				06074522E9904523BA64DCD5 /* CourseScheduleViewModel.swift in Sources */,

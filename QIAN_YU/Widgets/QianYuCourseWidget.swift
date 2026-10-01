@@ -172,7 +172,7 @@ public struct QianYuCourseWidget: Widget {
         StaticConfiguration(kind: kind, provider: CourseWidgetProvider()) { entry in
             CourseWidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("千语课表")
+        .configurationDisplayName("QIAN YU 课表")
         .description("一眼掌握下节上课教室与时间，陈千语全程随行陪伴。")
         #if os(iOS)
         .supportedFamilies([
@@ -232,7 +232,7 @@ public struct CourseWidgetEntryView: View {
             HStack(alignment: .center, spacing: 6) {
                 chibiMiniAvatar(size: 26)
 
-                Text("千语课表")
+                Text("QIAN YU")
                     .font(.system(size: 13, weight: .bold))
                     .foregroundColor(.primary)
 
@@ -458,7 +458,8 @@ public struct CourseWidgetEntryView: View {
                         .font(.system(size: 12, weight: .bold))
                     let start = entry.timeString.components(separatedBy: " - ").first ?? entry.timeString
                     Text(start)
-                        .font(.system(size: 9, weight: .semibold, design: .monospaced))
+                        .font(.system(size: 9, weight: .semibold))
+                        .monospacedDigit()
                     if !entry.classroom.isEmpty {
                         Text(String(entry.classroom.prefix(3)))
                             .font(.system(size: 8))
@@ -477,7 +478,7 @@ public struct CourseWidgetEntryView: View {
                 HStack(spacing: 4) {
                     Image(systemName: "sparkles")
                         .font(.system(size: 11))
-                    Text("千语课表 · 今日无课")
+                    Text("QIAN YU · 今日无课")
                         .font(.system(size: 12, weight: .bold))
                 }
                 Text("「下课啦！带我去后山转转！」")
@@ -515,43 +516,11 @@ public struct CourseWidgetEntryView: View {
     }
     #endif
 
-    // MARK: - 辅助微缩头像 (严禁剑标)
+    // MARK: - 辅助微缩头像
     public func chibiMiniAvatar(size: CGFloat) -> some View {
-        ZStack {
-            #if os(macOS)
-            if let nsImg = NSImage(named: "qianyu_chibi_avatar") ?? NSImage(named: "QianyuAvatar") {
-                Image(nsImage: nsImg)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: size, height: size)
-                    .clipShape(Circle())
-            } else {
-                fallbackCircle(size: size)
-            }
-            #else
-            if let uiImg = UIImage(named: "qianyu_chibi_avatar") ?? UIImage(named: "QianyuAvatar") {
-                Image(uiImage: uiImg)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: size, height: size)
-                    .clipShape(Circle())
-            } else {
-                fallbackCircle(size: size)
-            }
-            #endif
-        }
+        QianYuChibiMiniAvatarView(size: size, assetName: "QianyuAvatar")
     }
 
-    private func fallbackCircle(size: CGFloat) -> some View {
-        ZStack {
-            Circle()
-                .fill(LinearGradient(colors: [.orange, .pink], startPoint: .topLeading, endPoint: .bottomTrailing))
-                .frame(width: size, height: size)
-            Text("千")
-                .font(.system(size: max(8, size * 0.55), weight: .bold))
-                .foregroundColor(.white)
-        }
-    }
 }
 
 // MARK: - 跨平台 Widget 容器背景修饰符

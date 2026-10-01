@@ -1,3504 +1,4697 @@
 {
-  "sourceLanguage": "en",
-  "strings": {
-    "": {},
-    " · 单周": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": " · 单周"
+  "sourceLanguage" : "en",
+  "strings" : {
+    "" : {
+
+    },
+    " · 单周" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " · 单周"
           }
         }
       }
     },
-    " · 双周": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": " · 双周"
+    " · 双周" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " · 双周"
           }
         }
       }
     },
-    "%@ @ %@": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$@ @ %2$@"
+    "· %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "· %@"
           }
         }
       }
     },
-    "%@ · %@": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$@ · %2$@"
+    "「%@」" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「%@」"
           }
         }
       }
     },
-    "%@ · 仅单周": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ · 仅单周"
+    "「下课啦！带我去后山转转，或者喝杯奶茶？」" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「下课啦！带我去后山转转，或者去喝杯奶茶？」"
           }
         }
       }
     },
-    "%@ · 仅双周": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ · 仅双周"
+    "「下课啦！带我去后山转转！」" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「下课啦！带我去后山转转！」"
           }
         }
       }
     },
-    "%@ · 每周": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ · 每周"
+    "「吸气、呼气、一口气做完！」" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「吸气、呼气、一口气做完吧！」"
           }
         }
       }
     },
-    "%lld 分钟": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld 分钟"
+    "「嘿嘿，帅不帅？在那边我一直是第一哦！哎呀夸得我都不好意思啦——再来两句！」" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「嘿嘿，帅不帅？在这边我一直是第一哦！哎呀夸得我都不好意思啦——再来两句！」"
           }
         }
       }
     },
-    "%lld%%": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld%%"
+    "「在呢在呢！找我啥好事呀？是不是要带我出任务啦？」" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「在呢在呢！找我啥好事呀？是不是要带我出去玩啦？」"
           }
         }
       }
     },
-    "%lld-%lld周": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$lld-%2$lld周"
+    "「当破即破，冲冲冲！」" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「当破即破，当断则断！」"
+          }
+        }
+      }
+    },
+    "「终于可以歇一歇啦！走，管理员，去菈梵朵玛碰碰杯杯喝奶茶！」" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「终于可以歇一歇啦！走，管理员，去喝杯奶茶吧！」"
+          }
+        }
+      }
+    },
+    "「菈梵朵玛碰碰杯杯奶茶店？很简单嘛，喝够了奶茶，就走了。」" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「菈梵朵玛碰碰杯杯奶茶店？很简单嘛，喝够了奶茶，就走了。」"
+          }
+        }
+      }
+    },
+    "「要不……我也帮你松松？我可是知道几个穴位哦！来嘛来嘛，外套脱了别客气！」" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「要不……我也帮你松松？我也知道几个穴位哦！来嘛来嘛，外套脱了别客气！」"
+          }
+        }
+      }
+    },
+    "「走走走！正好带我去后山转转，比划两招！」" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「走走走！正好带我去后山转转，比划比划！」"
+          }
+        }
+      }
+    },
+    "「随时喊我，我都在呢！」" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「随时喊我，我都在呢！」"
+          }
+        }
+      }
+    },
+    "%@ · %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$@"
+          }
+        }
+      }
+    },
+    "%@ · 仅单周" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · 仅单周"
+          }
+        }
+      }
+    },
+    "%@ · 仅双周" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · 仅双周"
+          }
+        }
+      }
+    },
+    "%@ · 每周" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · 每周"
+          }
+        }
+      }
+    },
+    "%@ @ %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ @ %2$@"
+          }
+        }
+      }
+    },
+    "%lld 分钟" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 分钟"
+          }
+        }
+      }
+    },
+    "%lld-%lld周" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld-%2$lld周"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$lld-%2$lld周"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld-%2$lld周"
           }
         }
       }
     },
-    "%lld分后": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld分后"
+    "%lld%%" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld%%"
           }
         }
       }
     },
-    "%lld分钟后": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld分钟后"
+    "%lld分后" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld分后"
           }
         }
       }
     },
-    "1. 极其简短口语化：单次回复严格控制在 1~3 句话（30~80字，严禁超过100字），绝不发长篇大论。\n2. 高情商、充满亲和力：嘴甜、会夸人、给足情绪价值，绝不怼人不说教。\n3. 元气起头：常以「在呢在呢！」「走走走！」「交给我准没错！」「来啦！」热络起步。\n4. 真实日常闲暇：只有琢磨剑招差点撞柱子、擦剑、按穴位放松、假装打坐偷偷打瞌睡、看大炎武侠、喝奶茶。绝不使用吃货俗套。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "1. 极其简短口语化：单次回复严格控制在 1~3 句话（30~80字，严禁超过100字），绝不发长篇大论。\n2. 高情商、充满亲和力：嘴甜、会夸人、给足情绪价值，绝不怼人不说教。\n3. 元气起头：常以「在呢在呢！」「走走走！」「交给我准没错！」「来啦！」热络起步。\n4. 真实日常闲暇：只有琢磨剑招差点撞柱子、擦剑、按穴位放松、假装打坐偷偷打瞌睡、看大炎武侠、喝奶茶。绝不使用吃货俗套。"
+    "%lld分钟后" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld分钟后"
           }
         }
       }
     },
-    "1. 锁屏单行组件 (Accessory Inline)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "1. 锁屏单行组件 (Accessory Inline)"
+    "• 故乡：宏山城环形山，大院里长大的龙族姑娘，头上两角一条尾巴。\n• 发型：对准双角扎成细致对称的双辫（王奶奶独门秘诀）。\n• 武器：一对普通单手剑，趁手就行。曾纠结刻“当破即破”还是“当断即断”。\n• 经历：在谈剑堂提前毕业；在菈梵朵玛“碰碰杯杯”奶茶店待过三个月；与佩丽卡合力推驮兽车分吃一个馍加入终末地。" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "• 故乡：宏山城环形山，大院里长大的龙族姑娘，头上两角一条尾巴。\n• 发型：对准双角扎成细致对称的双辫（王奶奶独门秘诀）。\n• 武器：一对普通单手剑，趁手就行。曾纠结刻“当破即破”还是“当断即断”。\n• 经历：在谈剑堂提前毕业；在菈梵朵玛“碰碰杯杯”奶茶店待过三个月；与佩丽卡合力推驮兽车分吃一个馍加入终末地。"
           }
         }
       }
     },
-    "2. 圆形 (Circular)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "2. 圆形 (Circular)"
+    "⚠️ 下课时间必须晚于上课时间" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ 下课时间必须晚于上课时间。"
           }
         }
       }
     },
-    "24:50": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "24:50"
+    "⚠️ 未能升起：请前往 iPhone「设置 -> QIAN YU -> 实时活动」确认开关已开启。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ 未能升起：请前往 iPhone「设置 -> QIAN YU -> 实时活动」确认开关已开启。"
           }
         }
       }
     },
-    "3. 矩形 (Rectangular)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "3. 矩形 (Rectangular)"
+    "✅ 灵动岛已成功升起！退回桌面或锁屏即可看到陈千语伴读浮岛。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✅ 灵动岛已成功升起！退回桌面或锁屏即可看到陈千语伴读浮岛。"
           }
         }
       }
     },
-    "AI 模型驱动 (OpenAI 协议兼容)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "AI 模型驱动 (OpenAI 协议兼容)"
+    "💭 千语正在深入琢磨中……" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💭 千语正在输入……"
           }
         }
       }
     },
-    "API Key 保存在本机系统钥匙串中。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "API Key 保存在本机系统钥匙串中。"
+    "1. 极其简短口语化：单次回复严格控制在 1~3 句话（30~80字，严禁超过100字），绝不发长篇大论。\n2. 高情商、充满亲和力：嘴甜、会夸人、给足情绪价值，绝不怼人不说教。\n3. 元气起头：常以「在呢在呢！」「走走走！」「交给我准没错！」「来啦！」热络起步。\n4. 真实日常闲暇：只有琢磨剑招差点撞柱子、擦剑、按穴位放松、假装打坐偷偷打瞌睡、看大炎武侠、喝奶茶。绝不使用吃货俗套。" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. 极其简短口语化：单次回复严格控制在 1~3 句话（30~80字，严禁超过100字），绝不发长篇大论。\n2. 高情商、充满亲和力：嘴甜、会夸人、给足情绪价值，绝不怼人不说教。\n3. 元气起头：常以「在呢在呢！」「走走走！」「交给我准没错！」「来啦！」热络起步。\n4. 真实日常闲暇：只有琢磨剑招差点撞柱子、擦剑、按穴位放松、假装打坐偷偷打瞌睡、看大炎武侠、喝奶茶。绝不使用吃货俗套。"
           }
         }
       }
     },
-    "API Key 未能保存到钥匙串，请检查系统钥匙串权限后重试。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "API Key 未能保存到钥匙串，请检查系统钥匙串权限后重试。"
+    "1. 锁屏单行组件 (Accessory Inline)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. 锁屏单行组件 (Accessory Inline)"
           }
         }
       }
     },
-    "Apple HIG · SwiftUI 原生跨平台": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Apple HIG · SwiftUI 原生跨平台"
+    "2. 圆形 (Circular)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2. 圆形 (Circular)"
           }
         }
       }
     },
-    "DeepSeek (推荐)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "DeepSeek (推荐)"
+    "3. 矩形 (Rectangular)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3. 矩形 (Rectangular)"
           }
         }
       }
     },
-    "https://...": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "https://..."
+    "24:50" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "24:50"
           }
         }
       }
     },
-    "iOS 锁屏小组件全套形态 (iOS 16+)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "iOS 锁屏小组件全套形态 (iOS 16+)"
+    "① 关闭时：添加千语的「睡眠已结束」动作。\n② 开启时：添加千语的「准备睡觉」动作。\n两项配置完成后，再开启上方开关。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "① 关闭时：添加千语的「睡眠已结束」动作。\n② 开启时：添加千语的「准备睡觉」动作。\n两项配置完成后，再开启上方开关。"
           }
         }
       }
     },
-    "· %@": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "· %@"
+    "AI 模型驱动 (OpenAI 协议兼容)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AI 模型驱动 (OpenAI 协议兼容)"
           }
         }
       }
     },
-    "• 故乡：宏山城环形山，大院里长大的龙族姑娘，头上两角一条尾巴。\n• 发型：对准双角扎成细致对称的双辫（王奶奶独门秘诀）。\n• 武器：一对普通单手剑，趁手就行。曾纠结刻“当破即破”还是“当断即断”。\n• 经历：在谈剑堂提前毕业；在菈梵朵玛“碰碰杯杯”奶茶店待过三个月；与佩丽卡合力推驮兽车分吃一个馍加入终末地。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "• 故乡：宏山城环形山，大院里长大的龙族姑娘，头上两角一条尾巴。\n• 发型：对准双角扎成细致对称的双辫（王奶奶独门秘诀）。\n• 武器：一对普通单手剑，趁手就行。曾纠结刻“当破即破”还是“当断即断”。\n• 经历：在谈剑堂提前毕业；在菈梵朵玛“碰碰杯杯”奶茶店待过三个月；与佩丽卡合力推驮兽车分吃一个馍加入终末地。"
+    "AI 问候与天气" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AI 问候与天气"
           }
         }
       }
     },
-    "⚠️ 下课时间必须晚于上课时间": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "⚠️ 下课时间必须晚于上课时间"
+    "API Key 保存在本机系统钥匙串中。" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API Key 保存在本机系统钥匙串中。"
           }
         }
       }
     },
-    "⚠️ 未能升起：请前往 iPhone「设置 -> QIAN YU -> 实时活动」确认开关已开启。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "⚠️ 未能升起：请前往 iPhone「设置 -> QIAN YU -> 实时活动」确认开关已开启。"
+    "API Key 保存失败" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API Key 保存失败"
           }
         }
       }
     },
-    "✅ 灵动岛已成功升起！退回桌面或锁屏即可看到陈千语伴读浮岛。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "✅ 灵动岛已成功升起！退回桌面或锁屏即可看到陈千语伴读浮岛。"
+    "API Key 按服务商分别保存在系统钥匙串中。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API Key 按服务商分别保存在系统钥匙串中。"
           }
         }
       }
     },
-    "「%@」": {
-      "extractionState": "stale",
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "「%@」"
+    "API Key 未能保存到钥匙串，请检查系统钥匙串权限后重试。" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API Key 未能保存到钥匙串，请检查系统钥匙串权限后重试。"
           }
         }
       }
     },
-    "「下课啦！带我去后山转转！」": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "「下课啦！带我去后山转转！」"
+    "API Key 未能保存到钥匙串，请重试。当前输入仅在本次运行中有效。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API Key 未能保存到钥匙串，请重试。当前输入仅在本次运行中有效。"
           }
         }
       }
     },
-    "「下课啦！带我去后山转转，或者喝杯奶茶？」": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "「下课啦！带我去后山转转，或者喝杯奶茶？」"
+    "API 地址须为完整的 http:// 或 https:// 地址，且不能包含用户名或密码。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API 地址须为完整的 http:// 或 https:// 地址，且不能包含用户名或密码。"
           }
         }
       }
     },
-    "「吸气、呼气、一口气做完！」": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "「吸气、呼气、一口气做完！」"
+    "Apple HIG · SwiftUI 原生跨平台" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple HIG · SwiftUI 原生跨平台"
           }
         }
       }
     },
-    "「嘿嘿，帅不帅？在那边我一直是第一哦！哎呀夸得我都不好意思啦——再来两句！」": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "「嘿嘿，帅不帅？在那边我一直是第一哦！哎呀夸得我都不好意思啦——再来两句！」"
+    "DeepSeek (推荐)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DeepSeek (推荐)"
           }
         }
       }
     },
-    "「在呢在呢！找我啥好事呀？是不是要带我出任务啦？」": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "「在呢在呢！找我啥好事呀？是不是要带我出任务啦？」"
+    "https://..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://..."
           }
         }
       }
     },
-    "「当破即破，冲冲冲！」": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "「当破即破，冲冲冲！」"
+    "iOS 锁屏小组件全套形态 (iOS 16+)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iOS 锁屏小组件全套形态 (iOS 16+)"
           }
         }
       }
     },
-    "「终于可以歇一歇啦！走，管理员，去菈梵朵玛碰碰杯杯喝奶茶！」": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "「终于可以歇一歇啦！走，管理员，去菈梵朵玛碰碰杯杯喝奶茶！」"
+    "MiMo 使用 thinking.type=enabled / disabled 控制思考开关，不使用 low / medium / high。自动不传此参数。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MiMo 使用 thinking.type=enabled / disabled 控制思考开关，不使用 low / medium / high。自动不传此参数。"
           }
         }
       }
     },
-    "「菈梵朵玛碰碰杯杯奶茶店？很简单嘛，喝够了奶茶，就走了。」": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "「菈梵朵玛碰碰杯杯奶茶店？很简单嘛，喝够了奶茶，就走了。」"
+    "Ollama 的 GPT-OSS 使用 reasoning_effort=low / medium / high，不支持关闭思考。自动使用本地模型默认值。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ollama 的 GPT-OSS 使用 reasoning_effort=low / medium / high，不支持关闭思考。自动使用本地模型默认值。"
           }
         }
       }
     },
-    "「要不……我也帮你松松？我可是知道几个穴位哦！来嘛来嘛，外套脱了别客气！」": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "「要不……我也帮你松松？我可是知道几个穴位哦！来嘛来嘛，外套脱了别客气！」"
+    "QIAN YU" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "QIAN YU"
           }
         }
       }
     },
-    "「走走走！正好带我去后山转转，比划两招！」": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "「走走走！正好带我去后山转转，比划两招！」"
+    "QIAN YU · 今日无课" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "QIAN YU · 今日无课"
           }
         }
       }
     },
-    "「随时喊我，我都在呢！」": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "「随时喊我，我都在呢！」"
+    "QIAN YU 课表" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "QIAN YU 课表"
           }
         }
       }
     },
-    "一眼掌握下节上课教室与时间，陈千语全程随行陪伴。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "一眼掌握下节上课教室与时间，陈千语全程随行陪伴。"
+    "一眼掌握下节上课教室与时间，陈千语全程随行陪伴。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一眼掌握下节上课教室与时间，陈千语全程随行陪伴。"
           }
         }
       }
     },
-    "上课中": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "上课中"
+    "上次验证：%@。修改地址、密钥、模型或思考配置后需要重新测试。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上次验证：%@。修改地址、密钥、模型或思考配置后需要重新测试。"
           }
         }
       }
     },
-    "上课提醒与学期教学周": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "上课提醒与学期教学周"
+    "上课中" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上课中"
           }
         }
       }
     },
-    "上课日程表": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "上课日程表"
+    "上课提醒与学期教学周" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上课提醒与学期教学周"
           }
         }
       }
     },
-    "上课时间": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "上课时间"
+    "上课日程表" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上课日程表"
           }
         }
       }
     },
-    "上课星期": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "上课星期"
+    "上课时间" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上课时间"
           }
         }
       }
     },
-    "下一节课 · %@": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "下一节课 · %@"
+    "上课星期" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上课星期"
           }
         }
       }
     },
-    "下个教室": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "下个教室"
+    "下一节课 · %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下一节课 · %@"
           }
         }
       }
     },
-    "下节: %@": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "下节: %@"
+    "下个教室" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下个教室"
           }
         }
       }
     },
-    "下节: %@ %@": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "下节: %1$@ %2$@"
+    "下节: %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下节: %@"
           }
         }
       }
     },
-    "下节: 高等数学 08:30": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "下节: 高等数学 08:30"
+    "下节: %@ %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下节: %1$@ %2$@"
           }
         }
       }
     },
-    "下节日程": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "下节日程"
+    "下节: 高等数学 08:30" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下节: 高等数学 08:30"
           }
         }
       }
     },
-    "下节课详情": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "下节课详情"
+    "下节日程" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下节日程"
           }
         }
       }
     },
-    "下节课：%@": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "下节课：%@"
+    "下节课：%@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下节课：%@"
           }
         }
       }
     },
-    "下课时千语主动提醒收拾文具、喝水活动、或根据下节课距离为你预留赶路时间": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "下课时千语主动提醒收拾文具、喝水活动、或根据下节课距离为你预留赶路时间"
+    "下节课详情" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下节课详情"
           }
         }
       }
     },
-    "下课时间": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "下课时间"
+    "下课时千语主动提醒收拾文具、喝水活动、或根据下节课距离为你预留赶路时间" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下课时千语主动提醒收拾文具、喝水活动、或根据下节课距离为你预留赶路时间"
           }
         }
       }
     },
-    "专注中": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "专注中"
+    "下课时间" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下课时间"
           }
         }
       }
     },
-    "专注番茄钟": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "专注番茄钟"
+    "专注中" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "专注中"
           }
         }
       }
     },
-    "专注进行中": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "专注进行中"
+    "专注番茄钟" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "专注番茄钟"
           }
         }
       }
     },
-    "中 (平衡思考)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "中 (平衡思考)"
+    "专注进行中" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "专注进行中"
           }
         }
       }
     },
-    "仅单周": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "仅单周"
+    "中 · medium" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中 · medium"
           }
         }
       }
     },
-    "仅双周": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "仅双周"
+    "中 (平衡思考)" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中 (平衡思考)"
           }
         }
       }
     },
-    "今天没有安排课程哦！": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今天没有安排课程哦！"
+    "也可手动填写完整模型 ID" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "也可手动填写完整模型 ID"
           }
         }
       }
     },
-    "今日已无任何课程": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今日已无任何课程"
+    "人设内容" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "人设内容"
           }
         }
       }
     },
-    "今日已无课": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今日已无课"
+    "人设内容不能为空，可点击“恢复默认”重新填入默认设定。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "人设内容不能为空，可点击“恢复默认”重新填入默认设定。"
           }
         }
       }
     },
-    "今日已无课 · 享受闲暇": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今日已无课 · 享受闲暇"
+    "仅单周" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅单周"
           }
         }
       }
     },
-    "今日无课": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今日无课"
+    "仅双周" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅双周"
           }
         }
       }
     },
-    "今日课表": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今日课表"
+    "今天没有安排课程哦！" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今天没有安排课程哦！"
           }
         }
       }
     },
-    "以上为往期历史对话": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "以上为往期历史对话"
+    "今日已无任何课程" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日已无任何课程"
           }
         }
       }
     },
-    "任课教师 (可选)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "任课教师 (可选)"
+    "今日已无课" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日已无课"
           }
         }
       }
     },
-    "伙伴称呼": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "伙伴称呼"
+    "今日已无课 · 享受闲暇" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日已无课 · 享受闲暇"
           }
         }
       }
     },
-    "低 (快速思考)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "低 (快速思考)"
+    "今日无课" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日无课"
           }
         }
       }
     },
-    "例如：1, 2, 4, 7": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "例如：1, 2, 4, 7"
+    "今日课表" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日课表"
           }
         }
       }
     },
-    "例如：管理员": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "例如：管理员"
+    "以上为往期历史对话" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "以上为往期历史对话"
           }
         }
       }
     },
-    "保存": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "保存"
+    "任课教师 (可选)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "任课教师 (可选)"
           }
         }
       }
     },
-    "保存日历事件失败，请稍后重试。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "保存日历事件失败，请稍后重试。"
+    "优先使用已获取的当前位置" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "优先使用已获取的当前位置"
           }
         }
       }
     },
-    "保存课程失败": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "保存课程失败"
+    "伙伴称呼" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "伙伴称呼"
           }
         }
       }
     },
-    "保存课程失败：%@": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "保存课程失败：%@"
+    "低 · low" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "低 · low"
           }
         }
       }
     },
-    "保持专注": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "保持专注"
+    "低 (快速思考)" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "低 (快速思考)"
           }
         }
       }
     },
-    "全周": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "全周"
+    "使用已配置的 API，自动生成可能产生费用。早晨结合天气预报，午饭结合当天课程时长，傍晚结合剩余课程；就寝只说晚安。会检查正文重复，无法生成时使用可变的本地文案。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用已配置的 API，自动生成可能产生费用。早晨结合天气预报，午饭结合当天课程时长，傍晚结合剩余课程；就寝只说晚安。会检查正文重复，无法生成时使用可变的本地文案。"
           }
         }
       }
     },
-    "全学期": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "全学期"
+    "使用当前位置" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用当前位置"
           }
         }
       }
     },
-    "全学期总表": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "全学期总表"
+    "使用默认人设" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用默认人设"
           }
         }
       }
     },
-    "全选": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "全选"
+    "例如：1, 2, 4, 7" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "例如：1, 2, 4, 7"
           }
         }
       }
     },
-    "共 %lld 门课程 · %lld 条上课安排": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "共 %lld 门课程 · %lld 条上课安排"
+    "例如：管理员" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "例如：管理员"
           }
         }
       }
     },
-    "关于应用": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "关于应用"
+    "保存" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存"
           }
         }
       }
     },
-    "关闭 (极速直答，推荐)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "关闭 (极速直答，推荐)"
+    "保存日历事件失败，请稍后重试。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存日历事件失败，请稍后重试。"
           }
         }
       }
     },
-    "再来一轮": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "再来一轮"
+    "保存课程失败" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存课程失败"
           }
         }
       }
     },
-    "删除": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "删除"
+    "保存课程失败：%@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存课程失败：%@"
           }
         }
       }
     },
-    "删除整门课": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "删除整门课"
+    "保持专注" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保持专注"
           }
         }
       }
     },
-    "删除此安排": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "删除此安排"
+    "傍晚鼓励" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "傍晚鼓励"
           }
         }
       }
     },
-    "剑术体能与形体": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "剑术体能与形体"
+    "全周" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全周"
           }
         }
       }
     },
-    "功能导航": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "功能导航"
+    "全学期" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全学期"
           }
         }
       }
     },
-    "北区风雨操场": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "北区风雨操场"
+    "全学期总表" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全学期总表"
           }
         }
       }
     },
-    "千": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "千"
+    "全选" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全选"
           }
         }
       }
     },
-    "千语": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "千语"
+    "共 %lld 门课程 · %lld 条上课安排" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "共 %lld 门课程 · %lld 条上课安排"
           }
         }
       }
     },
-    "千语%@。未变化的重复项 %lld 门未重复添加。": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "千语%1$@。未变化的重复项 %2$lld 门未重复添加。"
+    "关于应用" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关于应用"
+          }
+        }
+      }
+    },
+    "关闭 (极速直答，推荐)" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关闭 (极速直答，推荐)"
+          }
+        }
+      }
+    },
+    "关闭发送 thinking.type=disabled；其余档位发送 thinking.type=enabled 和同名 reasoning_effort（low / high / max）。自动使用服务端默认值。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关闭发送 thinking.type=disabled；其余档位发送 thinking.type=enabled 和同名 reasoning_effort（low / high / max）。自动使用服务端默认值。"
+          }
+        }
+      }
+    },
+    "关闭思考" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关闭思考"
+          }
+        }
+      }
+    },
+    "再来一轮" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "再来一轮"
+          }
+        }
+      }
+    },
+    "最少 · minimal" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最少 · minimal"
+          }
+        }
+      }
+    },
+    "最高 · max" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最高 · max"
+          }
+        }
+      }
+    },
+    "准备睡觉" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "准备睡觉"
+          }
+        }
+      }
+    },
+    "删除" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除"
+          }
+        }
+      }
+    },
+    "删除整门课" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除整门课"
+          }
+        }
+      }
+    },
+    "删除此安排" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除此安排"
+          }
+        }
+      }
+    },
+    "刷新服务端模型列表" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "刷新服务端模型列表"
+          }
+        }
+      }
+    },
+    "刷新模型列表" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "刷新模型列表"
+          }
+        }
+      }
+    },
+    "剑术体能与形体" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "剑术体能与形体"
+          }
+        }
+      }
+    },
+    "功能导航" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "功能导航"
+          }
+        }
+      }
+    },
+    "北区风雨操场" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "北区风雨操场"
+          }
+        }
+      }
+    },
+    "千" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "千"
+          }
+        }
+      }
+    },
+    "千语" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "千语"
+          }
+        }
+      }
+    },
+    "千语，我下一节课快到了，帮我提个醒、打打气呗！" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "千语，我下一节课快到了，帮我提个醒、打打气呗！"
+          }
+        }
+      }
+    },
+    "千语%@。未变化的重复项 %lld 门未重复添加。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "千语%1$@。未变化的重复项 %2$lld 门未重复添加。"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "千语%1$@。未变化的重复项 %2$lld 门未重复添加。"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "千语%1$@。未变化的重复项 %2$lld 门未重复添加。"
           }
         }
       }
     },
-    "千语伴读 · %@": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "千语伴读 · %@"
+    "千语会根据课表和提醒规则发送上课与日常问候。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "千语会根据课表和提醒规则发送上课与日常问候。"
           }
         }
       }
     },
-    "千语伴读 · 专注中": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "千语伴读 · 专注中"
+    "千语伴读 · %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "千语伴读 · %@"
           }
         }
       }
     },
-    "千语原声调子": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "千语原声调子"
+    "千语伴读 · 专注中" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "千语伴读 · 专注中"
           }
         }
       }
     },
-    "千语叮嘱": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "千语叮嘱"
+    "千语原声调子" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "千语原声调子"
           }
         }
       }
     },
-    "千语将按设定时间准时在状态栏或屏幕为你推送上课与日常问候。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "千语将按设定时间准时在状态栏或屏幕为你推送上课与日常问候。"
+    "千语叮嘱" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "千语叮嘱"
           }
         }
       }
     },
-    "千语提醒偏好": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "千语提醒偏好"
+    "千语将按设定时间准时在状态栏或屏幕为你推送上课与日常问候。" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "千语将按设定时间准时在状态栏或屏幕为你推送上课与日常问候。"
           }
         }
       }
     },
-    "千语日常闲聊与推送提醒时对你的尊称，在终末地工业默认为「管理员」。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "千语日常闲聊与推送提醒时对你的尊称，在终末地工业默认为「管理员」。"
+    "千语提醒偏好" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "千语提醒偏好"
           }
         }
       }
     },
-    "千语正在回信……": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "千语正在回信……"
+    "千语日常闲聊与推送提醒时对你的尊称，在终末地工业默认为「管理员」。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "千语日常闲聊与推送提醒时对你的尊称，在终末地工业默认为「管理员」。"
           }
         }
       }
     },
-    "千语每日陪伴定点推送": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "千语每日陪伴定点推送"
+    "千语正在回信……" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "千语正在回信……"
           }
         }
       }
     },
-    "千语课表": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "千语课表"
+    "千语每日陪伴定点推送" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "千语每日陪伴定点推送"
           }
         }
       }
     },
-    "千语课表 · 今日无课": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "千语课表 · 今日无课"
+    "千语每日陪伴推送" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "千语每日陪伴推送"
           }
         }
       }
     },
-    "千语，我下一节课快到了，帮我提个醒、打打气呗！": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "千语，我下一节课快到了，帮我提个醒、打打气呗！"
+    "千语课表" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "千语课表"
           }
         }
       }
     },
-    "午后防困与穴位放松": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "午后防困与穴位放松"
+    "千语课表 · 今日无课" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "千语课表 · 今日无课"
           }
         }
       }
     },
-    "午饭提醒": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "午饭提醒"
+    "午后防困与穴位放松" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "午后防困与穴位放松"
           }
         }
       }
     },
-    "单周": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "单周"
+    "午饭：上午最后一节课早于 11:00 结束时，11:30 提醒；11:00 或之后结束时，下课即提醒。没有上午课时使用上方时间。午后：仅在 14:00–15:00 有课时提醒。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "午饭：上午最后一节课早于 11:00 结束时，11:30 提醒；11:00 或之后结束时，下课即提醒。没有上午课时使用上方时间。午后：仅在 14:00–15:00 有课时提醒。"
           }
         }
       }
     },
-    "即刻体验通知效果": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "即刻体验通知效果"
+    "午饭提醒" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "午饭提醒"
           }
         }
       }
     },
-    "即将上课": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "即将上课"
+    "单周" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "单周"
           }
         }
       }
     },
-    "即将到来的课程": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "即将到来的课程"
+    "即刻体验通知效果" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "即刻体验通知效果"
           }
         }
       }
     },
-    "即时查看 2x2 桌面组件与锁屏组件显示效果，并可真机一键拉起灵动岛实时伴读测试。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "即时查看 2x2 桌面组件与锁屏组件显示效果，并可真机一键拉起灵动岛实时伴读测试。"
+    "即将上课" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "即将上课"
           }
         }
       }
     },
-    "去授权": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "去授权"
+    "即将到来的课程" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "即将到来的课程"
           }
         }
       }
     },
-    "双周": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "双周"
+    "即时查看 2x2 桌面组件与锁屏组件显示效果，并可真机一键拉起灵动岛实时伴读测试。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "即时查看 2x2 桌面组件与锁屏组件显示效果，并可真机一键拉起灵动岛实时伴读测试。"
           }
         }
       }
     },
-    "发送测试通知": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "发送测试通知"
+    "去授权" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "去授权"
           }
         }
       }
     },
-    "取消": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "取消"
+    "双周" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "双周"
           }
         }
       }
     },
-    "取消全选": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "取消全选"
+    "发送测试通知" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "发送测试通知"
           }
         }
       }
     },
-    "合并更新 %lld 门已有课程的周次": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "合并更新 %lld 门已有课程的周次"
+    "取消" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
           }
         }
       }
     },
-    "同名课程集中展示，包含全学期所有周次。可编辑单条安排，或一次删除整门课程。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "同名课程集中展示，包含全学期所有周次。可编辑单条安排，或一次删除整门课程。"
+    "取消全选" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消全选"
           }
         }
       }
     },
-    "同步至 Apple 系统日历": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "同步至 Apple 系统日历"
+    "只在你点击「使用当前位置」时申请使用期间定位。定位被拒绝、撤销或超过一天未更新时使用常用城市；修改城市后请查找并选择地点。城市、区名可用于查找，不需要精确定位。天气由 Open-Meteo 提供，天气服务会收到所选地点的坐标；AI 收到天气概况、课程统计、称呼、角色设定和近期通知正文，不发送精确坐标、街道地址或聊天记录。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "只在你点击「使用当前位置」时申请使用期间定位。定位被拒绝、撤销或超过一天未更新时使用常用城市；修改城市后请查找并选择地点。城市、区名可用于查找，不需要精确定位。天气由 Open-Meteo 提供，天气服务会收到所选地点的坐标；AI 收到天气概况、课程统计、称呼、角色设定和近期通知正文，不发送精确坐标、街道地址或聊天记录。"
           }
         }
       }
     },
-    "启动灵动岛": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "启动灵动岛"
+    "可以修改身份、性格、说话风格和回复规则。保存后，从下一条 AI 对话开始使用。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "可以修改身份、性格、说话风格和回复规则。保存后，从下一条 AI 对话开始使用。"
           }
         }
       }
     },
-    "启用课前千语智能通知": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "启用课前千语智能通知"
+    "各档位直接对应 OpenAI 的同名 reasoning_effort；自动省略该字段并使用模型默认值。仅显示当前模型支持的档位，不支持关闭时不显示“关闭”。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "各档位直接对应 OpenAI 的同名 reasoning_effort；自动省略该字段并使用模型默认值。仅显示当前模型支持的档位，不支持关闭时不显示“关闭”。"
           }
         }
       }
     },
-    "启用课后千语收尾关怀": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "启用课后千语收尾关怀"
+    "合并更新 %lld 门已有课程的周次" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "合并更新 %lld 门已有课程的周次"
           }
         }
       }
     },
-    "启用课程提醒": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "启用课程提醒"
+    "同名课程集中展示，包含全学期所有周次。可编辑单条安排，或一次删除整门课程。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "同名课程集中展示，包含全学期所有周次。可编辑单条安排，或一次删除整门课程。"
           }
         }
       }
     },
-    "周一": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "周一"
+    "同步至 Apple 系统日历" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "同步至 Apple 系统日历"
           }
         }
       }
     },
-    "周三": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "周三"
+    "启动灵动岛" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动灵动岛"
           }
         }
       }
     },
-    "周二": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "周二"
+    "启用课前千语智能通知" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用课前千语智能通知"
           }
         }
       }
     },
-    "周五": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "周五"
+    "启用课后千语收尾关怀" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用课后千语收尾关怀"
           }
         }
       }
     },
-    "周六": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "周六"
+    "启用课程提醒" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用课程提醒"
           }
         }
       }
     },
-    "周四": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "周四"
+    "周一" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "周一"
           }
         }
       }
     },
-    "周数与单双周规则": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "周数与单双周规则"
+    "周三" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "周三"
           }
         }
       }
     },
-    "周数模式": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "周数模式"
+    "周二" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "周二"
           }
         }
       }
     },
-    "周日": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "周日"
+    "周五" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "周五"
           }
         }
       }
     },
-    "回到本周 (第 %lld 周)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "回到本周 (第 %lld 周)"
+    "周六" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "周六"
           }
         }
       }
     },
-    "在 iPhone 主屏幕长按空白区域至应用图标抖动 -> 点击左上角「+」-> 搜索「QIAN YU」-> 选择 2x2 尺寸卡片点击「添加小组件」。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "在 iPhone 主屏幕长按空白区域至应用图标抖动 -> 点击左上角「+」-> 搜索「QIAN YU」-> 选择 2x2 尺寸卡片点击「添加小组件」。"
+    "周四" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "周四"
           }
         }
       }
     },
-    "在锁屏状态下长按屏幕 -> 点击「自定」-> 选择「锁定屏幕」-> 点击时钟下方或上方的小组件插槽 -> 添加「QIAN YU」课程表或专注组件。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "在锁屏状态下长按屏幕 -> 点击「自定」-> 选择「锁定屏幕」-> 点击时钟下方或上方的小组件插槽 -> 添加「QIAN YU」课程表或专注组件。"
+    "周数与单双周规则" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "周数与单双周规则"
           }
         }
       }
     },
-    "地点未填写": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "地点未填写"
+    "周数模式" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "周数模式"
           }
         }
       }
     },
-    "基本信息": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "基本信息"
+    "周日" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "周日"
           }
         }
       }
     },
-    "好的": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "好的"
+    "回到本周 (第 %lld 周)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回到本周 (第 %lld 周)"
           }
         }
       }
     },
-    "如 sk-...": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "如 sk-..."
+    "在 iPhone 主屏幕长按空白区域至应用图标抖动 -> 点击左上角「+」-> 搜索「QIAN YU」-> 选择 2x2 尺寸卡片点击「添加小组件」。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 iPhone 主屏幕长按空白区域至应用图标抖动 -> 点击左上角「+」-> 搜索「QIAN YU」-> 选择 2x2 尺寸卡片点击「添加小组件」。"
           }
         }
       }
     },
-    "如何添加小组件与启用灵动岛": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "如何添加小组件与启用灵动岛"
+    "在 iPhone「快捷指令 → 自动化」中创建两项个人自动化，触发条件均选择「睡眠」专注模式，并选择「立即运行」：" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 iPhone「快捷指令 → 自动化」中创建两项个人自动化，触发条件均选择「睡眠」专注模式，并选择「立即运行」："
           }
         }
       }
     },
-    "完成": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "完成"
+    "在锁屏状态下长按屏幕 -> 点击「自定」-> 选择「锁定屏幕」-> 点击时钟下方或上方的小组件插槽 -> 添加「QIAN YU」课程表或专注组件。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在锁屏状态下长按屏幕 -> 点击「自定」-> 选择「锁定屏幕」-> 点击时钟下方或上方的小组件插槽 -> 添加「QIAN YU」课程表或专注组件。"
           }
         }
       }
     },
-    "宏山城龙族姑娘 · 终末地特勤干员 · 双剑客 · 说话规范": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "宏山城龙族姑娘 · 终末地特勤干员 · 双剑客 · 说话规范"
+    "地点未填写" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "地点未填写"
           }
         }
       }
     },
-    "实验楼 A408": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "实验楼 A408"
+    "地点查询失败，请检查网络后重试。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "地点查询失败，请检查网络后重试。"
           }
         }
       }
     },
-    "导入 (%lld)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "导入 (%lld)"
+    "基本信息" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "基本信息"
           }
         }
       }
     },
-    "导入 .ics 日历课表": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "导入 .ics 日历课表"
+    "天气来源：Open-Meteo" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "天气来源：Open-Meteo"
           }
         }
       }
     },
-    "导入 .ics 课表": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "导入 .ics 课表"
+    "天气状况不明" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "天气状况不明"
           }
         }
       }
     },
-    "导入失败": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "导入失败"
+    "好的" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "好的"
           }
         }
       }
     },
-    "导入完成": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "导入完成"
+    "如 sk-..." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "如 sk-..."
           }
         }
       }
     },
-    "导入提示": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "导入提示"
+    "如何添加小组件与启用灵动岛" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "如何添加小组件与启用灵动岛"
           }
         }
       }
     },
-    "导入模式": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "导入模式"
+    "完成" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完成"
           }
         }
       }
     },
-    "导入课程表 (.ics)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "导入课程表 (.ics)"
+    "宏山城龙族姑娘 · 终末地特勤干员 · 双剑客 · 说话规范" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "宏山城龙族姑娘 · 终末地特勤干员 · 双剑客 · 说话规范"
           }
         }
       }
     },
-    "将删除「%@」在%@ %@ 的安排（%@）。其他安排不受影响。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "将删除「%@」在%@ %@ 的安排（%@）。其他安排不受影响。"
+    "定位不可用，继续使用常用城市。可在系统设置中允许定位，或手动选择城市与区。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "定位不可用，继续使用常用城市。可在系统设置中允许定位，或手动选择城市与区。"
           }
         }
       }
     },
-    "将删除「%@」的全部 %lld 条上课安排及所有周次，无法撤销。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "将删除「%@」的全部 %lld 条上课安排及所有周次，无法撤销。"
+    "实验楼 A408" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实验楼 A408"
           }
         }
       }
     },
-    "将开学第一周对齐到 %@，确保单双周和本周课表精准计算。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "将开学第一周对齐到 %@，确保单双周和本周课表精准计算。"
+    "导入 .ics 日历课表" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入 .ics 日历课表"
           }
         }
       }
     },
-    "小米 MiMo": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "小米 MiMo"
+    "导入 .ics 课表" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入 .ics 课表"
           }
         }
       }
     },
-    "小组件与灵动岛": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "小组件与灵动岛"
+    "导入 (%lld)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入 (%lld)"
           }
         }
       }
     },
-    "小组件与灵动岛全览": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "小组件与灵动岛全览"
+    "导入失败" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入失败"
           }
         }
       }
     },
-    "展开往期历史记录 (%lld 条)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "展开往期历史记录 (%lld 条)"
+    "导入完成" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入完成"
           }
         }
       }
     },
-    "展开态 (长按灵动岛展开大卡片)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "展开态 (长按灵动岛展开大卡片)"
+    "导入提示" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入提示"
           }
         }
       }
     },
-    "已完成 %lld%%": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "已完成 %lld%%"
+    "导入模式" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入模式"
           }
         }
       }
     },
-    "已完成 35%": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "已完成 35%"
+    "导入课程表 (.ics)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入课程表 (.ics)"
           }
         }
       }
     },
-    "已思考过程": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "已思考过程"
+    "将删除「%@」在%@ %@ 的安排（%@）。其他安排不受影响。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将删除「%@」在%@ %@ 的安排（%@）。其他安排不受影响。"
           }
         }
       }
     },
-    "已收回灵动岛实时活动。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "已收回灵动岛实时活动。"
+    "将删除「%@」的全部 %lld 条上课安排及所有周次，无法撤销。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将删除「%@」的全部 %lld 条上课安排及所有周次，无法撤销。"
           }
         }
       }
     },
-    "已暂停": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "已暂停"
+    "将开学第一周对齐到 %@，确保单双周和本周课表精准计算。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将开学第一周对齐到 %@，确保单双周和本周课表精准计算。"
           }
         }
       }
     },
-    "已自动过滤 %lld 个全天非上课事件 (如节假日或校历)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "已自动过滤 %lld 个全天非上课事件 (如节假日或校历)"
+    "小米 MiMo" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "小米 MiMo"
           }
         }
       }
     },
-    "应用名称": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "应用名称"
+    "小组件与灵动岛" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "小组件与灵动岛"
           }
         }
       }
     },
-    "开启后千语才能在课前和每日定点给你发通知。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "开启后千语才能在课前和每日定点给你发通知。"
+    "小组件与灵动岛全览" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "小组件与灵动岛全览"
           }
         }
       }
     },
-    "开启灵动岛实时活动": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "开启灵动岛实时活动"
+    "尚未保存" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尚未保存"
           }
         }
       }
     },
-    "开始专注": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "开始专注"
+    "尚未填写 API Key" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尚未填写 API Key"
           }
         }
       }
     },
-    "开始小憩": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "开始小憩"
+    "尚未填写模型 ID" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尚未填写模型 ID"
           }
         }
       }
     },
-    "开学第一周起始日期": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "开学第一周起始日期"
+    "尚未确认此地址与模型的思考参数支持情况，使用服务端默认设置，不发送 reasoning_effort 或其他思考参数。自动不表示关闭思考。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尚未确认此地址与模型的思考参数支持情况，使用服务端默认设置，不发送 reasoning_effort 或其他思考参数。自动不表示关闭思考。"
           }
         }
       }
     },
-    "张教授": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "张教授"
+    "尚未读取服务端模型列表。预设仅供参考；点击刷新可读取当前 API Key 可见的全部模型，也可手动填写模型 ID。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尚未读取服务端模型列表。预设仅供参考；点击刷新可读取当前 API Key 可见的全部模型，也可手动填写模型 ID。"
           }
         }
       }
     },
-    "当前课表中已有同名同时间课程（追加导入会合并周次；无变化的重复项不会重复添加）": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "当前课表中已有同名同时间课程（追加导入会合并周次；无变化的重复项不会重复添加）"
+    "展开往期历史记录 (%lld 条)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "展开往期历史记录 (%lld 条)"
           }
         }
       }
     },
-    "当课表中课程开启提醒时，千语将在课前提前为你预警教室与时间": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "当课表中课程开启提醒时，千语将在课前提前为你预警教室与时间"
+    "展开态 (长按灵动岛展开大卡片)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "展开态 (长按灵动岛展开大卡片)"
           }
         }
       }
     },
-    "思考强度": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "思考强度"
+    "已使用：%@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已使用：%@"
           }
         }
       }
     },
-    "总轮次 %lld 分钟": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "总轮次 %lld 分钟"
+    "已保存自定义人设" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已保存自定义人设"
           }
         }
       }
     },
-    "总轮次 25 分钟": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "总轮次 25 分钟"
+    "已完成 %lld%%" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已完成 %lld%%"
           }
         }
       }
     },
-    "成功解析出 %lld 门规律周课 (扫描 %lld 场日程)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "成功解析出 %1$lld 门规律周课 (扫描 %2$lld 场日程)"
+    "已完成 35%" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已完成 35%"
           }
         }
       }
     },
-    "所选 %lld 门课程已存在且周次没有变化，没有新增课程。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "所选 %lld 门课程已存在且周次没有变化，没有新增课程。"
+    "已思考过程" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已思考过程"
           }
         }
       }
     },
-    "手动加课": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "手动加课"
+    "已收回灵动岛实时活动。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已收回灵动岛实时活动。"
           }
         }
       }
     },
-    "手动添加课程": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "手动添加课程"
+    "已暂停" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已暂停"
           }
         }
       }
     },
-    "打开主窗口": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "打开主窗口"
+    "已自动过滤 %lld 个全天非上课事件 (如节假日或校历)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已自动过滤 %lld 个全天非上课事件 (如节假日或校历)"
           }
         }
       }
     },
-    "找千语唠嗑或问课表……": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "找千语唠嗑或问课表……"
+    "已读取 %lld 个服务端模型。列表可能包含非对话模型；请选定后测试连接。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已读取 %lld 个服务端模型。列表可能包含非对话模型；请选定后测试连接。"
           }
         }
       }
     },
-    "指定具体周次": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "指定具体周次"
+    "已选择：%@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已选择：%@"
           }
         }
       }
     },
-    "按周查看": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "按周查看"
+    "已配置睡眠自动化" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已配置睡眠自动化"
           }
         }
       }
     },
-    "授课教师: %@\n教学周: 第%lld周": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "授课教师: %1$@\n教学周: 第%2$lld周"
+    "常用地点：%@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "常用地点：%@"
+          }
+        }
+      }
+    },
+    "常用城市 / 区，例如深圳市南山区" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "常用城市 / 区，例如深圳市南山区"
+          }
+        }
+      }
+    },
+    "应用名称" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "应用名称"
+          }
+        }
+      }
+    },
+    "开启后，清晨优先在退出睡眠模式时提醒，最迟在设定时间后一小时提醒；晚安优先在进入睡眠模式时提醒，最迟在设定时间提醒。每天各一次，超过截止时间不再补发。清晨动作在上午生效，晚安按当次就寝的截止时间判断，支持跨午夜。未开启时，早晚按设定时间提醒。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开启后，清晨优先在退出睡眠模式时提醒，最迟在设定时间后一小时提醒；晚安优先在进入睡眠模式时提醒，最迟在设定时间提醒。每天各一次，超过截止时间不再补发。清晨动作在上午生效，晚安按当次就寝的截止时间判断，支持跨午夜。未开启时，早晚按设定时间提醒。"
+          }
+        }
+      }
+    },
+    "开启后千语才能发送课程与每日提醒。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开启后千语才能发送课程与每日提醒。"
+          }
+        }
+      }
+    },
+    "开启后千语才能在课前和每日定点给你发通知。" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开启后千语才能在课前和每日定点给你发通知。"
+          }
+        }
+      }
+    },
+    "开启思考" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开启思考"
+          }
+        }
+      }
+    },
+    "开启灵动岛实时活动" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开启灵动岛实时活动"
+          }
+        }
+      }
+    },
+    "开始专注" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开始专注"
+          }
+        }
+      }
+    },
+    "开始小憩" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开始小憩"
+          }
+        }
+      }
+    },
+    "开学第一周起始日期" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开学第一周起始日期"
+          }
+        }
+      }
+    },
+    "张教授" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "张教授"
+          }
+        }
+      }
+    },
+    "当前位置" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前位置"
+          }
+        }
+      }
+    },
+    "当前模型：%@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前模型：%@"
+          }
+        }
+      }
+    },
+    "当前课表中已有同名同时间课程（追加导入会合并周次；无变化的重复项不会重复添加）" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前课表中已有同名同时间课程（追加导入会合并周次；无变化的重复项不会重复添加）"
+          }
+        }
+      }
+    },
+    "当前配置已通过连接测试" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前配置已通过连接测试"
+          }
+        }
+      }
+    },
+    "当课表中课程开启提醒时，千语将在课前提前为你预警教室与时间" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当课表中课程开启提醒时，千语将在课前提前为你预警教室与时间"
+          }
+        }
+      }
+    },
+    "思考强度" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "思考强度"
+          }
+        }
+      }
+    },
+    "总轮次 %lld 分钟" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "总轮次 %lld 分钟"
+          }
+        }
+      }
+    },
+    "总轮次 25 分钟" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "总轮次 25 分钟"
+          }
+        }
+      }
+    },
+    "恢复默认" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复默认"
+          }
+        }
+      }
+    },
+    "恢复默认后也需要点击保存。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复默认后也需要点击保存。"
+          }
+        }
+      }
+    },
+    "成功解析出 %lld 门规律周课 (扫描 %lld 场日程)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "成功解析出 %1$lld 门规律周课 (扫描 %2$lld 场日程)"
+          }
+        }
+      }
+    },
+    "所有提醒使用普通通知，声音和横幅由系统通知与专注模式设置决定。每日提醒预排未来 7 天，打开应用或运行睡眠自动化时续排，系统后台刷新也会尝试续排。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所有提醒使用普通通知，声音和横幅由系统通知与专注模式设置决定。每日提醒预排未来 7 天，打开应用或运行睡眠自动化时续排，系统后台刷新也会尝试续排。"
+          }
+        }
+      }
+    },
+    "所选 %lld 门课程已存在且周次没有变化，没有新增课程。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所选 %lld 门课程已存在且周次没有变化，没有新增课程。"
+          }
+        }
+      }
+    },
+    "手动加课" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "手动加课"
+          }
+        }
+      }
+    },
+    "手动添加课程" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "手动添加课程"
+          }
+        }
+      }
+    },
+    "打开主窗口" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开主窗口"
+          }
+        }
+      }
+    },
+    "找千语唠嗑或问课表……" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "找千语唠嗑或问课表……"
+          }
+        }
+      }
+    },
+    "指定具体周次" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "指定具体周次"
+          }
+        }
+      }
+    },
+    "按周查看" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按周查看"
+          }
+        }
+      }
+    },
+    "授课教师: %@\n教学周: 第%lld周" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "授课教师: %1$@\n教学周: 第%2$lld周"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "授课教师: %1$@\n教学周: 第%2$lld周"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "授课教师: %1$@\n教学周: 第%2$lld周"
           }
         }
       }
     },
-    "授课教师：%@": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "授课教师：%@"
+    "授课教师：%@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "授课教师：%@"
           }
         }
       }
     },
-    "接口地址": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "接口地址"
+    "接口地址" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接口地址"
           }
         }
       }
     },
-    "推送时间到达时，系统将以陈千语专属口吻发送带有横幅与声音的本地通知。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "推送时间到达时，系统将以陈千语专属口吻发送带有横幅与声音的本地通知。"
+    "推送时间到达时，系统将以陈千语专属口吻发送带有横幅与声音的本地通知。" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "推送时间到达时，系统将以陈千语专属口吻发送带有横幅与声音的本地通知。"
           }
         }
       }
     },
-    "推送测试": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "推送测试"
+    "推送测试" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "推送测试"
           }
         }
       }
     },
-    "提前 %lld 分钟": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "提前 %lld 分钟"
+    "提前 %lld 分钟" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提前 %lld 分钟"
           }
         }
       }
     },
-    "提前 %lld 分钟千语推送": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "提前 %lld 分钟千语推送"
+    "提前 %lld 分钟千语推送" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提前 %lld 分钟千语推送"
           }
         }
       }
     },
-    "提前 %lld 分钟提醒": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "提前 %lld 分钟提醒"
+    "提前 %lld 分钟提醒" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提前 %lld 分钟提醒"
           }
         }
       }
     },
-    "提前提醒时间": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "提前提醒时间"
+    "提前提醒时间" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提前提醒时间"
           }
         }
       }
     },
-    "提速建议：千语设定为极简口语（30~80字），推荐将「思考强度」设为「关闭 (极速直答)」，或在模型中选用 deepseek-chat 等对话模型，避免深度推理（o1/o3/R1 思维链）带来的漫长等待。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "提速建议：千语设定为极简口语（30~80字），推荐将「思考强度」设为「关闭 (极速直答)」，或在模型中选用 deepseek-chat 等对话模型，避免深度推理（o1/o3/R1 思维链）带来的漫长等待。"
+    "提速建议：千语设定为极简口语（30~80字），推荐将「思考强度」设为「关闭 (极速直答)」，或在模型中选用 deepseek-chat 等对话模型，避免深度推理（o1/o3/R1 思维链）带来的漫长等待。" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提速建议：千语设定为极简口语（30~80字），推荐将「思考强度」设为「关闭 (极速直答)」，或在模型中选用 deepseek-chat 等对话模型，避免深度推理（o1/o3/R1 思维链）带来的漫长等待。"
           }
         }
       }
     },
-    "提醒已关闭": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "提醒已关闭"
+    "提醒已关闭" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提醒已关闭"
           }
         }
       }
     },
-    "提醒时间": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "提醒时间"
+    "提醒时间" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提醒时间"
           }
         }
       }
     },
-    "搜索课程、教师或地点": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "搜索课程、教师或地点"
+    "搜索模型 ID" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "搜索模型 ID"
           }
         }
       }
     },
-    "收回灵动岛": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "收回灵动岛"
+    "搜索课程、教师或地点" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "搜索课程、教师或地点"
           }
         }
       }
     },
-    "收起往期历史记录": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "收起往期历史记录"
+    "收回灵动岛" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "收回灵动岛"
           }
         }
       }
     },
-    "放弃重置": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "放弃重置"
+    "收起往期历史记录" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "收起往期历史记录"
           }
         }
       }
     },
-    "教室": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "教室"
+    "放弃重置" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "放弃重置"
           }
         }
       }
     },
-    "教室 / 地点 (例如：正心楼 312)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "教室 / 地点 (例如：正心楼 312)"
+    "教室" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "教室"
           }
         }
       }
     },
-    "教室未指定": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "教室未指定"
+    "教室 / 地点 (例如：正心楼 312)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "教室 / 地点 (例如：正心楼 312)"
           }
         }
       }
     },
-    "教师未填写": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "教师未填写"
+    "教室未指定" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "教室未指定"
           }
         }
       }
     },
-    "数据结构与算法": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "数据结构与算法"
+    "教师未填写" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "教师未填写"
           }
         }
       }
     },
-    "新增 %lld 门课程": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "新增 %lld 门课程"
+    "数据结构与算法" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "数据结构与算法"
           }
         }
       }
     },
-    "无周次": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "无周次"
+    "文案在打开应用或系统允许后台刷新时提前准备，通知到点直接发送缓存内容。天气是指定日期的预报；没有可靠数据就不提天气。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文案在打开应用或系统允许后台刷新时提前准备，通知到点直接发送缓存内容。天气是指定日期的预报；没有可靠数据就不提天气。"
           }
         }
       }
     },
-    "无法读取共享课表": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "无法读取共享课表"
+    "新增 %lld 门课程" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新增 %lld 门课程"
           }
         }
       }
     },
-    "无法读取日历文件，文件可能已损坏或编码不受支持。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "无法读取日历文件，文件可能已损坏或编码不受支持。"
+    "无周次" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无周次"
           }
         }
       }
     },
-    "无课": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "无课"
+    "无法读取共享课表" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法读取共享课表"
           }
         }
       }
     },
-    "日历课表文件": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "日历课表文件"
+    "无法读取日历文件，文件可能已损坏或编码不受支持。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法读取日历文件，文件可能已损坏或编码不受支持。"
           }
         }
       }
     },
-    "旧 API Key 尚未迁移。可允许一次旧钥匙串访问，或重新输入 API Key。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "旧 API Key 尚未迁移。可允许一次旧钥匙串访问，或重新输入 API Key。"
+    "无法读取钥匙串中的 API Key，请解锁系统钥匙串后重试。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法读取钥匙串中的 API Key，请解锁系统钥匙串后重试。"
           }
         }
       }
     },
-    "旧 API Key 尚未迁移到钥匙串；请检查系统钥匙串权限。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "旧 API Key 尚未迁移到钥匙串；请检查系统钥匙串权限。"
+    "无课" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无课"
           }
         }
       }
     },
-    "旧钥匙串中没有找到 API Key，请重新输入。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "旧钥匙串中没有找到 API Key，请重新输入。"
+    "日历课表文件" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日历课表文件"
           }
         }
       }
     },
-    "时间与周期": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "时间与周期"
+    "旧 API Key 尚未迁移。可允许一次旧钥匙串访问，或重新输入 API Key。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "旧 API Key 尚未迁移。可允许一次旧钥匙串访问，或重新输入 API Key。"
           }
         }
       }
     },
-    "显示 API Key": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "显示 API Key"
+    "旧 API Key 尚未迁移到钥匙串；请检查系统钥匙串权限。" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "旧 API Key 尚未迁移到钥匙串；请检查系统钥匙串权限。"
           }
         }
       }
     },
-    "暂停": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "暂停"
+    "旧 API Key 暂时无法读取，请解锁系统钥匙串后重试。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "旧 API Key 暂时无法读取，请解锁系统钥匙串后重试。"
           }
         }
       }
     },
-    "服务商预设": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "服务商预设"
+    "旧钥匙串中没有找到 API Key，请重新输入。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "旧钥匙串中没有找到 API Key，请重新输入。"
           }
         }
       }
     },
-    "未命名课程": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "未命名课程"
+    "时间与周期" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "时间与周期"
           }
         }
       }
     },
-    "未指定": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "未指定"
+    "显示 API Key" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示 API Key"
           }
         }
       }
     },
-    "未能从该日历文件中识别出有效的上课日程事件。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "未能从该日历文件中识别出有效的上课日程事件。"
+    "晴" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "晴"
           }
         }
       }
     },
-    "未能成功解析日历文件": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "未能成功解析日历文件"
+    "晴间多云或阴" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "晴间多云或阴"
           }
         }
       }
     },
-    "未能获取日历访问权限。请前往系统「设置」->「隐私与安全性」->「日历」中允许 QIAN YU 访问。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "未能获取日历访问权限。请前往系统「设置」->「隐私与安全性」->「日历」中允许 QIAN YU 访问。"
+    "暂停" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂停"
           }
         }
       }
     },
-    "未能读取旧 API Key，请允许本次钥匙串访问或重新输入。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "未能读取旧 API Key，请允许本次钥匙串访问或重新输入。"
+    "更高 · xhigh" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更高 · xhigh"
           }
         }
       }
     },
-    "本周": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "本周"
+    "服务商预设" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务商预设"
           }
         }
       }
     },
-    "本地 Ollama": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "本地 Ollama"
+    "服务未返回兼容的模型列表；仍可手动填写模型 ID 并测试连接。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务未返回兼容的模型列表；仍可手动填写模型 ID 并测试连接。"
           }
         }
       }
     },
-    "李老师": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "李老师"
+    "服务端返回了空模型列表。可以手动填写模型 ID，再测试该模型的连接。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务端返回了空模型列表。可以手动填写模型 ID，再测试该模型的连接。"
           }
         }
       }
     },
-    "极简态 (与其他 App 共享灵动岛时)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "极简态 (与其他 App 共享灵动岛时)"
+    "服务返回了无法识别的聊天数据。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务返回了无法识别的聊天数据。"
           }
         }
       }
     },
-    "桌面 2x2": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "桌面 2x2"
+    "服务返回了非 SSE 聊天内容，请检查 API 地址和模型。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务返回了非 SSE 聊天内容，请检查 API 地址和模型。"
           }
         }
       }
     },
-    "桌面 2x2 小组件 · 锁屏单行/圆形/长条 · 灵动岛 4 种实时伴读形态": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "桌面 2x2 小组件 · 锁屏单行/圆形/长条 · 灵动岛 4 种实时伴读形态"
+    "服务返回的内容不是有效的聊天 API JSON，请检查 API 地址。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务返回的内容不是有效的聊天 API JSON，请检查 API 地址。"
           }
         }
       }
     },
-    "桌面 2x2 系统小号组件 (System Small)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "桌面 2x2 系统小号组件 (System Small)"
+    "未命名课程" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未命名课程"
           }
         }
       }
     },
-    "模型名称": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "模型名称"
+    "未找到地点，请补充省、市或区名。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未找到地点，请补充省、市或区名。"
           }
         }
       }
     },
-    "模型服务返回 HTTP %lld。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "模型服务返回 HTTP %lld。"
+    "未指定" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未指定"
           }
         }
       }
     },
-    "模型服务返回 HTTP %lld：%@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "模型服务返回 HTTP %1$lld：%2$@"
+    "未能从该日历文件中识别出有效的上课日程事件。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未能从该日历文件中识别出有效的上课日程事件。"
+          }
+        }
+      }
+    },
+    "未能成功解析日历文件" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未能成功解析日历文件"
+          }
+        }
+      }
+    },
+    "未能获取日历访问权限。请前往系统「设置」->「隐私与安全性」->「日历」中允许 QIAN YU 访问。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未能获取日历访问权限。请前往系统「设置」->「隐私与安全性」->「日历」中允许 QIAN YU 访问。"
+          }
+        }
+      }
+    },
+    "未能读取旧 API Key，请允许本次钥匙串访问或重新输入。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未能读取旧 API Key，请允许本次钥匙串访问或重新输入。"
+          }
+        }
+      }
+    },
+    "本周" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本周"
+          }
+        }
+      }
+    },
+    "本地 Ollama" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本地 Ollama"
+          }
+        }
+      }
+    },
+    "本机接口可留空；若服务要求密钥，仍需填写。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本机接口可留空；若服务要求密钥，仍需填写。"
+          }
+        }
+      }
+    },
+    "本轮已到时" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本轮已到时"
+          }
+        }
+      }
+    },
+    "李老师" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "李老师"
+          }
+        }
+      }
+    },
+    "极简态 (与其他 App 共享灵动岛时)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "极简态 (与其他 App 共享灵动岛时)"
+          }
+        }
+      }
+    },
+    "查找城市与区" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查找城市与区"
+          }
+        }
+      }
+    },
+    "桌面 2x2" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "桌面 2x2"
+          }
+        }
+      }
+    },
+    "桌面 2x2 小组件 · 锁屏单行/圆形/长条 · 灵动岛 4 种实时伴读形态" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "桌面 2x2 小组件 · 锁屏单行/圆形/长条 · 灵动岛 4 种实时伴读形态"
+          }
+        }
+      }
+    },
+    "桌面 2x2 系统小号组件 (System Small)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "桌面 2x2 系统小号组件 (System Small)"
+          }
+        }
+      }
+    },
+    "模型 ID" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型 ID"
+          }
+        }
+      }
+    },
+    "模型列表分页异常，请稍后重试。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型列表分页异常，请稍后重试。"
+          }
+        }
+      }
+    },
+    "模型列表缺少下一页信息。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型列表缺少下一页信息。"
+          }
+        }
+      }
+    },
+    "模型列表返回了无效的分页地址。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型列表返回了无效的分页地址。"
+          }
+        }
+      }
+    },
+    "模型名称" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型名称"
+          }
+        }
+      }
+    },
+    "模型回复超过可处理的大小。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型回复超过可处理的大小。"
+          }
+        }
+      }
+    },
+    "模型服务返回 HTTP %lld：%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "模型服务返回 HTTP %1$lld：%2$@"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "模型服务返回 HTTP %1$lld：%2$@"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型服务返回 HTTP %1$lld：%2$@"
           }
         }
       }
     },
-    "模拟课程状态：": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "模拟课程状态："
+    "模型服务返回 HTTP %lld。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型服务返回 HTTP %lld。"
           }
         }
       }
     },
-    "正在上课": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "正在上课"
+    "模型未返回可用的文字回复，请检查所选模型是否支持聊天。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型未返回可用的文字回复，请检查所选模型是否支持聊天。"
           }
         }
       }
     },
-    "正在同步至系统日历…": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "正在同步至系统日历…"
+    "模型的回复流提前中断，请重试。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型的回复流提前中断，请重试。"
           }
         }
       }
     },
-    "正在思考中…": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "正在思考中…"
+    "模拟课程状态：" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模拟课程状态："
           }
         }
       }
     },
-    "正心楼 312": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "正心楼 312"
+    "正在上课" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在上课"
           }
         }
       }
     },
-    "每周 (单双周均上)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "每周 (单双周均上)"
+    "正在同步至系统日历…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在同步至系统日历…"
           }
         }
       }
     },
-    "每日推送与提醒": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "每日推送与提醒"
+    "正在思考中…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在思考中…"
           }
         }
       }
     },
-    "每日提醒与上课通知": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "每日提醒与上课通知"
+    "正在查找城市与区…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在查找城市与区…"
           }
         }
       }
     },
-    "每日提醒与通知": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "每日提醒与通知"
+    "正在获取当前位置…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在获取当前位置…"
           }
         }
       }
     },
-    "没有找到课程": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "没有找到课程"
+    "正在读取…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在读取…"
           }
         }
       }
     },
-    "注意：与现有其它课程时间段重叠": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "注意：与现有其它课程时间段重叠"
+    "正在验证…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在验证…"
           }
         }
       }
     },
-    "深夜就寝": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "深夜就寝"
+    "正在验证当前模型与思考配置…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在验证当前模型与思考配置…"
           }
         }
       }
     },
-    "添加新课程": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "添加新课程"
+    "正心楼 312" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正心楼 312"
           }
         }
       }
     },
-    "添加桌面 2x2 小组件": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "添加桌面 2x2 小组件"
+    "此专用模型的参数和接口可能不同，当前使用服务端默认思考设置；请用连接测试确认它支持聊天接口。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此专用模型的参数和接口可能不同，当前使用服务端默认思考设置；请用连接测试确认它支持聊天接口。"
           }
         }
       }
     },
-    "添加课程": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "添加课程"
+    "此模型使用 enable_thinking=true / false 切换思考。thinking_budget 是 token 上限，不等同于 reasoning_effort，应用不虚构低、中、高映射。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此模型使用 enable_thinking=true / false 切换思考。thinking_budget 是 token 上限，不等同于 reasoning_effort，应用不虚构低、中、高映射。"
           }
         }
       }
     },
-    "添加课程，开始管理本学期的上课安排。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "添加课程，开始管理本学期的上课安排。"
+    "每周 (单双周均上)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每周 (单双周均上)"
           }
         }
       }
     },
-    "添加锁屏小组件": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "添加锁屏小组件"
+    "每日推送与提醒" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每日推送与提醒"
           }
         }
       }
     },
-    "清晨唤醒": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "清晨唤醒"
+    "每日提醒与上课通知" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每日提醒与上课通知"
           }
         }
       }
     },
-    "清晨唤醒 · 饭点提醒 · 穴位放松 · 深夜关怀 · 课前预警": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "清晨唤醒 · 饭点提醒 · 穴位放松 · 深夜关怀 · 课前预警"
+    "每日提醒与通知" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每日提醒与通知"
           }
         }
       }
     },
-    "清空对话记录": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "清空对话记录"
+    "没有找到课程" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有找到课程"
           }
         }
       }
     },
-    "清空并覆盖现有课表": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "清空并覆盖现有课表"
+    "注意：与现有其它课程时间段重叠" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "注意：与现有其它课程时间段重叠"
           }
         }
       }
     },
-    "灵动岛": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "灵动岛"
+    "测试当前配置" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "测试当前配置"
           }
         }
       }
     },
-    "灵动岛 4 种实时形态 (Dynamic Island)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "灵动岛 4 种实时形态 (Dynamic Island)"
+    "深夜就寝" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "深夜就寝"
           }
         }
       }
     },
-    "灵动岛真机实测控制": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "灵动岛真机实测控制"
+    "添加新课程" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加新课程"
           }
         }
       }
     },
-    "点击「启动灵动岛」后，可返回 iPhone 主屏幕或锁屏，即可在支持灵动岛的机型上看到实时浮动伴读！": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "点击「启动灵动岛」后，可返回 iPhone 主屏幕或锁屏，即可在支持灵动岛的机型上看到实时浮动伴读！"
+    "添加桌面 2x2 小组件" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加桌面 2x2 小组件"
           }
         }
       }
     },
-    "点击后 3 秒触发本地通知横幅，便于测试系统声音与权限。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "点击后 3 秒触发本地通知横幅，便于测试系统声音与权限。"
+    "添加课程" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加课程"
           }
         }
       }
     },
-    "点击进入配置清晨、午休、傍晚等四大定点陪伴推送与课前课后提醒时间。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "点击进入配置清晨、午休、傍晚等四大定点陪伴推送与课前课后提醒时间。"
+    "添加课程，开始管理本学期的上课安排。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加课程，开始管理本学期的上课安排。"
           }
         }
       }
     },
-    "版本号": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "版本号"
+    "添加锁屏小组件" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加锁屏小组件"
           }
         }
       }
     },
-    "特勤干员 · 随行": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "特勤干员 · 随行"
+    "清晨唤醒" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "清晨唤醒"
           }
         }
       }
     },
-    "特勤干员 · 随行中": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "特勤干员 · 随行中"
+    "清晨唤醒 · 饭点提醒 · 穴位放松 · 深夜关怀 · 课前预警" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "清晨唤醒 · 饭点提醒 · 穴位放松 · 深夜关怀 · 课前预警"
           }
         }
       }
     },
-    "硅基流动 (SiliconFlow)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "硅基流动 (SiliconFlow)"
+    "清空对话记录" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "清空对话记录"
           }
         }
       }
     },
-    "确保在 iPhone「系统设置 -> QIAN YU」中将「实时活动」开关保持打开。开启番茄钟专注后，灵动岛将自动升起伴读。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "确保在 iPhone「系统设置 -> QIAN YU」中将「实时活动」开关保持打开。开启番茄钟专注后，灵动岛将自动升起伴读。"
+    "清空并覆盖现有课表" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "清空并覆盖现有课表"
           }
         }
       }
     },
-    "确定": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "确定"
+    "灵动岛" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "灵动岛"
           }
         }
       }
     },
-    "确认删除？": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "确认删除？"
+    "灵动岛 4 种实时形态 (Dynamic Island)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "灵动岛 4 种实时形态 (Dynamic Island)"
           }
         }
       }
     },
-    "称呼": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "称呼"
+    "灵动岛真机实测控制" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "灵动岛真机实测控制"
           }
         }
       }
     },
-    "第 %lld 周": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "第 %lld 周"
+    "点击「启动灵动岛」后，可返回 iPhone 主屏幕或锁屏，即可在支持灵动岛的机型上看到实时浮动伴读！" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "点击「启动灵动岛」后，可返回 iPhone 主屏幕或锁屏，即可在支持灵动岛的机型上看到实时浮动伴读！"
           }
         }
       }
     },
-    "第 %lld 周 (查看中)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "第 %lld 周 (查看中)"
+    "点击后 3 秒触发本地通知横幅，便于测试系统声音与权限。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "点击后 3 秒触发本地通知横幅，便于测试系统声音与权限。"
           }
         }
       }
     },
-    "第 %lld 周 · %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "第 %1$lld 周 · %2$@"
+    "点击进入配置清晨、午休、傍晚等四大定点陪伴推送与课前课后提醒时间。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "点击进入配置清晨、午休、傍晚等四大定点陪伴推送与课前课后提醒时间。"
+          }
+        }
+      }
+    },
+    "版本号" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本号"
+          }
+        }
+      }
+    },
+    "特勤干员 · 随行" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "特勤干员 · 随行"
+          }
+        }
+      }
+    },
+    "特勤干员 · 随行中" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "特勤干员 · 随行中"
+          }
+        }
+      }
+    },
+    "用 AI 生成每日问候" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用 AI 生成每日问候"
+          }
+        }
+      }
+    },
+    "睡眠已结束" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睡眠已结束"
+          }
+        }
+      }
+    },
+    "硅基流动 (SiliconFlow)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "硅基流动 (SiliconFlow)"
+          }
+        }
+      }
+    },
+    "硅基流动：关闭发送 enable_thinking=false；开启发送 enable_thinking=true 及 reasoning_effort=high / max。自动使用服务端默认值。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "硅基流动：关闭发送 enable_thinking=false；开启发送 enable_thinking=true 及 reasoning_effort=high / max。自动使用服务端默认值。"
+          }
+        }
+      }
+    },
+    "确保在 iPhone「系统设置 -> QIAN YU」中将「实时活动」开关保持打开。开启番茄钟专注后，灵动岛将自动升起伴读。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确保在 iPhone「系统设置 -> QIAN YU」中将「实时活动」开关保持打开。开启番茄钟专注后，灵动岛将自动升起伴读。"
+          }
+        }
+      }
+    },
+    "确定" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确定"
+          }
+        }
+      }
+    },
+    "确认删除？" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确认删除？"
+          }
+        }
+      }
+    },
+    "离线固定回复与通知文案仍使用内置千语台词，不受此处修改影响。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "离线固定回复与通知文案仍使用内置千语台词，不受此处修改影响。"
+          }
+        }
+      }
+    },
+    "称呼" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "称呼"
+          }
+        }
+      }
+    },
+    "第 %lld 周" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "第 %lld 周"
+          }
+        }
+      }
+    },
+    "第 %lld 周 · %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "第 %1$lld 周 · %2$@"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "第 %1$lld 周 · %2$@"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "第 %1$lld 周 · %2$@"
           }
         }
       }
     },
-    "第 1 周": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "第 1 周"
+    "第 %lld 周 (查看中)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "第 %lld 周 (查看中)"
           }
         }
       }
     },
-    "第 4 周 · 双周": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "第 4 周 · 双周"
+    "第 1 周" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "第 1 周"
           }
         }
       }
     },
-    "第%@周%@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "第%1$@周%2$@"
+    "第 4 周 · 双周" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "第 4 周 · 双周"
+          }
+        }
+      }
+    },
+    "第%@周%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "第%1$@周%2$@"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "第%1$@周%2$@"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "第%1$@周%2$@"
           }
         }
       }
     },
-    "第%lld周 (单次)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "第%lld周 (单次)"
+    "第%lld周 (单次)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "第%lld周 (单次)"
           }
         }
       }
     },
-    "管理员": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "管理员"
+    "管理员" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "管理员"
           }
         }
       }
     },
-    "系统已判定当前为【%@】，用于单双周智能过滤": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "系统已判定当前为【%@】，用于单双周智能过滤"
+    "系统已判定当前为【%@】，用于单双周智能过滤" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统已判定当前为【%@】，用于单双周智能过滤"
           }
         }
       }
     },
-    "系统日历同步": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "系统日历同步"
+    "系统日历同步" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统日历同步"
           }
         }
       }
     },
-    "系统通知权限已开启": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "系统通知权限已开启"
+    "系统通知权限已开启" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统通知权限已开启"
           }
         }
       }
     },
-    "系统通知权限未开启": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "系统通知权限未开启"
+    "系统通知权限未开启" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统通知权限未开启"
           }
         }
       }
     },
-    "紧凑态 (左右药丸)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "紧凑态 (左右药丸)"
+    "紧凑态 (左右药丸)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "紧凑态 (左右药丸)"
           }
         }
       }
     },
-    "组件类型": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "组件类型"
+    "组件类型" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "组件类型"
           }
         }
       }
     },
-    "终末地特勤": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "终末地特勤"
+    "终末地特勤" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "终末地特勤"
           }
         }
       }
     },
-    "终末地特勤干员 · 双剑客 · 龙族": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "终末地特勤干员 · 双剑客 · 龙族"
+    "终末地特勤干员 · 双剑客 · 龙族" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "终末地特勤干员 · 双剑客 · 龙族"
           }
         }
       }
     },
-    "结束周数: 第 %lld 周": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "结束周数: 第 %lld 周"
+    "结束周数: 第 %lld 周" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "结束周数: 第 %lld 周"
           }
         }
       }
     },
-    "继续": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "继续"
+    "继续" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "继续"
           }
         }
       }
     },
-    "继续编辑": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "继续编辑"
+    "继续编辑" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "继续编辑"
           }
         }
       }
     },
-    "编辑": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "编辑"
+    "编辑" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "编辑"
           }
         }
       }
     },
-    "编辑上课安排": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "编辑上课安排"
+    "编辑上课安排" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "编辑上课安排"
           }
         }
       }
     },
-    "自动校准开学日期": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "自动校准开学日期"
+    "自动（模型默认）" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自动（模型默认）"
           }
         }
       }
     },
-    "自动识别学期开学：%@ (第 1 周周一)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "自动识别学期开学：%@ (第 1 周周一)"
+    "自动校准开学日期" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自动校准开学日期"
           }
         }
       }
     },
-    "自定义服务商": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "自定义服务商"
+    "自动识别学期开学：%@ (第 1 周周一)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自动识别学期开学：%@ (第 1 周周一)"
           }
         }
       }
     },
-    "角色人设": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "角色人设"
+    "自定义服务商" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自定义服务商"
           }
         }
       }
     },
-    "解析到的课程清单 (%lld/%lld)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "解析到的课程清单 (%1$lld/%2$lld)"
+    "角色人设" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "角色人设"
           }
         }
       }
     },
-    "设置": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "设置"
+    "解析到的课程清单 (%lld/%lld)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "解析到的课程清单 (%1$lld/%2$lld)"
           }
         }
       }
     },
-    "设置与偏好": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "设置与偏好"
+    "设置" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置"
           }
         }
       }
     },
-    "设计规范": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "设计规范"
+    "设置与偏好" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置与偏好"
           }
         }
       }
     },
-    "试试其他课程名称、教师或地点。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "试试其他课程名称、教师或地点。"
+    "设计规范" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设计规范"
           }
         }
       }
     },
-    "说话的核心规范": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "说话的核心规范"
+    "试试其他课程名称、教师或地点。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "试试其他课程名称、教师或地点。"
           }
         }
       }
     },
-    "请检查 App Group 配置": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "请检查 App Group 配置"
+    "说话的核心规范" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "说话的核心规范"
           }
         }
       }
     },
-    "请稍后重试。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "请稍后重试。"
+    "请先填写或选择模型 ID。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请先填写或选择模型 ID。"
           }
         }
       }
     },
-    "请输入至少一个 1–%lld 之间的周数。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "请输入至少一个 1–%lld 之间的周数。"
+    "请填写有效的 HTTP 或 HTTPS API 地址" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请填写有效的 HTTP 或 HTTPS API 地址"
           }
         }
       }
     },
-    "请输入至少一个 1–30 之间的周数。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "请输入至少一个 1–30 之间的周数。"
+    "请检查 App Group 配置" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请检查 App Group 配置"
           }
         }
       }
     },
-    "课程保存失败": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "课程保存失败"
+    "请稍后重试。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请稍后重试。"
           }
         }
       }
     },
-    "课程名称 (必填，例如：高等数学)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "课程名称 (必填，例如：高等数学)"
+    "请输入至少一个 1–%lld 之间的周数。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请输入至少一个 1–%lld 之间的周数。"
           }
         }
       }
     },
-    "课程管理": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "课程管理"
+    "请输入至少一个 1–30 之间的周数。" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请输入至少一个 1–30 之间的周数。"
           }
         }
       }
     },
-    "课程表": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "课程表"
+    "请选择对应地点。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请选择对应地点。"
           }
         }
       }
     },
-    "课程表没有保存成功，请重试。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "课程表没有保存成功，请重试。"
+    "读取模型列表失败：%@。仍可手动填写模型 ID 并测试连接。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "读取模型列表失败：%@。仍可手动填写模型 ID 并测试连接。"
           }
         }
       }
     },
-    "课表标签色": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "课表标签色"
+    "课程保存失败" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "课程保存失败"
           }
         }
       }
     },
-    "起始周数: 第 %lld 周": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "起始周数: 第 %lld 周"
+    "课程名称 (必填，例如：高等数学)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "课程名称 (必填，例如：高等数学)"
           }
         }
       }
     },
-    "跟千语说句话……": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "跟千语说句话……"
+    "课程管理" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "课程管理"
           }
         }
       }
     },
-    "身份与背景": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "身份与背景"
+    "课程表" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "课程表"
           }
         }
       }
     },
-    "输入 1–%lld 的周数，用逗号分隔；可用于间断周或单次课程。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "输入 1–%lld 的周数，用逗号分隔；可用于间断周或单次课程。"
+    "课程表没有保存成功，请重试。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "课程表没有保存成功，请重试。"
           }
         }
       }
     },
-    "输入 1–30 的周数，用逗号分隔；可用于间断周或单次课程。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "输入 1–30 的周数，用逗号分隔；可用于间断周或单次课程。"
+    "课表标签色" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "课表标签色"
           }
         }
       }
     },
-    "输入 API Key": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "输入 API Key"
+    "起始周数: 第 %lld 周" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "起始周数: 第 %lld 周"
           }
         }
       }
     },
-    "输入或从上方选择模型": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "输入或从上方选择模型"
+    "跟千语说句话……" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "跟千语说句话……"
           }
         }
       }
     },
-    "还没有课程": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "还没有课程"
+    "跟随睡眠模式" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "跟随睡眠模式"
           }
         }
       }
     },
-    "追加到现有课表": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "追加到现有课表"
+    "身份与背景" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "身份与背景"
           }
         }
       }
     },
-    "退出": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "退出"
+    "输入 1–%lld 的周数，用逗号分隔；可用于间断周或单次课程。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "输入 1–%lld 的周数，用逗号分隔；可用于间断周或单次课程。"
           }
         }
       }
     },
-    "选择模型": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "选择模型"
+    "输入 1–30 的周数，用逗号分隔；可用于间断周或单次课程。" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "输入 1–30 的周数，用逗号分隔；可用于间断周或单次课程。"
           }
         }
       }
     },
-    "重新尝试迁移旧 API Key": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "重新尝试迁移旧 API Key"
+    "输入 API Key" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "输入 API Key"
           }
         }
       }
     },
-    "重置": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "重置"
+    "输入或从上方选择模型" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "输入或从上方选择模型"
           }
         }
       }
     },
-    "锁屏实时横幅 (Lock Screen Live Activity)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "锁屏实时横幅 (Lock Screen Live Activity)"
+    "还没有课程" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "还没有课程"
           }
         }
       }
     },
-    "锁屏组件": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "锁屏组件"
+    "这是 DeepSeek 的旧模型名称。请刷新模型列表并选择当前可用模型；旧名称的思考模式由模型本身决定。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这是 DeepSeek 的旧模型名称。请刷新模型列表并选择当前可用模型；旧名称的思考模式由模型本身决定。"
           }
         }
       }
     },
-    "长按 iPhone 桌面空白处，点击左上角「+」即可添加。": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "长按 iPhone 桌面空白处，点击左上角「+」即可添加。"
+    "进入睡眠专注模式时，发送千语的晚安问候。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "进入睡眠专注模式时，发送千语的晚安问候。"
           }
         }
       }
     },
-    "陈千语": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "陈千语"
+    "连接测试未通过" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "连接测试未通过"
           }
         }
       }
     },
-    "陈千语 (Chen Qianyu)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "陈千语 (Chen Qianyu)"
+    "追加到现有课表" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "追加到现有课表"
           }
         }
       }
     },
-    "陈千语 · 人设档案": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "陈千语 · 人设档案"
+    "退出" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出"
           }
         }
       }
     },
-    "陈千语 · 伴读中": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "陈千语 · 伴读中"
+    "退出睡眠专注模式时，发送千语的清晨问候。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出睡眠专注模式时，发送千语的清晨问候。"
           }
         }
       }
     },
-    "陈千语 · 完整人设规范与台词语料": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "陈千语 · 完整人设规范与台词语料"
+    "选择模型" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择模型"
           }
         }
       }
     },
-    "陈千语 · 随行伴读": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "陈千语 · 随行伴读"
+    "配置已保存，尚未验证" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "配置已保存，尚未验证"
           }
         }
       }
     },
-    "陈千语 · 随行状态": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "陈千语 · 随行状态"
+    "配置未完成" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "配置未完成"
           }
         }
       }
     },
-    "陈教练": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "陈教练"
+    "重新尝试保存" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重新尝试保存"
           }
         }
       }
     },
-    "隐藏 API Key": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "隐藏 API Key"
+    "重新尝试迁移旧 API Key" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重新尝试迁移旧 API Key"
           }
         }
       }
     },
-    "高 (深度推理)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "高 (深度推理)"
+    "重置" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重置"
           }
         }
       }
     },
-    "高数": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "高数"
+    "锁屏实时横幅 (Lock Screen Live Activity)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "锁屏实时横幅 (Lock Screen Live Activity)"
           }
         }
       }
     },
-    "高等数学 (上)": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "高等数学 (上)"
+    "锁屏组件" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "锁屏组件"
           }
         }
       }
     },
-    "默认提前提醒": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "默认提前提醒"
+    "长按 iPhone 桌面空白处，点击左上角「+」即可添加。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "长按 iPhone 桌面空白处，点击左上角「+」即可添加。"
           }
         }
       }
     },
-    "💭 千语正在深入琢磨中……": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "💭 千语正在深入琢磨中……"
+    "陈千语" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "陈千语"
+          }
+        }
+      }
+    },
+    "陈千语 · 人设档案" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "陈千语 · 人设档案"
+          }
+        }
+      }
+    },
+    "陈千语 · 伴读中" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "千语和你一起专注哦！"
+          }
+        }
+      }
+    },
+    "陈千语 · 完整人设规范与台词语料" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "陈千语 · 完整人设规范与台词语料"
+          }
+        }
+      }
+    },
+    "陈千语 · 随行伴读" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "千语在看着你哦！"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "千语在看着你哦！"
+          }
+        }
+      }
+    },
+    "陈千语 · 随行状态" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "陈千语 · 随行状态"
+          }
+        }
+      }
+    },
+    "陈千语 (Chen Qianyu)" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "陈千语 (Chen Qianyu)"
+          }
+        }
+      }
+    },
+    "陈教练" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "陈教练"
+          }
+        }
+      }
+    },
+    "隐藏 API Key" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "隐藏 API Key"
+          }
+        }
+      }
+    },
+    "雨" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "雨"
+          }
+        }
+      }
+    },
+    "雪" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "雪"
+          }
+        }
+      }
+    },
+    "雷雨" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "雷雨"
+          }
+        }
+      }
+    },
+    "雾" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "雾"
+          }
+        }
+      }
+    },
+    "高 · high" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高 · high"
+          }
+        }
+      }
+    },
+    "高 (深度推理)" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高 (深度推理)"
+          }
+        }
+      }
+    },
+    "高数" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高数"
+          }
+        }
+      }
+    },
+    "高等数学 (上)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高等数学 (上)"
+          }
+        }
+      }
+    },
+    "默认人设参考" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "默认人设参考"
+          }
+        }
+      }
+    },
+    "默认提前提醒" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "默认提前提醒"
           }
         }
       }
     }
   },
-  "version": "1.0"
+  "version" : "1.0"
 }

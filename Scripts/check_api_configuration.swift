@@ -2,14 +2,6 @@
 import Foundation
 import Security
 
-public enum EditorialCopy {
-    public static func text(_ key: String, _ values: [String: CustomStringConvertible] = [:]) -> String {
-        let template = key == "persona.base" ? "默认千语人设" : "{base} {userName} {timeContext}"
-        var result = template
-        for (name, value) in values { result = result.replacingOccurrences(of: "{\(name)}", with: value.description) }
-        return result
-    }
-}
 @MainActor public final class NotificationManager {
     public static let shared = NotificationManager()
     public func checkAuthorizationStatus() async -> Bool { false }
@@ -32,6 +24,38 @@ final class MemoryKeyStore: APIKeyStorage {
     }
 }
 
+final class DailyPushURLProtocol: URLProtocol {
+    override class func canInit(with request: URLRequest) -> Bool { request.url?.host == "fixture.invalid" }
+    override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
+    override func startLoading() {
+        var data = request.httpBody ?? Data()
+        if let stream = request.httpBodyStream {
+            stream.open()
+            defer { stream.close() }
+            var buffer = [UInt8](repeating: 0, count: 4096)
+            while stream.hasBytesAvailable {
+                let length = stream.read(&buffer, maxLength: buffer.count)
+                guard length > 0 else { break }
+                data.append(contentsOf: buffer.prefix(length))
+            }
+        }
+        let payload = try! JSONSerialization.jsonObject(with: data) as! [String: Any]
+        precondition(payload["stream"] as? Bool == false)
+        precondition(request.timeoutInterval == 25)
+        precondition(request.value(forHTTPHeaderField: "Authorization") == "Bearer fixture-secret")
+        let model = payload["model"] as! String
+        let status = model == "denied" ? 401 : 200
+        let body: [String: Any] = model == "denied"
+            ? ["error": ["message": "invalid fixture-secret"]]
+            : ["choices": [["message": ["content": model == "empty" ? "" : "生成的推送正文"]]]]
+        let response = HTTPURLResponse(url: request.url!, statusCode: status, httpVersion: "HTTP/1.1", headerFields: ["Content-Type": "application/json"])!
+        client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+        client?.urlProtocol(self, didLoad: try! JSONSerialization.data(withJSONObject: body))
+        client?.urlProtocolDidFinishLoading(self)
+    }
+    override func stopLoading() {}
+}
+
 @main struct RegressionChecks {
     @MainActor static func main() async throws {
         let suite = "qianyu.api.regression.\(UUID().uuidString)"
@@ -40,6 +64,34 @@ final class MemoryKeyStore: APIKeyStorage {
         let store = MemoryKeyStore()
         store.values["chat-api-key"] = "legacy-secret"
         let first = AppSettings(defaults: defaults, keyStore: store)
+        precondition(first.afternoonHour == 13 && first.afternoonMinute == 45, "New afternoon default")
+        precondition(first.duskEnabled && first.duskHour == 18 && first.duskMinute == 0, "Independent dusk default")
+        precondition(first.weatherCity == "深圳市南山区" && !first.weatherUseLocation, "Weather is manual until permission requested")
+        let fullPersona = EditorialCopy.text("persona.base")
+        precondition(fullPersona.count > 8_000, "Default persona must retain the full source")
+        for heading in ["# 身份", "# 说话的样子", "# 你说过的话", "# 事实边界", "# 互动习惯", "# 世界：你的知识边界", "# 人物"] {
+            precondition(fullPersona.contains(heading), "Missing original persona section: \(heading)")
+        }
+        precondition(!fullPersona.contains("get_weather"), "Do not advertise an unavailable weather tool")
+        precondition(first.effectivePersonaPrompt == fullPersona)
+        let fullPrompt = PersonaEngine(settings: first).buildSystemPrompt(
+            userName: "测试同伴", upcomingCourseHint: "测试课 10:00 A101", weatherHint: "测试天气"
+        )
+        precondition(fullPrompt.hasPrefix(fullPersona), "Persona must not be summarized or truncated")
+        let factualContext = String(fullPrompt.dropFirst(fullPersona.count))
+        precondition(factualContext.contains("当前本地时间："))
+        precondition(factualContext.contains("测试同伴") && factualContext.contains("测试课 10:00 A101"))
+        precondition(factualContext.contains("测试天气"))
+        for unwanted in ["提醒", "催促", "包子", "不许熬夜"] {
+            precondition(!factualContext.contains(unwanted), "Context must not impose character behavior")
+        }
+        let personaRequest = try LLMRequestBuilder.chatRequest(
+            baseURL: "https://example.org/v1", apiKey: "test", model: "test-model",
+            messages: [ChatRequestMessage(role: "system", content: fullPrompt)], stream: true
+        )
+        let personaBody = try JSONSerialization.jsonObject(with: personaRequest.httpBody!) as! [String: Any]
+        let serializedMessages = personaBody["messages"] as! [[String: Any]]
+        precondition(serializedMessages[0]["content"] as? String == fullPrompt, "API must receive the complete persona")
         precondition(first.apiKey == "legacy-secret")
         precondition(store.values["chat-api-key.deepseek"] == "legacy-secret")
         first.modelName = "manually-entered/deepseek-model"
@@ -57,6 +109,9 @@ final class MemoryKeyStore: APIKeyStorage {
         precondition(second.modelName == "manually-entered/deepseek-model")
         precondition(second.customPersonaPrompt == "自定义角色，只讲事实")
         precondition(PersonaEngine(settings: second).buildSystemPrompt().contains("自定义角色，只讲事实"))
+        second.customPersonaPrompt = ""
+        precondition(second.effectivePersonaPrompt == fullPersona, "Restore default must restore the full persona")
+        second.customPersonaPrompt = "自定义角色，只讲事实"
         precondition(second.activateProvider(code: "openai", defaultURL: "", defaultModel: ""))
         precondition(second.modelName == "manually-entered/openai-model")
         precondition(second.apiKey == "openai-secret")
@@ -99,6 +154,22 @@ final class MemoryKeyStore: APIKeyStorage {
         second.modelName = "another-custom-model"
         vm.configurationDidChange()
         precondition(vm.configurationStatus == .saved)
-        print("API settings regression checks passed")
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.protocolClasses = [DailyPushURLProtocol.self]
+        let generator = LLMService(session: URLSession(configuration: configuration))
+        let generated = try await generator.completeDailyPush(baseURL: "https://fixture.invalid/v1", apiKey: "fixture-secret",
+            model: "normal", thinkingEffort: "auto", messages: [.init(role: "user", content: "测试推送")])
+        precondition(generated == "生成的推送正文")
+        do {
+            _ = try await generator.completeDailyPush(baseURL: "https://fixture.invalid/v1", apiKey: "fixture-secret",
+                model: "empty", thinkingEffort: "auto", messages: [])
+            preconditionFailure("empty response must fail")
+        } catch LLMServiceError.emptyResponse { }
+        do {
+            _ = try await generator.completeDailyPush(baseURL: "https://fixture.invalid/v1", apiKey: "fixture-secret",
+                model: "denied", thinkingEffort: "auto", messages: [])
+            preconditionFailure("denied response must fail")
+        } catch { precondition(!error.localizedDescription.contains("fixture-secret"), "Errors must redact keys") }
+        print("API settings and complete persona regression checks passed")
     }
 }

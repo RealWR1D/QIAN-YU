@@ -150,7 +150,7 @@ public struct SettingsView: View {
                     SettingsSectionHeader(title: String(localized: "关于应用"), icon: "info.circle")
 
                     SettingsCardContainer {
-                        SettingsInfoRow(label: String(localized: "应用名称"), value: String(localized: "千语"))
+                        SettingsInfoRow(label: String(localized: "应用名称"), value: "QIAN YU")
                         Divider().padding(.leading, 126)
                         SettingsInfoRow(label: String(localized: "设计规范"), value: String(localized: "Apple HIG · SwiftUI 原生跨平台"))
                         Divider().padding(.leading, 126)

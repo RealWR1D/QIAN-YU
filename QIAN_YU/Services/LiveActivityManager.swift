@@ -33,6 +33,7 @@ public final class LiveActivityManager {
         sessionTitle: String,
         totalSeconds: Int,
         remainingSeconds: Int,
+        endDate: Date,
         quote: String = EditorialCopy.text("focus.activity.defaultQuote")
     ) -> Bool {
         #if canImport(ActivityKit) && os(iOS)
@@ -51,13 +52,14 @@ public final class LiveActivityManager {
             totalSeconds: totalSeconds,
             isPaused: false,
             sessionTitle: sessionTitle,
-            quote: quote
+            quote: quote,
+            endDate: endDate
         )
 
         do {
             let activity = try Activity<PomodoroActivityAttributes>.request(
                 attributes: attributes,
-                content: .init(state: initialState, staleDate: nil),
+                content: .init(state: initialState, staleDate: endDate),
                 pushType: nil
             )
             self.currentActivity = activity
@@ -76,6 +78,7 @@ public final class LiveActivityManager {
         remainingSeconds: Int,
         isPaused: Bool,
         sessionTitle: String,
+        endDate: Date? = nil,
         quote: String? = nil
     ) {
         #if canImport(ActivityKit) && os(iOS)
@@ -89,11 +92,12 @@ public final class LiveActivityManager {
             totalSeconds: activeActivity.content.state.totalSeconds,
             isPaused: isPaused,
             sessionTitle: sessionTitle,
-            quote: finalQuote
+            quote: finalQuote,
+            endDate: isPaused ? nil : endDate
         )
 
         Task {
-            await activeActivity.update(.init(state: updatedState, staleDate: nil))
+            await activeActivity.update(.init(state: updatedState, staleDate: updatedState.endDate))
         }
         #endif
     }

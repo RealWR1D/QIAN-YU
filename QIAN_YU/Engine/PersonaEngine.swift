@@ -24,32 +24,16 @@ public struct PersonaEngine {
         upcomingCourseHint: String? = nil,
         weatherHint: String? = nil
     ) -> String {
-        if settings.hasCustomPersonaPrompt {
-            return buildCustomSystemPrompt(
-                userName: userName,
-                upcomingCourseHint: upcomingCourseHint,
-                weatherHint: weatherHint
-            )
-        }
-
-        let hour = Calendar.current.component(.hour, from: Date())
-        var timeContext = ""
-
-        switch hour {
-        case 5..<11:
-            timeContext = EditorialCopy.text("persona.time.morning")
-        case 11..<14:
-            timeContext = EditorialCopy.text("persona.time.lunch")
-        case 14..<18:
-            timeContext = EditorialCopy.text("persona.time.afternoon")
-        case 18..<22:
-            timeContext = EditorialCopy.text("persona.time.evening")
-        default:
-            timeContext = EditorialCopy.text("persona.time.night")
-        }
+        // 默认与自定义人设都只附加事实，避免时段台词强制角色催睡、劝饭。
+        let formatter = DateFormatter()
+        formatter.locale = .autoupdatingCurrent
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
 
         var prompt = EditorialCopy.text("persona.context", [
-            "base": baseSystemPrompt, "userName": userName, "timeContext": timeContext
+            "base": baseSystemPrompt,
+            "userName": userName,
+            "timeContext": "当前本地时间：\(formatter.string(from: Date()))"
         ])
 
         if let course = upcomingCourseHint, !course.isEmpty {
@@ -63,26 +47,6 @@ public struct PersonaEngine {
         return prompt
     }
 
-    /// 自定义人设只补充事实背景，避免默认时段台词中的语气、行为要求覆盖用户设定。
-    private func buildCustomSystemPrompt(
-        userName: String,
-        upcomingCourseHint: String?,
-        weatherHint: String?
-    ) -> String {
-        let formatter = DateFormatter()
-        formatter.locale = .autoupdatingCurrent
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
-        var prompt = baseSystemPrompt + "\n\n【实时情境信息，仅作为背景】：\n对方称呼：\(userName)\n当前本地时间：\(formatter.string(from: Date()))"
-        if let course = upcomingCourseHint, !course.isEmpty {
-            prompt += "\n【课表动态】：\(course)"
-        }
-        if let weather = weatherHint, !weather.isEmpty {
-            prompt += "\n【天气概况】：\(weather)"
-        }
-        return prompt
-    }
-
     /// 离线每日推送保底文案库 (严格符合千语口吻)
     public func fallbackNotification(for type: PushType, userName: String = "管理员") -> (title: String, body: String) {
         let key: String
@@ -90,6 +54,7 @@ public struct PersonaEngine {
         case .morning: key = "morning"
         case .lunch: key = "lunch"
         case .afternoon: key = "afternoon"
+        case .dusk: key = "dusk"
         case .evening: key = "evening"
         }
         return (

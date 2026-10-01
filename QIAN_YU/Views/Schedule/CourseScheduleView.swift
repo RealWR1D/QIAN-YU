@@ -274,6 +274,7 @@ public struct CourseScheduleView: View {
         .sheet(isPresented: $viewModel.isShowingImportPreview) {
             if let result = viewModel.currentImportResult {
                 ImportCoursesPreviewSheet(viewModel: viewModel, parseResult: result)
+                    .id(viewModel.importPresentationID)
             }
         }
         .fileImporter(

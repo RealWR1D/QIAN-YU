@@ -83,7 +83,28 @@ public final class AppSettings {
         }
     }
 
-    // MARK: - 每日四大定点提醒开关与时间
+    // MARK: - 每日陪伴提醒
+    public var aiDailyPushEnabled: Bool {
+        didSet { defaults.set(aiDailyPushEnabled, forKey: "qianyu_ai_daily_push") }
+    }
+    public var weatherCity: String {
+        didSet { defaults.set(weatherCity, forKey: "qianyu_weather_city") }
+    }
+    public var weatherUseLocation: Bool {
+        didSet { defaults.set(weatherUseLocation, forKey: "qianyu_weather_use_location") }
+    }
+    public var duskEnabled: Bool {
+        didSet { defaults.set(duskEnabled, forKey: "qianyu_dusk_enabled") }
+    }
+    public var duskHour: Int {
+        didSet { defaults.set(duskHour, forKey: "qianyu_dusk_hour") }
+    }
+    public var duskMinute: Int {
+        didSet { defaults.set(duskMinute, forKey: "qianyu_dusk_minute") }
+    }
+    public var sleepAutomationEnabled: Bool {
+        didSet { defaults.set(sleepAutomationEnabled, forKey: "qianyu_sleep_automation_enabled") }
+    }
     public var morningEnabled: Bool {
         didSet { defaults.set(morningEnabled, forKey: "qianyu_morning_enabled") }
     }
@@ -192,6 +213,13 @@ public final class AppSettings {
         self.keyStore = keyStore
         self.userName = defaults.string(forKey: "qianyu_userName") ?? String(localized: "管理员")
 
+        self.aiDailyPushEnabled = defaults.object(forKey: "qianyu_ai_daily_push") as? Bool ?? true
+        self.weatherCity = defaults.string(forKey: "qianyu_weather_city") ?? "深圳市南山区"
+        self.weatherUseLocation = defaults.bool(forKey: "qianyu_weather_use_location")
+        self.duskEnabled = defaults.object(forKey: "qianyu_dusk_enabled") as? Bool ?? true
+        self.duskHour = defaults.object(forKey: "qianyu_dusk_hour") as? Int ?? 18
+        self.duskMinute = defaults.object(forKey: "qianyu_dusk_minute") as? Int ?? 0
+        self.sleepAutomationEnabled = defaults.bool(forKey: "qianyu_sleep_automation_enabled")
         self.morningEnabled = defaults.object(forKey: "qianyu_morning_enabled") as? Bool ?? true
         self.morningHour = defaults.object(forKey: "qianyu_morning_hour") as? Int ?? 7
         self.morningMinute = defaults.object(forKey: "qianyu_morning_minute") as? Int ?? 45
@@ -201,8 +229,8 @@ public final class AppSettings {
         self.lunchMinute = defaults.object(forKey: "qianyu_lunch_minute") as? Int ?? 0
 
         self.afternoonEnabled = defaults.object(forKey: "qianyu_afternoon_enabled") as? Bool ?? true
-        self.afternoonHour = defaults.object(forKey: "qianyu_afternoon_hour") as? Int ?? 14
-        self.afternoonMinute = defaults.object(forKey: "qianyu_afternoon_minute") as? Int ?? 0
+        self.afternoonHour = defaults.object(forKey: "qianyu_afternoon_hour") as? Int ?? 13
+        self.afternoonMinute = defaults.object(forKey: "qianyu_afternoon_minute") as? Int ?? 45
 
         self.eveningEnabled = defaults.object(forKey: "qianyu_evening_enabled") as? Bool ?? true
         self.eveningHour = defaults.object(forKey: "qianyu_evening_hour") as? Int ?? 22
@@ -419,6 +447,9 @@ public final class AppSettings {
         case .afternoon:
             self.afternoonHour = hour
             self.afternoonMinute = minute
+        case .dusk:
+            self.duskHour = hour
+            self.duskMinute = minute
         case .evening:
             self.eveningHour = hour
             self.eveningMinute = minute
@@ -427,5 +458,6 @@ public final class AppSettings {
 }
 
 public enum PushType {
+    case dusk
     case morning, lunch, afternoon, evening
 }

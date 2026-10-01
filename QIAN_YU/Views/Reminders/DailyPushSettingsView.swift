@@ -9,11 +9,14 @@ import SwiftUI
 
 public struct DailyPushSettingsView: View {
     @Bindable public var viewModel: SettingsViewModel
+    @State private var weatherCityQuery = ""
+    @State private var weather = DailyWeatherService.shared
     @Bindable public var scheduleViewModel: CourseScheduleViewModel
 
     public init(viewModel: SettingsViewModel, scheduleViewModel: CourseScheduleViewModel) {
         self.viewModel = viewModel
         self.scheduleViewModel = scheduleViewModel
+        self._weatherCityQuery = State(initialValue: viewModel.settings.weatherCity)
     }
 
     public var body: some View {
@@ -35,7 +38,7 @@ public struct DailyPushSettingsView: View {
                             Text(viewModel.isAuthorizedForNotification ? "系统通知权限已开启" : "系统通知权限未开启")
                                 .font(.system(size: 14, weight: .bold))
 
-                            Text(viewModel.isAuthorizedForNotification ? "千语将按设定时间准时在状态栏或屏幕为你推送上课与日常问候。" : "开启后千语才能在课前和每日定点给你发通知。")
+                            Text(viewModel.isAuthorizedForNotification ? "千语会根据课表和提醒规则发送上课与日常问候。" : "开启后千语才能发送课程与每日提醒。")
                                 .font(.system(size: 12))
                                 .foregroundColor(.secondary)
                         }
@@ -55,9 +58,9 @@ public struct DailyPushSettingsView: View {
                     .padding(16)
                 }
 
-                // 2. 每日四大定点陪伴推送
+                // 2. 每日五个时段的陪伴推送
                 VStack(alignment: .leading, spacing: 8) {
-                    SettingsSectionHeader(title: String(localized: "千语每日陪伴定点推送"), icon: "clock.badge.checkmark")
+                    SettingsSectionHeader(title: String(localized: "千语每日陪伴推送"), icon: "clock.badge.checkmark")
 
                     SettingsCardContainer {
                         // 晨醒
@@ -108,6 +111,20 @@ public struct DailyPushSettingsView: View {
 
                         Divider().padding(.leading, 16)
 
+                        DailyPushRow(
+                            icon: "🌇",
+                            title: String(localized: "傍晚鼓励"),
+                            isEnabled: $viewModel.settings.duskEnabled,
+                            hour: viewModel.settings.duskHour,
+                            minute: viewModel.settings.duskMinute,
+                            quote: EditorialCopy.text("notification.dusk.body"),
+                            onTimeChange: { date in
+                                viewModel.settings.update(type: .dusk, from: date)
+                                viewModel.updateDailySchedules()
+                            }
+                        )
+                        Divider().padding(.leading, 16)
+
                         // 晚间就寝
                         DailyPushRow(
                             icon: "🌙",
@@ -123,11 +140,69 @@ public struct DailyPushSettingsView: View {
                         )
                     }
 
-                    Text("推送时间到达时，系统将以陈千语专属口吻发送带有横幅与声音的本地通知。")
+                    Text("午饭：上午最后一节课早于 11:00 结束时，11:30 提醒；11:00 或之后结束时，下课即提醒。没有上午课时使用上方时间。午后：仅在 14:00–15:00 有课时提醒。")
+                        .font(.system(size: 12))
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal, 4)
+                    Text("所有提醒使用普通通知，声音和横幅由系统通知与专注模式设置决定。每日提醒预排未来 7 天，打开应用或运行睡眠自动化时续排，系统后台刷新也会尝试续排。")
                         .font(.system(size: 12))
                         .foregroundColor(.secondary)
                         .padding(.horizontal, 4)
                 }
+
+                VStack(alignment: .leading, spacing: 8) {
+                    SettingsSectionHeader(title: String(localized: "AI 问候与天气"), icon: "sparkles")
+                    SettingsCardContainer {
+                        VStack(alignment: .leading, spacing: 12) {
+                            Toggle("用 AI 生成每日问候", isOn: $viewModel.settings.aiDailyPushEnabled)
+                                .onChange(of: viewModel.settings.aiDailyPushEnabled) { _, _ in viewModel.updateDailySchedules() }
+                            Text("使用已配置的 API，自动生成可能产生费用。早晨结合天气预报，午饭结合当天课程时长，傍晚结合剩余课程；就寝只说晚安。会检查正文重复，无法生成时使用可变的本地文案。")
+                            Text("文案在打开应用或系统允许后台刷新时提前准备，通知到点直接发送缓存内容。天气是指定日期的预报；没有可靠数据就不提天气。")
+                            Divider()
+                            TextField("常用城市 / 区，例如深圳市南山区", text: $weatherCityQuery)
+                                .textFieldStyle(.roundedBorder)
+                            HStack {
+                                Button("查找城市与区") {
+                                    Task { await weather.search(city: weatherCityQuery) }
+                                }
+                                Button("使用当前位置") { Task { await weather.useCurrentLocation() } }
+                            }
+                            Text("常用地点：\(viewModel.settings.weatherCity)").foregroundStyle(.secondary)
+                            Toggle("优先使用已获取的当前位置", isOn: $viewModel.settings.weatherUseLocation)
+                                .onChange(of: viewModel.settings.weatherUseLocation) { _, _ in viewModel.updateDailySchedules() }
+                            ForEach(Array(weather.places.enumerated()), id: \.offset) { _, place in
+                                Button(DailyWeatherService.name(place)) {
+                                    weather.select(place)
+                                    weatherCityQuery = viewModel.settings.weatherCity
+                                }
+                            }
+                            if !weather.status.isEmpty { Text(weather.status).foregroundStyle(.secondary) }
+                            Text("只在你点击「使用当前位置」时申请使用期间定位。定位被拒绝、撤销或超过一天未更新时使用常用城市；修改城市后请查找并选择地点。城市、区名可用于查找，不需要精确定位。天气由 Open-Meteo 提供，天气服务会收到所选地点的坐标；AI 收到天气概况、课程统计、称呼、角色设定和近期通知正文，不发送精确坐标、街道地址或聊天记录。")
+                            Link("天气来源：Open-Meteo", destination: URL(string: "https://open-meteo.com/")!)
+                        }
+                        .font(.system(size: 12))
+                        .padding(16)
+                    }
+                }
+
+                #if os(iOS)
+                VStack(alignment: .leading, spacing: 8) {
+                    SettingsSectionHeader(title: String(localized: "跟随睡眠模式"), icon: "moon.zzz")
+                    SettingsCardContainer {
+                        VStack(alignment: .leading, spacing: 12) {
+                            Toggle("已配置睡眠自动化", isOn: $viewModel.settings.sleepAutomationEnabled)
+                                .onChange(of: viewModel.settings.sleepAutomationEnabled) { _, _ in
+                                    viewModel.updateDailySchedules()
+                                }
+                            Text("在 iPhone「快捷指令 → 自动化」中创建两项个人自动化，触发条件均选择「睡眠」专注模式，并选择「立即运行」：")
+                            Text("① 关闭时：添加千语的「睡眠已结束」动作。\n② 开启时：添加千语的「准备睡觉」动作。\n两项配置完成后，再开启上方开关。")
+                            Text("开启后，清晨优先在退出睡眠模式时提醒，最迟在设定时间后一小时提醒；晚安优先在进入睡眠模式时提醒，最迟在设定时间提醒。每天各一次，超过截止时间不再补发。清晨动作在上午生效，晚安按当次就寝的截止时间判断，支持跨午夜。未开启时，早晚按设定时间提醒。")
+                        }
+                        .font(.system(size: 12))
+                        .padding(16)
+                    }
+                }
+                #endif
 
                 // 3. 上课提醒与学期周数
                 VStack(alignment: .leading, spacing: 8) {

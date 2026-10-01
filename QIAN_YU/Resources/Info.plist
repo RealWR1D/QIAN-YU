@@ -2,14 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>用于获取你所在城市的天气，为清晨问候提供天气背景。也可以手动选择城市与区。</string>
+	<key>NSLocationUsageDescription</key>
+	<string>用于获取所在城市的天气；也可以手动选择城市与区。</string>
 	<key>CFBundleDisplayName</key>
-	<string>千语</string>
+	<string>QIAN YU</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleName</key>
-	<string>千语</string>
+	<string>QIAN YU</string>
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
@@ -23,13 +27,13 @@
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.lifestyle</string>
 	<key>NSUserNotificationsUsageDescription</key>
-	<string>千语需要通知权限来提醒你上课、每日晨醒和贴心问候。</string>
+	<string>QIAN YU 需要通知权限来提醒你上课、每日晨醒和贴心问候。</string>
 	<key>NSCalendarsUsageDescription</key>
-	<string>千语需要日历权限以便将你的上课日程一键同步至系统日历中。</string>
+	<string>QIAN YU 需要日历权限以便将你的上课日程一键同步至系统日历中。</string>
 	<key>NSCalendarsFullAccessUsageDescription</key>
-	<string>千语需要日历完整访问权限以便为你创建「QIAN YU 课表」并自动同步课程。</string>
+	<string>QIAN YU 需要日历完整访问权限以便为你创建「QIAN YU 课表」并自动同步课程。</string>
 	<key>NSCalendarsWriteOnlyAccessUsageDescription</key>
-	<string>千语需要日历写入权限以便将你的上课日程导入系统日历。</string>
+	<string>QIAN YU 需要日历写入权限以便将你的上课日程导入系统日历。</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsLocalNetworking</key>
@@ -61,6 +65,45 @@
 			</array>
 		</dict>
 	</array>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>iCalendar</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Alternate</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.apple.ical.ics</string>
+			</array>
+		</dict>
+	</array>
+	<key>UTImportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeIdentifier</key>
+			<string>com.apple.ical.ics</string>
+			<key>UTTypeDescription</key>
+			<string>iCalendar</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.text</string>
+			</array>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>ics</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>text/calendar</string>
+			</dict>
+		</dict>
+	</array>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
 	<key>UILaunchScreen</key>
 	<dict/>
 	<key>UISupportedInterfaceOrientations</key>

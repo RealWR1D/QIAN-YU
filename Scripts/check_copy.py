@@ -12,6 +12,9 @@ CATALOGS = [
     ROOT / "QIAN_YU/Widgets/Localizable.xcstrings",
 ]
 PLACEHOLDERS = {
+    "notification.context.course": {"courseCount", "totalMinutes", "remainingCount", "remainingMinutes"},
+    "notification.context.entry": {"date", "kind", "userName", "course", "weather"},
+    "notification.ai.prompt": {"contexts", "recent"},
     "persona.context": {"base", "userName", "timeContext"},
     "persona.course": {"course"},
     "persona.weather": {"weather"},

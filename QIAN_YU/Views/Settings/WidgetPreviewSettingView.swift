@@ -252,17 +252,13 @@ public struct WidgetPreviewSettingView: View {
                     .foregroundColor(.secondary)
 
                 HStack {
-                    ZStack {
-                        Circle()
-                            .stroke(Color.orange.opacity(0.6), lineWidth: 1.5)
-                            .frame(width: 22, height: 22)
-                        QianYuChibiMiniAvatarView(size: 18)
-                    }
+                    QianYuCompactAvatarView()
 
                     Spacer()
 
                     Text("24:50")
-                        .font(.system(size: 12, weight: .bold, design: .monospaced))
+                        .font(.system(size: 12, weight: .bold))
+                        .monospacedDigit()
                         .foregroundColor(.orange)
                 }
                 .padding(.horizontal, 12)
@@ -318,7 +314,8 @@ public struct WidgetPreviewSettingView: View {
 
                         VStack(alignment: .trailing, spacing: 2) {
                             Text("24:50")
-                                .font(.system(size: 22, weight: .bold, design: .monospaced))
+                                .font(.system(size: 22, weight: .bold))
+                                .monospacedDigit()
                                 .foregroundColor(.orange)
                             Text("保持专注")
                                 .font(.system(size: 10, weight: .semibold))
@@ -374,7 +371,8 @@ public struct WidgetPreviewSettingView: View {
                     totalSeconds: 25 * 60,
                     isPaused: false,
                     sessionTitle: "专注中",
-                    quote: "「吸气、呼气、一口气做完！」"
+                    quote: "「吸气、呼气、一口气做完！」",
+                    endDate: Date().addingTimeInterval(TimeInterval(24 * 60 + 50))
                 )
                 PomodoroLockScreenLiveView(state: sampleState)
                     .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
@@ -389,7 +387,8 @@ public struct WidgetPreviewSettingView: View {
                                 .foregroundColor(.orange)
                             Spacer()
                             Text("24:50")
-                                .font(.system(size: 20, weight: .bold, design: .monospaced))
+                                .font(.system(size: 20, weight: .bold))
+                                .monospacedDigit()
                         }
                         Text("「吸气、呼气、一口气做完！」")
                             .font(.system(size: 12))
@@ -421,6 +420,7 @@ public struct WidgetPreviewSettingView: View {
                         sessionTitle: "专注中",
                         totalSeconds: 25 * 60,
                         remainingSeconds: 24 * 60 + 50,
+                        endDate: Date().addingTimeInterval(TimeInterval(24 * 60 + 50)),
                         quote: "「当破即破，冲冲冲！」"
                     )
                     if success {

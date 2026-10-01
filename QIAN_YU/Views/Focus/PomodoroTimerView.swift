@@ -44,7 +44,7 @@ public struct PomodoroTimerView: View {
                 }
                 .padding(.top, 16)
 
-                // 2. 小陈陪伴插图槽位 (预留 Q 版图片展示区，无剑标)
+                // 2. 专注专用小陈头像
                 QianYuChibiSlotView(
                     isFocusing: viewModel.mode == .focus && viewModel.state == .running
                 )
@@ -70,7 +70,8 @@ public struct PomodoroTimerView: View {
                     // 内部时间与状态文本
                     VStack(spacing: 8) {
                         Text(viewModel.formattedTime)
-                            .font(.system(size: 48, weight: .bold, design: .monospaced))
+                            .font(.system(size: 48, weight: .bold))
+                            .monospacedDigit()
                             .foregroundColor(.primary)
 
                         Text(viewModel.statusCaption)
@@ -215,7 +216,7 @@ public struct PomodoroTimerView: View {
     }
 }
 
-// MARK: - 小陈专属插图插槽组件 (预留稍后填入的 Q 版图片，不包含任何剑标)
+// MARK: - 专注专用小陈头像
 public struct QianYuChibiSlotView: View {
     public let isFocusing: Bool
 
@@ -230,28 +231,7 @@ public struct QianYuChibiSlotView: View {
                     .fill(Color.orange.opacity(0.1))
                     .frame(width: 76, height: 76)
 
-                // 优先检查稍后添加的 "qianyu_chibi_avatar"，如果不存在则使用现有头像或优雅首字母徽章
-                #if os(macOS)
-                if let nsImg = NSImage(named: "qianyu_chibi_avatar") ?? NSImage(named: "chen_qianyu_avatar") {
-                    Image(nsImage: nsImg)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 70, height: 70)
-                        .clipShape(Circle())
-                } else {
-                    fallbackAvatar
-                }
-                #else
-                if let uiImg = UIImage(named: "qianyu_chibi_avatar") ?? UIImage(named: "chen_qianyu_avatar") {
-                    Image(uiImage: uiImg)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 70, height: 70)
-                        .clipShape(Circle())
-                } else {
-                    fallbackAvatar
-                }
-                #endif
+                QianYuChibiMiniAvatarView(size: 70)
             }
             .overlay(
                 Circle()
@@ -266,15 +246,4 @@ public struct QianYuChibiSlotView: View {
         }
     }
 
-    private var fallbackAvatar: some View {
-        ZStack {
-            Circle()
-                .fill(LinearGradient(colors: [.orange, .pink.opacity(0.8)], startPoint: .topLeading, endPoint: .bottomTrailing))
-                .frame(width: 70, height: 70)
-
-            Text("千语")
-                .font(.system(size: 18, weight: .bold))
-                .foregroundColor(.white)
-        }
-    }
 }

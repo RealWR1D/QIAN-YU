@@ -250,6 +250,23 @@ public actor LLMService {
         return models.sorted { $0.localizedStandardCompare($1) == .orderedAscending }
     }
 
+    /// 日常推送批量生成：有独立超时，不占用聊天历史。
+    public func completeDailyPush(baseURL: String, apiKey: String, model: String,
+                                  thinkingEffort: String, messages: [ChatRequestMessage]) async throws -> String {
+        var request = try LLMRequestBuilder.chatRequest(baseURL: baseURL, apiKey: apiKey, model: model,
+            thinkingEffort: thinkingEffort, messages: messages, stream: false)
+        request.timeoutInterval = 25
+        let (data, response) = try await session.data(for: request)
+        try Task.checkCancellation()
+        try checkHTTP(response, body: data, apiKey: apiKey)
+        guard data.count <= 1_048_576 else { throw LLMServiceError.invalidResponse("推送文案响应过长") }
+        let json = try jsonObject(data, apiKey: apiKey)
+        guard let choices = json["choices"] as? [[String: Any]],
+              let message = choices.first?["message"] as? [String: Any],
+              let content = message["content"] as? String, !content.isEmpty else { throw LLMServiceError.emptyResponse }
+        return content
+    }
+
     public func validateConfiguration(baseURL: String, apiKey: String, model: String, thinkingEffort: String) async throws {
         // Exercise the actual streaming path, selected model, and reasoning settings.
         // Listing models alone does not establish permission, credit, or chat support.
