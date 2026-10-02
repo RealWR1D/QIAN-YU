@@ -2,7 +2,7 @@
 
 > 一款支持 iOS 和 macOS 的千语陪伴应用。icon：Bilibili@唐可可为什么是神
 
-详细操作见[使用指南](Docs/千语使用指南.md)，也提供可放到个人网站的 [HTML 版本](Docs/千语使用指南.html)。显示文案的维护方法见[文案维护](文案维护.md)。
+使用文档见：lorra.cloud/qianyu
 
 ---
 
