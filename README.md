@@ -2,7 +2,7 @@
 
 > 一款支持 iOS 和 macOS 的千语陪伴应用。icon：Bilibili@唐可可为什么是神
 
-使用文档见：lorra.cloud/qianyu
+使用文档见：[千语使用文档](https://lorra.cloud/qianyu)
 
 ---
 
