@@ -20,7 +20,25 @@ struct QianYuApp: App {
             CourseItem.self
         ])
 
-        // 尝试启用 CloudKit 自动私有云同步；若当前环境未登录 iCloud 或未开通，自动平滑降级为本地存储，保证 100% 稳定不崩溃
+        #if os(macOS) && QIANYU_LOCAL_DISTRIBUTION
+        // Ad hoc signatures cannot access the developer team's App Group.
+        // Use a stable, separate store; never move or delete the signed build's data.
+        do {
+            let directory = try FileManager.default.url(
+                for: .applicationSupportDirectory, in: .userDomainMask,
+                appropriateFor: nil, create: true
+            ).appendingPathComponent("QIAN YU/LocalDistribution", isDirectory: true)
+            try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+            let configuration = ModelConfiguration(
+                schema: schema, url: directory.appendingPathComponent("default.store"),
+                cloudKitDatabase: .none
+            )
+            return try ModelContainer(for: schema, configurations: [configuration])
+        } catch {
+            fatalError("无法初始化本地分发数据库: \(error)")
+        }
+        #else
+        // Try CloudKit first, then the signed build's local storage.
         if let cloudContainer = try? ModelContainer(
             for: schema,
             configurations: [ModelConfiguration(schema: schema, isStoredInMemoryOnly: false, cloudKitDatabase: .automatic)]
@@ -34,6 +52,7 @@ struct QianYuApp: App {
                 fatalError("无法初始化 SwiftData ModelContainer: \(error)")
             }
         }
+        #endif
 
     }()
 

@@ -4,6 +4,8 @@
 
 使用文档见：[千语使用文档](https://lorra.cloud/qianyu)
 
+iPhone 免费自签与 Mac 下载包的说明见[安装与分发](Docs/安装与分发.md)。本项目为非官方同人应用，第三方素材的来源和授权状态见[素材与权利说明](Docs/素材与权利说明.md)。
+
 维护与发布前检查见[维护与验证](Docs/维护与验证.md)。在项目根目录运行 `bash Scripts/check_project.sh`，可执行回归检查及 iOS、macOS Release 构建。
 
 ---

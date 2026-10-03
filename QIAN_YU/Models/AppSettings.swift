@@ -15,7 +15,13 @@ protocol APIKeyStorage {
 }
 
 private struct APIKeyStore: APIKeyStorage {
+    #if os(macOS) && QIANYU_LOCAL_DISTRIBUTION
+    // Ad hoc signatures cannot access the data protection keychain. Keep this
+    // build's file-keychain items separate from development installations.
+    private static let service = "com.qianyu.companion.api.local-distribution"
+    #else
     private static let service = "com.qianyu.companion.api"
+    #endif
 
     private func query(account: String, legacy: Bool = false) -> [CFString: Any] {
         var attributes: [CFString: Any] = [
@@ -26,9 +32,11 @@ private struct APIKeyStore: APIKeyStorage {
         #if os(macOS)
         // The data protection keychain uses the signed app's access group instead of
         // a file-keychain ACL tied to a particular development build.
+        #if !QIANYU_LOCAL_DISTRIBUTION
         if !legacy {
             attributes[kSecUseDataProtectionKeychain] = true
         }
+        #endif
         #endif
         return attributes
     }
