@@ -41,7 +41,7 @@ struct PomodoroRegressionCheck {
         let suite = "qianyu.pomodoro.regression.\(UUID().uuidString)"
         let defaults = UserDefaults(suiteName: suite)!
         defer { defaults.removePersistentDomain(forName: suite) }
-        let end = Date().addingTimeInterval(1500)
+        let end = Date(timeIntervalSince1970: floor(Date().timeIntervalSince1970) + 1500)
         defaults.set("running", forKey: "qianyu.pomodoro.state")
         defaults.set(25, forKey: "qianyu.pomodoro.minutes")
         defaults.set(1500, forKey: "qianyu.pomodoro.remaining")

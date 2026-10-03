@@ -50,25 +50,36 @@ public final class NotificationManager: NSObject, UNUserNotificationCenterDelega
 
     private let dailyContent = DailyPushContentService()
     private var cachedCourses: [CourseItem] = []
-    private var mutationTask: Task<Void, Never>?
+    private let scheduler = NotificationScheduler()
     private let sentKey = "qianyu_daily_sent_v1"
 
     /// 所有排程和睡眠动作共享队列，避免改设置与自动化同时运行时重复发送。
     @discardableResult
     func enqueue(_ operation: @escaping @MainActor () async -> Void) -> Task<Void, Never> {
-        let previous = mutationTask
-        let task = Task { @MainActor in
-            await previous?.value
-            await operation()
-        }
-        mutationTask = task
-        return task
+        scheduler.enqueue(operation)
     }
 
     func cache(courses: [CourseItem]) { cachedCourses = courses }
 
     public func scheduleDailyNotifications() {
-        CourseReminderService.shared.syncAllCourseReminders(courses: cachedCourses)
+        reschedule(courses: cachedCourses)
+    }
+
+    /// A course change, a settings change and a foreground refresh share this path.
+    func reschedule(courses: [CourseItem], completion: (() -> Void)? = nil) {
+        cache(courses: courses)
+        enqueue {
+            let courses = self.cachedCourses
+            let daily = self.dailyRequests(courses: self.dailyCourseSnapshots(courses: courses))
+            let reminders = CourseReminderService.shared.requests(courses: courses, now: Date(), settings: .shared)
+            await self.scheduler.replacePlan(daily: daily, courses: reminders)
+            self.refreshDailyContent()
+            completion?()
+        }
+    }
+
+    func removePendingRequests(where predicate: @escaping (String) -> Bool) {
+        enqueue { await self.scheduler.remove(where: predicate) }
     }
 
     private var sentIdentifiers: Set<String> {
@@ -93,16 +104,7 @@ public final class NotificationManager: NSObject, UNUserNotificationCenterDelega
     }
 
     func dailyCourseSnapshots(courses: [CourseItem]) -> [DailyPushPlanner.Course] {
-        courses.filter(\.isEnabled).map { course in
-            let weeks: Set<Int>
-            if !course.activeWeeks.isEmpty { weeks = course.activeWeeks }
-            else if course.startWeek > 0, course.endWeek >= course.startWeek,
-                    course.endWeek - course.startWeek <= 100 {
-                weeks = Set((course.startWeek...course.endWeek).filter { course.isActive(inWeek: $0) })
-            } else { weeks = [] }
-            return DailyPushPlanner.Course(weekday: course.weekday, startMinutes: course.startTotalMinutes,
-                                           endMinutes: course.endTotalMinutes, weeks: weeks)
-        }
+        courses.filter(\.isEnabled).map(\.scheduleRule)
     }
 
     func primeDailyContent(courses: [CourseItem]) {
@@ -122,17 +124,16 @@ public final class NotificationManager: NSObject, UNUserNotificationCenterDelega
 
     func waitForDailyContentRefresh() async {
         await dailyContent.waitForRefresh()
-        await mutationTask?.value
+        await scheduler.waitUntilIdle()
     }
 
     func refreshDailyContent() {
         dailyContent.refresh { entries in
             self.enqueue {
-                let center = UNUserNotificationCenter.current()
-                let pending = Dictionary(uniqueKeysWithValues: await center.pendingNotificationRequests().map { ($0.identifier, $0) })
+                let pending = Dictionary(uniqueKeysWithValues: await self.scheduler.store.pending().map { ($0.identifier, $0) })
                 for entry in entries where entry.date > Date() && (pending[entry.identifier]?.trigger as? UNCalendarNotificationTrigger)?.nextTriggerDate() == entry.date
                     && !self.sentIdentifiers.contains(entry.identifier) {
-                    do { try await center.add(self.request(for: entry, immediate: false)) }
+                    do { try await self.scheduler.store.add(self.request(for: entry, immediate: false)) }
                     catch { NSLog("更新每日通知文案失败，保留原通知。") }
                 }
             }
@@ -165,7 +166,7 @@ public final class NotificationManager: NSObject, UNUserNotificationCenterDelega
                                                          configuration: self.dailyConfiguration),
                   !self.sentIdentifiers.contains(entry.identifier) else { return }
             do {
-                try await UNUserNotificationCenter.current().add(self.request(for: entry, immediate: true))
+                try await self.scheduler.store.add(self.request(for: entry, immediate: true))
                 var saved = UserDefaults.standard.dictionary(forKey: self.sentKey) as? [String: Double] ?? [:]
                 saved[entry.identifier] = now.timeIntervalSince1970
                 UserDefaults.standard.set(saved, forKey: self.sentKey)

@@ -24,6 +24,53 @@ final class MemoryKeyStore: APIKeyStorage {
     }
 }
 
+final class StreamingURLProtocol: URLProtocol {
+    override class func canInit(with request: URLRequest) -> Bool { request.url?.host == "stream-fixture.invalid" }
+    override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
+    override func startLoading() {
+        var data = request.httpBody ?? Data()
+        if let stream = request.httpBodyStream {
+            stream.open()
+            defer { stream.close() }
+            var buffer = [UInt8](repeating: 0, count: 4096)
+            while stream.hasBytesAvailable {
+                let length = stream.read(&buffer, maxLength: buffer.count)
+                guard length > 0 else { break }
+                data.append(contentsOf: buffer.prefix(length))
+            }
+        }
+        let payload = try! JSONSerialization.jsonObject(with: data) as! [String: Any]
+        precondition(payload["stream"] as? Bool == true)
+        precondition(request.value(forHTTPHeaderField: "Authorization") == "Bearer fixture-secret")
+        let model = payload["model"] as! String
+        let reasoning = "data: {\"choices\":[{\"delta\":{\"reasoning_content\":\"思考中\"}}]}"
+        let content = "data: {\"choices\":[{\"delta\":{\"content\":\"你好 OK\"}}]}"
+        let finish = "data: {\"choices\":[{\"delta\":{},\"finish_reason\":\"stop\"}]}"
+        var body: String
+        var status = 200
+        var contentType = "text/event-stream; charset=utf-8"
+        switch model {
+        case "crlf": body = "\u{FEFF}: heartbeat\r\n\r\nevent: message\r\n\(reasoning)\r\n\r\n\(content)\r\n\r\n\(finish)\r\n\r\ndata: [DONE]\r\n\r\n"
+        case "cr": body = "\(reasoning)\r\r\(content)\r\rdata: [DONE]\r\r"
+        case "multiline": body = "data: {\"choices\": [\ndata: {\"delta\": {\"content\": \"你好 OK\"}}]}\n\ndata: [DONE]\n\n"
+        case "no-final-newline": body = "\(content)\n\ndata: [DONE]"
+        case "finish-only": body = "\(content)\n\n\(finish)\n\n"
+        case "interrupted": body = "\(content)\n\n"
+        case "empty": body = "\(reasoning)\n\ndata: [DONE]\n\n"
+        case "denied": status = 401; contentType = "application/json"; body = "{\"error\":{\"message\":\"Invalid fixture-secret\"}}"
+        case "server-error": body = "data: {\"error\": {\"message\": \"Invalid fixture-secret\"}}\n\n"
+        case "json": contentType = "application/json"; body = "{\"choices\":[{\"message\":{\"content\":\"你好 OK\"}}]}"
+        default: body = "\(reasoning)\n\n\(content)\n\n\(finish)\n\ndata: {\"choices\":[],\"usage\":{}}\n\ndata: [DONE]\n\n"
+        }
+        let response = HTTPURLResponse(url: request.url!, statusCode: status, httpVersion: "HTTP/1.1", headerFields: ["Content-Type": contentType])!
+        client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+        // Force UTF-8 characters and SSE delimiters to cross transport chunk boundaries.
+        for byte in body.utf8 { client?.urlProtocol(self, didLoad: Data([byte])) }
+        client?.urlProtocolDidFinishLoading(self)
+    }
+    override func stopLoading() {}
+}
+
 final class DailyPushURLProtocol: URLProtocol {
     override class func canInit(with request: URLRequest) -> Bool { request.url?.host == "fixture.invalid" }
     override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
@@ -170,6 +217,40 @@ final class DailyPushURLProtocol: URLProtocol {
                 model: "denied", thinkingEffort: "auto", messages: [])
             preconditionFailure("denied response must fail")
         } catch { precondition(!error.localizedDescription.contains("fixture-secret"), "Errors must redact keys") }
-        print("API settings and complete persona regression checks passed")
+        let streamConfiguration = URLSessionConfiguration.ephemeral
+        streamConfiguration.protocolClasses = [StreamingURLProtocol.self]
+        let streamingService = LLMService(session: URLSession(configuration: streamConfiguration))
+        for model in ["lf", "crlf", "cr", "multiline", "no-final-newline", "finish-only", "json"] {
+            try await streamingService.validateConfiguration(baseURL: "https://stream-fixture.invalid/v1", apiKey: "fixture-secret", model: model, thinkingEffort: "auto")
+            var text = ""
+            var reasoning = ""
+            for try await chunk in await streamingService.streamChat(baseURL: "https://stream-fixture.invalid/v1", apiKey: "fixture-secret", model: model, messages: [.init(role: "user", content: "测试")]) {
+                switch chunk {
+                case .content(let value): text += value
+                case .reasoning(let value): reasoning += value
+                }
+            }
+            precondition(text == "你好 OK", "Streaming content must preserve UTF-8 and event boundaries")
+            if ["lf", "crlf", "cr"].contains(model) { precondition(reasoning == "思考中") }
+        }
+        for model in ["interrupted", "empty", "denied", "server-error"] {
+            do {
+                try await streamingService.validateConfiguration(baseURL: "https://stream-fixture.invalid/v1", apiKey: "fixture-secret", model: model, thinkingEffort: "auto")
+                preconditionFailure("Invalid streaming response must fail: \(model)")
+            } catch {
+                precondition(!error.localizedDescription.contains("fixture-secret"))
+                if model == "interrupted" { guard case LLMServiceError.interruptedStream = error else { throw error } }
+                if model == "empty" { guard case LLMServiceError.emptyResponse = error else { throw error } }
+                if model == "denied" { guard case LLMServiceError.http(statusCode: 401, responseBody: _) = error else { throw error } }
+            }
+        }
+        let liveValidator = SettingsViewModel(settings: second, defaults: defaults, checkNotificationPermissions: false,
+            connectionValidator: { _, key, _, effort in
+                try await streamingService.validateConfiguration(baseURL: "https://stream-fixture.invalid/v1", apiKey: key, model: "lf", thinkingEffort: effort)
+            })
+        second.apiKey = "fixture-secret"
+        await liveValidator.testConnection()
+        precondition(liveValidator.configurationStatus == .verified, "Real streamed response must verify the settings UI")
+        print("API settings, SSE validation/chat, and complete persona regression checks passed")
     }
 }

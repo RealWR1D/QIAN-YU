@@ -4,6 +4,8 @@
 
 使用文档见：[千语使用文档](https://lorra.cloud/qianyu)
 
+维护与发布前检查见[维护与验证](Docs/维护与验证.md)。在项目根目录运行 `bash Scripts/check_project.sh`，可执行回归检查及 iOS、macOS Release 构建。
+
 ---
 
 ## 核心功能

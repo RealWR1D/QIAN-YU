@@ -86,7 +86,7 @@ public struct CourseWidgetProvider: TimelineProvider {
                 if day > now { transitionDates.append(day) }
                 for course in schedule.courses {
                     for minute in [course.startMinutes, course.endMinutes + 1] {
-                        if let transition = calendar.date(byAdding: .minute, value: minute, to: day), transition > now {
+                        if let transition = CourseTimeRules.time(minute, on: day, calendar: calendar), transition > now {
                             transitionDates.append(transition)
                         }
                     }
@@ -108,18 +108,13 @@ public struct CourseWidgetProvider: TimelineProvider {
     private func fetchCurrentEntry(at date: Date) -> CourseWidgetEntry {
         if let schedule = readSchedule() {
             var calendar = Calendar(identifier: .gregorian)
-            calendar.firstWeekday = 2
             calendar.timeZone = .current
-            let semesterMonday = calendar.dateInterval(of: .weekOfYear, for: schedule.semesterStartDate)?.start
-                ?? calendar.startOfDay(for: schedule.semesterStartDate)
-            let currentMonday = calendar.dateInterval(of: .weekOfYear, for: date)?.start
-                ?? calendar.startOfDay(for: date)
-            let week = max(1, (calendar.dateComponents([.day], from: semesterMonday, to: currentMonday).day ?? 0) / 7 + 1)
-            let dayIndex = calendar.component(.weekday, from: date)
-            let weekday = dayIndex == 1 ? 7 : dayIndex - 1
-            let currentMinutes = calendar.component(.hour, from: date) * 60 + calendar.component(.minute, from: date)
+            let week = CourseTimeRules.displayWeek(on: date, semesterStart: schedule.semesterStartDate, calendar: calendar)
+            let teachingWeek = CourseTimeRules.teachingWeek(on: date, semesterStart: schedule.semesterStartDate, calendar: calendar)
+            let weekday = CourseTimeRules.weekday(on: date, calendar: calendar)
             let next = schedule.courses
-                .filter { $0.weekday == weekday && $0.activeWeeks.contains(week) && $0.endMinutes >= currentMinutes }
+                .filter { teachingWeek > 0 && $0.weekday == weekday && $0.activeWeeks.contains(teachingWeek)
+                    && CourseTimeRules.hasNotEnded(endMinutes: $0.endMinutes, at: date, calendar: calendar) }
                 .min { $0.startMinutes < $1.startMinutes }
             let weekType = week % 2 == 0 ? String(localized: "双周") : String(localized: "单周")
             let weekInfo = String(localized: "第 \(week) 周 · \(weekType)")

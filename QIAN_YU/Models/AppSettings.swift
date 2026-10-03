@@ -403,16 +403,8 @@ public final class AppSettings {
     // MARK: - 学期周数与单双周计算
     /// 计算指定日期属于学期的第几周 (从 1 开始，严格按照周一至周日完整教学周推进)
     public func currentWeekNumber(from date: Date = Date()) -> Int {
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.firstWeekday = 2 // 强制周一为每周起始日
-        let semesterMonday = calendar.dateInterval(of: .weekOfYear, for: semesterStartDate)?.start ?? calendar.startOfDay(for: semesterStartDate)
-        let targetMonday = calendar.dateInterval(of: .weekOfYear, for: date)?.start ?? calendar.startOfDay(for: date)
-        let diffDays = calendar.dateComponents([.day], from: semesterMonday, to: targetMonday).day ?? 0
-        if diffDays < 0 {
-            return 1 // 开学前默认当第1周
-        }
-        let week = (diffDays / 7) + 1
-        return max(1, week)
+        CourseTimeRules.displayWeek(on: date, semesterStart: semesterStartDate,
+                                    calendar: Calendar(identifier: .gregorian))
     }
 
     /// 指定日期是否属于单周

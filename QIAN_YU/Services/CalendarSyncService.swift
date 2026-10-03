@@ -86,9 +86,7 @@ public final class CalendarSyncService {
         var cal = Calendar(identifier: .gregorian)
         cal.firstWeekday = 2
         cal.timeZone = .current
-        guard let semesterMonday = cal.dateInterval(of: .weekOfYear, for: semesterStartDate)?.start else {
-            throw CalendarSyncError.failedToSave
-        }
+        let semesterMonday = CourseTimeRules.monday(containing: semesterStartDate, calendar: cal)
 
         // 日期可能已从旧学期切换到新学期。按年度分段检查相邻学期，
         // 同时覆盖升级前未记录同步日期的课程事件。
@@ -120,26 +118,10 @@ public final class CalendarSyncService {
             var savedCourseEvents = false
 
             for week in activeWeeks {
-                let (weekOffset, overflow) = (week - 1).multipliedReportingOverflow(by: 7)
-                let (dayOffset, additionOverflow) = weekOffset.addingReportingOverflow(course.weekday - 1)
-                guard !overflow, !additionOverflow,
-                      let classDate = cal.date(
-                        byAdding: .day,
-                        value: dayOffset,
-                        to: semesterMonday
-                      ) else {
-                    continue
-                }
-
-                var startComp = cal.dateComponents([.year, .month, .day], from: classDate)
-                startComp.hour = course.startHour
-                startComp.minute = course.startMinute
-                guard let eventStart = cal.date(from: startComp) else { continue }
-
-                var endComp = cal.dateComponents([.year, .month, .day], from: classDate)
-                endComp.hour = course.endHour
-                endComp.minute = course.endMinute
-                guard let eventEnd = cal.date(from: endComp) else { continue }
+                guard let classDate = CourseTimeRules.classDay(week: week, weekday: course.weekday,
+                                                               semesterStart: semesterStartDate, calendar: cal),
+                      let eventStart = CourseTimeRules.time(course.startTotalMinutes, on: classDate, calendar: cal),
+                      let eventEnd = CourseTimeRules.time(course.endTotalMinutes, on: classDate, calendar: cal) else { continue }
 
                 let event = EKEvent(eventStore: eventStore)
                 event.calendar = calendar
@@ -175,15 +157,7 @@ public final class CalendarSyncService {
     }
 
     private func resolvedActiveWeeks(for course: CourseItem) -> [Int] {
-        if !course.activeWeeks.isEmpty {
-            return course.activeWeeks.filter { $0 > 0 }.sorted()
-        }
-        guard course.startWeek > 0,
-              course.endWeek >= course.startWeek,
-              course.endWeek - course.startWeek <= 100 else {
-            return []
-        }
-        return (course.startWeek...course.endWeek).filter { course.isActive(inWeek: $0) }
+        course.effectiveWeeks.sorted()
     }
 }
 

@@ -16,9 +16,6 @@ import SwiftData
 public final class CourseReminderService {
     public static let shared = CourseReminderService()
 
-    private static let courseIdentifierPrefix = "qianyu_course_"
-    private static let notificationLimit = 64
-
     private struct ReminderCandidate {
         let identifier: String
         let title: String
@@ -32,59 +29,29 @@ public final class CourseReminderService {
     /// 按课程的实际教学周生成一次性提醒，并保留每日通知的名额。
     /// iOS 每个 App 最多保留 64 个待处理本地通知；回到前台时重新排程后续场次。
     public func syncAllCourseReminders(courses: [CourseItem], completion: (() -> Void)? = nil) {
-        let now = Date()
-        let settings = AppSettings.shared
-        let classReminderEnabled = settings.classReminderEnabled
-        let postClassReminderEnabled = settings.postClassReminderEnabled
-        let semesterStartDate = settings.semesterStartDate
-        let candidates = courses
-            .filter(\.isEnabled)
-            .flatMap {
-                reminderCandidates(
-                    for: $0,
-                    allCourses: courses,
-                    now: now,
-                    semesterStartDate: semesterStartDate,
-                    needsPreClass: classReminderEnabled,
-                    needsPostClass: postClassReminderEnabled
-                )
-            }
-            .sorted { $0.fireDate < $1.fireDate }
+        NotificationManager.shared.reschedule(courses: courses, completion: completion)
+    }
 
-        let manager = NotificationManager.shared
-        manager.cache(courses: courses)
-        let dailyCourses = manager.dailyCourseSnapshots(courses: courses)
-        manager.enqueue {
-            let center = UNUserNotificationCenter.current()
-            let requests = await center.pendingNotificationRequests()
-            let oldIDs = requests.map(\.identifier).filter {
-                $0.hasPrefix("qianyu_course_") || $0.hasPrefix("qianyu_daily_")
-            }
-            center.removePendingNotificationRequests(withIdentifiers: oldIDs)
-            let remainingSlots = max(0, Self.notificationLimit - (requests.count - oldIDs.count))
-            let daily = Array(manager.dailyRequests(courses: dailyCourses).prefix(remainingSlots))
-            let availableSlots = max(0, remainingSlots - daily.count)
-            var updated = daily
-            for candidate in candidates.prefix(availableSlots) {
-                let content = UNMutableNotificationContent()
-                content.title = candidate.title
-                content.body = candidate.body
-                content.sound = .default
-                content.categoryIdentifier = candidate.category
-                var calendar = Calendar(identifier: .gregorian)
-                calendar.timeZone = .current
-                var components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: candidate.fireDate)
-                components.calendar = calendar
-                components.timeZone = calendar.timeZone
-                updated.append(UNNotificationRequest(identifier: candidate.identifier, content: content,
-                    trigger: UNCalendarNotificationTrigger(dateMatching: components, repeats: false)))
-            }
-            for request in updated {
-                do { try await center.add(request) }
-                catch { NSLog("安排提醒失败：%@", error.localizedDescription) }
-            }
-            manager.refreshDailyContent()
-            completion?()
+    /// Build requests only; NotificationManager owns all queue mutations and capacity.
+    func requests(courses: [CourseItem], now: Date, settings: AppSettings) -> [UNNotificationRequest] {
+        let candidates = courses.filter(\.isEnabled).flatMap {
+            reminderCandidates(for: $0, allCourses: courses, now: now,
+                semesterStartDate: settings.semesterStartDate,
+                needsPreClass: settings.classReminderEnabled, needsPostClass: settings.postClassReminderEnabled)
+        }.sorted { $0.fireDate < $1.fireDate }
+        return candidates.map { candidate in
+            let content = UNMutableNotificationContent()
+            content.title = candidate.title
+            content.body = candidate.body
+            content.sound = .default
+            content.categoryIdentifier = candidate.category
+            var calendar = Calendar(identifier: .gregorian)
+            calendar.timeZone = .current
+            var components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: candidate.fireDate)
+            components.calendar = calendar
+            components.timeZone = calendar.timeZone
+            return UNNotificationRequest(identifier: candidate.identifier, content: content,
+                trigger: UNCalendarNotificationTrigger(dateMatching: components, repeats: false))
         }
     }
 
@@ -107,12 +74,7 @@ public final class CourseReminderService {
     }
 
     private func removeCourseRequests(where shouldRemove: @escaping (String) -> Bool) {
-        NotificationManager.shared.enqueue {
-            let center = UNUserNotificationCenter.current()
-            let requests = await center.pendingNotificationRequests()
-            let identifiers = requests.map(\.identifier).filter(shouldRemove)
-            center.removePendingNotificationRequests(withIdentifiers: identifiers)
-        }
+        NotificationManager.shared.removePendingRequests(where: shouldRemove)
     }
 
     private func reminderCandidates(
@@ -128,49 +90,16 @@ public final class CourseReminderService {
         var calendar = Calendar(identifier: .gregorian)
         calendar.firstWeekday = 2
         calendar.timeZone = .current
-        guard let semesterMonday = calendar.dateInterval(
-            of: .weekOfYear,
-            for: semesterStartDate
-        )?.start else {
-            return []
-        }
-
-        let weeks: [Int]
-        if !course.activeWeeks.isEmpty {
-            weeks = course.activeWeeks.filter { $0 > 0 }.sorted()
-        } else {
-            guard course.startWeek > 0,
-                  course.endWeek >= course.startWeek,
-                  course.endWeek - course.startWeek <= 100 else {
-                return []
-            }
-            weeks = (course.startWeek...course.endWeek).filter { course.isActive(inWeek: $0) }
-        }
+        let weeks = course.effectiveWeeks.sorted()
 
         guard (1...7).contains(course.weekday) else { return [] }
         var result: [ReminderCandidate] = []
 
         for week in weeks {
-            let (weekOffset, overflow) = (week - 1).multipliedReportingOverflow(by: 7)
-            let (dayOffset, additionOverflow) = weekOffset.addingReportingOverflow(course.weekday - 1)
-            guard !overflow, !additionOverflow,
-                  let classDate = calendar.date(
-                    byAdding: .day,
-                    value: dayOffset,
-                    to: semesterMonday
-                  ) else {
-                continue
-            }
-
-            var startComponents = calendar.dateComponents([.year, .month, .day], from: classDate)
-            startComponents.hour = course.startHour
-            startComponents.minute = course.startMinute
-            guard let classStart = calendar.date(from: startComponents) else { continue }
-
-            var endComponents = calendar.dateComponents([.year, .month, .day], from: classDate)
-            endComponents.hour = course.endHour
-            endComponents.minute = course.endMinute
-            guard let classEnd = calendar.date(from: endComponents) else { continue }
+            guard let classDate = CourseTimeRules.classDay(week: week, weekday: course.weekday,
+                                                           semesterStart: semesterStartDate, calendar: calendar),
+                  let classStart = CourseTimeRules.time(course.startTotalMinutes, on: classDate, calendar: calendar),
+                  let classEnd = CourseTimeRules.time(course.endTotalMinutes, on: classDate, calendar: calendar) else { continue }
 
             let weekSuffix = "\(course.id.uuidString)_\(week)"
             if needsPreClass,

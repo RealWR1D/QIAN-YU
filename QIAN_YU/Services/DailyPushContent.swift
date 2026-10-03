@@ -15,17 +15,9 @@ struct DailyPushFacts {
 
     static func make(for date: Date, courses: [DailyPushPlanner.Course], semesterStart: Date,
                      calendar original: Calendar = .current) -> Self {
-        var calendar = original
-        calendar.firstWeekday = 2
-        guard let semester = calendar.dateInterval(of: .weekOfYear, for: semesterStart)?.start,
-              let monday = calendar.dateInterval(of: .weekOfYear, for: date)?.start else {
-            return .init(courseCount: 0, totalMinutes: 0, remainingCount: 0, remainingMinutes: 0, lastEnd: nil)
-        }
-        let week = (calendar.dateComponents([.day], from: semester, to: monday).day ?? 0) / 7 + 1
-        let weekday = (calendar.component(.weekday, from: date) + 5) % 7 + 1
-        let minute = calendar.component(.hour, from: date) * 60 + calendar.component(.minute, from: date)
-        let active = courses.filter { $0.weekday == weekday && week > 0 && $0.weeks.contains(week)
-            && $0.startMinutes >= 0 && $0.endMinutes <= 1440 && $0.endMinutes > $0.startMinutes }
+        let calendar = CourseTimeRules.teachingCalendar(original)
+        let minute = CourseTimeRules.minutes(on: date, calendar: calendar)
+        let active = CourseTimeRules.activeCourses(on: date, semesterStart: semesterStart, courses: courses, calendar: calendar)
         let remaining = active.filter { $0.endMinutes > minute }
         return .init(courseCount: active.count, totalMinutes: duration(active.map { ($0.startMinutes, $0.endMinutes) }),
             remainingCount: remaining.count, remainingMinutes: duration(remaining.map { (max(minute, $0.startMinutes), $0.endMinutes) }),

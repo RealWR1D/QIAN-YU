@@ -1,10 +1,8 @@
 #!/bin/sh
-set -eu
-root_dir=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
-check_dir=$(mktemp -d /private/tmp/qianyu-content-check.XXXXXX)
-trap 'rm -rf "$check_dir"' EXIT
+. "$(dirname -- "$0")/check_common.sh"
+
 cp "$root_dir/QIAN_YU/Resources/EditorialContent.json" "$check_dir/EditorialContent.json"
-swiftc -module-cache-path "$check_dir/modules" -o "$check_dir/check" \
+swiftc "$root_dir/QIAN_YU/Models/CourseTimeRules.swift" -module-cache-path "$check_dir/modules" -o "$check_dir/check" \
     "$root_dir/QIAN_YU/Engine/EditorialCopy.swift" \
     "$root_dir/QIAN_YU/Services/DailyPushPlanner.swift" \
     "$root_dir/QIAN_YU/Services/DailyPushContent.swift" \

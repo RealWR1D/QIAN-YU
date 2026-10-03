@@ -14,4 +14,6 @@
 - [硅基流动 Chat Completions](https://docs.siliconflow.cn/docs/api/chat-completions-post)：`enable_thinking` 和部分模型的 `reasoning_effort`。
 - [Apple 本地网络 ATS 配置](https://developer.apple.com/documentation/bundleresources/information-property-list/nsapptransportsecurity/nsallowslocalnetworking)：本机 Ollama HTTP 接口允许本地网络访问。
 
-本地回归检查：`Scripts/check_api_configuration.sh`，使用内存钥匙串、独立 UserDefaults 和模拟模型列表，不读取真实 API Key，也不发网络请求。另以 Xcode 的 macOS、iOS 通用目标构建检查 SwiftUI 界面。
+流式回复按原始字节保留 SSE 的空行消息边界，支持 LF、CRLF、CR、UTF-8 BOM 和多行 data 字段。不能使用会跳过空行的 `URLSession.AsyncBytes.lines` 来驱动依赖空行的 SSE 解析器，否则正常回复会被拼接成无效 JSON（2026-10-03 修复）。
+
+本地回归检查：`Scripts/check_api_configuration.sh`，使用内存钥匙串、独立 UserDefaults、模拟模型列表和 URLProtocol 流式响应，不读取真实 API Key，也不访问外部模型服务。覆盖连接测试与聊天的中文内容、思考内容、消息边界、分片、异常响应和中断检查。另以 Xcode 的 macOS、iOS 通用目标构建检查 SwiftUI 界面。

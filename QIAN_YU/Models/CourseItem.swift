@@ -97,19 +97,14 @@ public final class CourseItem: Identifiable {
     /// 计算指定日期是否是该课程所在的星期几且当前教学周生效
     public func isScheduledForToday(on date: Date = Date(), calendar: Calendar = .current) -> Bool {
         guard isEnabled else { return false }
-        let weekdayIndex = calendar.component(.weekday, from: date)
-        // 转为 1=周一 ... 7=周日
-        let customWeekday = weekdayIndex == 1 ? 7 : weekdayIndex - 1
-        let currentWeek = AppSettings.shared.currentWeekNumber(from: date)
-        return customWeekday == self.weekday && isActive(inWeek: currentWeek)
+        let week = CourseTimeRules.teachingWeek(on: date, semesterStart: AppSettings.shared.semesterStartDate, calendar: calendar)
+        return CourseTimeRules.weekday(on: date, calendar: calendar) == weekday && isActive(inWeek: week)
     }
 
     /// 距离今日上课还有多少分钟 (仅当今天有这节课且尚未结束时有效)
     public func minutesUntilClassToday(from date: Date = Date(), calendar: Calendar = .current) -> Int? {
         guard isScheduledForToday(on: date, calendar: calendar) else { return nil }
-        let currentHour = calendar.component(.hour, from: date)
-        let currentMinute = calendar.component(.minute, from: date)
-        let currentTotal = currentHour * 60 + currentMinute
+        let currentTotal = CourseTimeRules.minutes(on: date, calendar: calendar)
 
         if currentTotal < startTotalMinutes {
             return startTotalMinutes - currentTotal
@@ -152,19 +147,15 @@ public final class CourseItem: Identifiable {
 
     /// 判断课程在指定周数是否生效（优先依照具体周数集合，否则依照起止周与单双周范围）
     public func isActive(inWeek week: Int) -> Bool {
-        let explicit = activeWeeks
-        if !explicit.isEmpty {
-            return explicit.contains(week)
-        }
-        guard week >= startWeek && week <= endWeek else { return false }
-        switch weekMode {
-        case .all:
-            return true
-        case .oddOnly:
-            return week % 2 != 0
-        case .evenOnly:
-            return week % 2 == 0
-        }
+        week > 0 && effectiveWeeks.contains(week)
+    }
+
+    public var effectiveWeeks: Set<Int> {
+        CourseTimeRules.effectiveWeeks(explicit: activeWeeks, start: startWeek, end: endWeek, mode: weekModeRaw)
+    }
+
+    var scheduleRule: CourseScheduleRule {
+        .init(weekday: weekday, startMinutes: startTotalMinutes, endMinutes: endTotalMinutes, weeks: effectiveWeeks)
     }
 
     public var weekModeDisplay: String {

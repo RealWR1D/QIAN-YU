@@ -309,9 +309,11 @@ public actor LLMService {
                         return
                     }
                     var decoder = ChatEventDecoder(apiKey: apiKey)
-                    for try await line in bytes.lines {
+                    // AsyncBytes.lines drops empty lines, including SSE event boundaries.
+                    // Frame bytes ourselves so distinct JSON events are never concatenated.
+                    for try await byte in bytes {
                         try Task.checkCancellation()
-                        for chunk in try decoder.consume(line) { continuation.yield(chunk) }
+                        for chunk in try decoder.consume(byte: byte) { continuation.yield(chunk) }
                         if decoder.isDone { break }
                     }
                     for chunk in try decoder.finish() { continuation.yield(chunk) }
@@ -383,10 +385,42 @@ private func paginationURL(json: [String: Any], currentURL: URL, firstURL: URL, 
 /// SSE framing supports data: with/without a space and multi-line event data.
 private struct ChatEventDecoder {
     let apiKey: String
+    private var lineBytes: [UInt8] = []
+    private var skipLF = false
+    private var isFirstLine = true
     private var dataLines: [String] = []
     private var receivedContent = false
     private var receivedFinish = false
     private(set) var isDone = false
+
+    /// SSE accepts LF, CRLF, and CR. Decode UTF-8 only after a whole line arrives.
+    mutating func consume(byte: UInt8) throws -> [StreamChunk] {
+        if skipLF {
+            skipLF = false
+            if byte == 10 { return [] }
+        }
+        if byte == 10 || byte == 13 {
+            skipLF = byte == 13
+            return try consumeBufferedLine()
+        }
+        lineBytes.append(byte)
+        guard lineBytes.count <= 1_048_576 else {
+            throw LLMServiceError.invalidResponse(String(localized: "模型回复超过可处理的大小。"))
+        }
+        return []
+    }
+
+    private mutating func consumeBufferedLine() throws -> [StreamChunk] {
+        if isFirstLine {
+            isFirstLine = false
+            if lineBytes.starts(with: [0xEF, 0xBB, 0xBF]) { lineBytes.removeFirst(3) }
+        }
+        guard let line = String(bytes: lineBytes, encoding: .utf8) else {
+            throw LLMServiceError.invalidResponse(String(localized: "服务返回的内容不是有效的聊天 API JSON，请检查 API 地址。"))
+        }
+        lineBytes.removeAll(keepingCapacity: true)
+        return try consume(line)
+    }
 
     mutating func consume(_ line: String) throws -> [StreamChunk] {
         if line.isEmpty { return try dispatch() }
@@ -401,7 +435,9 @@ private struct ChatEventDecoder {
     }
 
     mutating func finish() throws -> [StreamChunk] {
-        let chunks = try dispatch()
+        var chunks: [StreamChunk] = []
+        if !lineBytes.isEmpty { chunks += try consumeBufferedLine() }
+        chunks += try dispatch()
         guard receivedContent else { throw LLMServiceError.emptyResponse }
         guard isDone || receivedFinish else { throw LLMServiceError.interruptedStream }
         return chunks

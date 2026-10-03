@@ -59,6 +59,14 @@
 		D6A320000000000000000000 /* DailyPushContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A310000000000000000000 /* DailyPushContent.swift */; };
 		D6A320000000000000000001 /* DailyPushContentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A310000000000000000001 /* DailyPushContentService.swift */; };
 		D6A320000000000000000002 /* DailyWeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A310000000000000000002 /* DailyWeatherService.swift */; };
+		8AF7171491EB4FFF92D83ECA /* CourseTimeRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B1682E7BE34276B0C6C23B /* CourseTimeRules.swift */; };
+		5810A4E7A191458EBCCDDB23 /* CourseTimeRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B1682E7BE34276B0C6C23B /* CourseTimeRules.swift */; };
+		0557A7A675B0441C97B149B5 /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A39C322EB704277A472043D /* NotificationScheduler.swift */; };
+		BE5780E3CC444B93880EA140 /* ICSImportModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3AE6BC706E480C96260F81 /* ICSImportModels.swift */; };
+		A9D2634502F94C06BBE3CDB7 /* ICSFileDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AC50991B7047B4B8E11368 /* ICSFileDecoder.swift */; };
+		F84A154D2F9740E6BCE10975 /* ICSRecurrenceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4862A23F1E840C1B00BE492 /* ICSRecurrenceParser.swift */; };
+		8C3E78C57460455C92A757A1 /* ICSSemesterDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03B99EDA4424178AD48D8F9 /* ICSSemesterDetector.swift */; };
+		A79539E3F0E04F2489D41220 /* ICSCourseConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588F1A29815A437994E21577 /* ICSCourseConverter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,6 +147,13 @@
 		D6A310000000000000000000 /* DailyPushContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPushContent.swift; sourceTree = "<group>"; };
 		D6A310000000000000000001 /* DailyPushContentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPushContentService.swift; sourceTree = "<group>"; };
 		D6A310000000000000000002 /* DailyWeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherService.swift; sourceTree = "<group>"; };
+		F6B1682E7BE34276B0C6C23B /* CourseTimeRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseTimeRules.swift; sourceTree = "<group>"; };
+		2A39C322EB704277A472043D /* NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScheduler.swift; sourceTree = "<group>"; };
+		BC3AE6BC706E480C96260F81 /* ICSImportModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICSImportModels.swift; sourceTree = "<group>"; };
+		54AC50991B7047B4B8E11368 /* ICSFileDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICSFileDecoder.swift; sourceTree = "<group>"; };
+		C4862A23F1E840C1B00BE492 /* ICSRecurrenceParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICSRecurrenceParser.swift; sourceTree = "<group>"; };
+		C03B99EDA4424178AD48D8F9 /* ICSSemesterDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICSSemesterDetector.swift; sourceTree = "<group>"; };
+		588F1A29815A437994E21577 /* ICSCourseConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICSCourseConverter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +206,7 @@
 		4233154A3CB74495BE171980 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				F6B1682E7BE34276B0C6C23B /* CourseTimeRules.swift */,
 				C69800022F984BC39B14A87D /* ChatMessage.swift */,
 				28DAD27A7891468F9B85B703 /* CourseItem.swift */,
 				10A47FCE42194EBA8432A37D /* AppSettings.swift */,
@@ -315,6 +331,12 @@
 		ED73DFCB3BD74047BDE42C38 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				588F1A29815A437994E21577 /* ICSCourseConverter.swift */,
+				C03B99EDA4424178AD48D8F9 /* ICSSemesterDetector.swift */,
+				C4862A23F1E840C1B00BE492 /* ICSRecurrenceParser.swift */,
+				54AC50991B7047B4B8E11368 /* ICSFileDecoder.swift */,
+				BC3AE6BC706E480C96260F81 /* ICSImportModels.swift */,
+				2A39C322EB704277A472043D /* NotificationScheduler.swift */,
 				A667035134A1432796AB99B7 /* LLMService.swift */,
 				11593F6DCCBF4F779A00EED9 /* NotificationManager.swift */,
 				D6A310000000000000000002 /* DailyWeatherService.swift */,
@@ -443,6 +465,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A79539E3F0E04F2489D41220 /* ICSCourseConverter.swift in Sources */,
+				8C3E78C57460455C92A757A1 /* ICSSemesterDetector.swift in Sources */,
+				F84A154D2F9740E6BCE10975 /* ICSRecurrenceParser.swift in Sources */,
+				A9D2634502F94C06BBE3CDB7 /* ICSFileDecoder.swift in Sources */,
+				BE5780E3CC444B93880EA140 /* ICSImportModels.swift in Sources */,
+				0557A7A675B0441C97B149B5 /* NotificationScheduler.swift in Sources */,
+				8AF7171491EB4FFF92D83ECA /* CourseTimeRules.swift in Sources */,
 				47E9582401674B2B947A7967 /* QianYuApp.swift in Sources */,
 				800D9F52529544369409160C /* ChatMessage.swift in Sources */,
 				335B1A15091D4A3EA0999B0E /* CourseItem.swift in Sources */,
@@ -492,6 +521,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5810A4E7A191458EBCCDDB23 /* CourseTimeRules.swift in Sources */,
 				C4B01100D0014D88A1230001 /* QianYuWidgetBundle.swift in Sources */,
 				C4B01100D0014D88A1230002 /* QianYuCourseWidget.swift in Sources */,
 				C4B01100D0014D88A1230003 /* QianYuDynamicIslandView.swift in Sources */,

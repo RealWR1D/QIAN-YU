@@ -55,9 +55,7 @@ public final class CourseScheduleViewModel {
     }
 
     private func setInitialWeekday() {
-        let weekdayIndex = Calendar.current.component(.weekday, from: Date())
-        // Apple Calendar: 1=Sun, 2=Mon...7=Sat -> 转为 1=周一...7=周日
-        self.selectedWeekday = weekdayIndex == 1 ? 7 : weekdayIndex - 1
+        self.selectedWeekday = CourseTimeRules.weekday(on: Date())
     }
 
     public func loadCourses() {
@@ -167,29 +165,22 @@ public final class CourseScheduleViewModel {
 
     /// 今天的所有课程（自动根据当前教学周单双周与周数过滤）
     public var todayCourses: [CourseItem] {
-        let weekdayIndex = Calendar.current.component(.weekday, from: Date())
-        let todayDay = weekdayIndex == 1 ? 7 : weekdayIndex - 1
-        let currentWeek = AppSettings.shared.currentWeekNumber()
-        return courses.filter { $0.isEnabled && $0.weekday == todayDay && $0.isActive(inWeek: currentWeek) }
+        let now = Date()
+        return courses.filter { $0.isScheduledForToday(on: now) }
             .sorted { $0.startTotalMinutes < $1.startTotalMinutes }
     }
 
     /// 今天的下一门即将到来的课程
     public var nextUpcomingCourse: CourseItem? {
-        let currentHour = Calendar.current.component(.hour, from: Date())
-        let currentMinute = Calendar.current.component(.minute, from: Date())
-        let currentMinutes = currentHour * 60 + currentMinute
-
-        // 筛选尚未结束的课程
-        return todayCourses
-            .filter { $0.isEnabled && $0.endTotalMinutes >= currentMinutes }
+        let now = Date()
+        return todayCourses.filter { CourseTimeRules.hasNotEnded(endMinutes: $0.endTotalMinutes, at: now) }
             .min { $0.startTotalMinutes < $1.startTotalMinutes }
     }
 
     /// 下一门课程的一句话摘要（传给 PersonaEngine）
     public var nextCourseSummary: String? {
         guard let next = nextUpcomingCourse else { return nil }
-        let currentMinutes = Calendar.current.component(.hour, from: Date()) * 60 + Calendar.current.component(.minute, from: Date())
+        let currentMinutes = CourseTimeRules.minutes(on: Date())
         let diff = next.startTotalMinutes - currentMinutes
 
         if diff > 0 {
@@ -368,13 +359,7 @@ public final class CourseScheduleViewModel {
     }
 
     private func effectiveWeeks(for course: CourseItem) -> Set<Int> {
-        if !course.activeWeeks.isEmpty { return course.activeWeeks }
-        guard course.startWeek > 0,
-              course.endWeek >= course.startWeek,
-              course.endWeek - course.startWeek <= 100 else {
-            return []
-        }
-        return Set((course.startWeek...course.endWeek).filter { course.isActive(inWeek: $0) })
+        course.effectiveWeeks
     }
 
     /// 检查某节课是否与已有课程存在时间段重叠冲突
@@ -382,9 +367,8 @@ public final class CourseScheduleViewModel {
         return courses.contains { course in
             guard course.weekday == weekday else { return false }
             guard !effectiveWeeks(for: course).isDisjoint(with: activeWeeks) else { return false }
-            let overlapStart = max(course.startTotalMinutes, startTotalMinutes)
-            let overlapEnd = min(course.endTotalMinutes, endTotalMinutes)
-            return overlapStart < overlapEnd
+            return CourseTimeRules.overlaps(start: course.startTotalMinutes, end: course.endTotalMinutes,
+                                            otherStart: startTotalMinutes, otherEnd: endTotalMinutes)
         }
     }
 

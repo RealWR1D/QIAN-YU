@@ -1,0 +1,48 @@
+name: Validate project
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validation-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
+
+jobs:
+  validate:
+    runs-on: macos-15
+    timeout-minutes: 35
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Show toolchain
+        run: |
+          xcodebuild -version
+          swift --version
+      - name: Regression checks and unsigned Release builds
+        run: bash Scripts/check_project.sh --output-dir "$RUNNER_TEMP/qianyu-validation"
+      - name: Write summary
+        if: always()
+        run: |
+          if [ -f "$RUNNER_TEMP/qianyu-validation/summary.txt" ]; then
+            cat "$RUNNER_TEMP/qianyu-validation/summary.txt" >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Upload validation logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-logs
+          path: |
+            ${{ runner.temp }}/qianyu-validation/*.log
+            ${{ runner.temp }}/qianyu-validation/summary.txt
+          if-no-files-found: warn
+          retention-days: 14

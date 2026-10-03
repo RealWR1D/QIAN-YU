@@ -2,12 +2,7 @@ import Foundation
 
 /// 纯排程规则，独立于通知权限、SwiftData 和快捷指令。
 enum DailyPushPlanner {
-    struct Course {
-        let weekday: Int
-        let startMinutes: Int
-        let endMinutes: Int
-        let weeks: Set<Int>
-    }
+    typealias Course = CourseScheduleRule
 
     struct Configuration {
         let morning: Int?
@@ -34,24 +29,17 @@ enum DailyPushPlanner {
     }
 
     static func time(_ minutes: Int, on day: Date, calendar: Calendar) -> Date? {
-        guard (0..<1500).contains(minutes),
-              let targetDay = calendar.date(byAdding: .day, value: minutes / 1440, to: day) else { return nil }
-        return calendar.date(bySettingHour: (minutes % 1440) / 60, minute: minutes % 60, second: 0, of: targetDay)
+        CourseTimeRules.time(minutes, on: day, calendar: calendar)
     }
 
     static func entries(now: Date, configuration: Configuration, courses: [Course],
                         sentIdentifiers: Set<String> = [], calendar original: Calendar = .current) -> [Entry] {
-        var calendar = original
-        calendar.firstWeekday = 2
-        guard let semesterMonday = calendar.dateInterval(of: .weekOfYear, for: configuration.semesterStart)?.start else { return [] }
+        let calendar = CourseTimeRules.teachingCalendar(original)
         var result: [Entry] = []
         for offset in 0..<horizonDays {
-            guard let day = calendar.date(byAdding: .day, value: offset, to: calendar.startOfDay(for: now)),
-                  let monday = calendar.dateInterval(of: .weekOfYear, for: day)?.start else { continue }
-            let days = calendar.dateComponents([.day], from: semesterMonday, to: monday).day ?? 0
-            let week = days / 7 + 1
-            let weekday = (calendar.component(.weekday, from: day) + 5) % 7 + 1
-            let active = courses.filter { $0.weekday == weekday && week > 0 && $0.weeks.contains(week) }
+            guard let day = calendar.date(byAdding: .day, value: offset, to: calendar.startOfDay(for: now)) else { continue }
+            let active = CourseTimeRules.activeCourses(on: day, semesterStart: configuration.semesterStart,
+                                                       courses: courses, calendar: calendar)
 
             func append(_ kind: Kind, minutes: Int?) {
                 guard let minutes, let date = time(minutes, on: day, calendar: calendar), date > now else { return }
@@ -69,7 +57,7 @@ enum DailyPushPlanner {
                 append(.lunch, minutes: end.map { $0 < 11 * 60 ? 11 * 60 + 30 : $0 } ?? lunch)
             }
             if let afternoon = configuration.afternoon,
-               active.contains(where: { $0.startMinutes < 15 * 60 && $0.endMinutes > 14 * 60 }) {
+               active.contains(where: { CourseTimeRules.overlaps(start: $0.startMinutes, end: $0.endMinutes, otherStart: 14 * 60, otherEnd: 15 * 60) }) {
                 append(.afternoon, minutes: afternoon)
             }
             append(.dusk, minutes: configuration.dusk)
