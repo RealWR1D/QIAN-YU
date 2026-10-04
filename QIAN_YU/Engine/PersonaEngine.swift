@@ -18,10 +18,11 @@ public struct PersonaEngine {
     /// 每次请求都读取已保存的人设；未自定义时使用 EditorialContent.json 的默认设定。
     public var baseSystemPrompt: String { settings.effectivePersonaPrompt }
 
-    /// 构建注入当前时间、今日课程与用户称呼的动态提示词
+    /// 构建注入当前时间、完整课表与用户称呼的动态提示词。
     public func buildSystemPrompt(
         userName: String = "管理员",
         upcomingCourseHint: String? = nil,
+        scheduleContext: String? = nil,
         weatherHint: String? = nil
     ) -> String {
         // 默认与自定义人设都只附加事实，避免时段台词强制角色催睡、劝饭。
@@ -38,6 +39,10 @@ public struct PersonaEngine {
 
         if let course = upcomingCourseHint, !course.isEmpty {
             prompt += EditorialCopy.text("persona.course", ["course": course])
+        }
+
+        if let schedule = scheduleContext, !schedule.isEmpty {
+            prompt += EditorialCopy.text("persona.schedule", ["schedule": schedule])
         }
 
         if let weather = weatherHint, !weather.isEmpty {

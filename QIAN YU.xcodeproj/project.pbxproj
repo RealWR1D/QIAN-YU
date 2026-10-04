@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F9B02000AA114400BBBB0002 /* BackupSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A02000AA114400BBBB0002 /* BackupSettingsView.swift */; };
+		F9B02000AA114400BBBB0001 /* AppBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A02000AA114400BBBB0001 /* AppBackup.swift */; };
 		F6A914C93D414ADCB7149FA1 /* DailyPushPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A914C93D414ADCB7149FA2 /* DailyPushPlanner.swift */; };
 		00CA77B950EB4388B0F860BA /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE9364011674E7BB4B60FE3 /* ChatViewModel.swift */; };
 		06074522E9904523BA64DCD5 /* CourseScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF443555EF04EC196AA9574 /* CourseScheduleViewModel.swift */; };
@@ -94,6 +96,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F9A02000AA114400BBBB0002 /* BackupSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupSettingsView.swift; sourceTree = "<group>"; };
+		F9A02000AA114400BBBB0001 /* AppBackup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBackup.swift; sourceTree = "<group>"; };
 		F6A914C93D414ADCB7149FA2 /* DailyPushPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPushPlanner.swift; sourceTree = "<group>"; };
 		004FCB660B9449889CB0C13F /* QuickActionChipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickActionChipsView.swift; sourceTree = "<group>"; };
 		089EE8855582444898BCEE7C /* PersonaEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonaEngine.swift; sourceTree = "<group>"; };
@@ -196,6 +200,7 @@
 		30127A221AF641E189D14BC3 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				F9A02000AA114400BBBB0002 /* BackupSettingsView.swift */,
 				CDC6F13D95154CA9A0713B63 /* SettingsView.swift */,
 				3B6CE63FC40B46EFABB09718 /* PersonaDocView.swift */,
 				C3A01100D0014D88A1230001 /* WidgetPreviewSettingView.swift */,
@@ -206,6 +211,7 @@
 		4233154A3CB74495BE171980 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				F9A02000AA114400BBBB0001 /* AppBackup.swift */,
 				F6B1682E7BE34276B0C6C23B /* CourseTimeRules.swift */,
 				C69800022F984BC39B14A87D /* ChatMessage.swift */,
 				28DAD27A7891468F9B85B703 /* CourseItem.swift */,
@@ -488,6 +494,8 @@
 				F6A914C93D414ADCB7149FA1 /* DailyPushPlanner.swift in Sources */,
 				918CFD7272C24C8E9296C81F /* CourseReminderService.swift in Sources */,
 				00CA77B950EB4388B0F860BA /* ChatViewModel.swift in Sources */,
+				F9B02000AA114400BBBB0002 /* BackupSettingsView.swift in Sources */,
+				F9B02000AA114400BBBB0001 /* AppBackup.swift in Sources */,
 				06074522E9904523BA64DCD5 /* CourseScheduleViewModel.swift in Sources */,
 				41FBE959F808408D94D1E849 /* SettingsViewModel.swift in Sources */,
 				2D7BCB28A64B49418E0B8B73 /* MainView.swift in Sources */,

@@ -19,6 +19,9 @@ if ! xcodebuild -project 'QIAN YU.xcodeproj' -scheme 'QIAN YU' \
     exit 1
 fi
 app="$output_dir/DerivedData/Build/Products/Release/QIAN YU.app"
+icon_file=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIconFile' "$app/Contents/Info.plist")
+case "$icon_file" in *.icns) ;; *) icon_file="$icon_file.icns" ;; esac
+[ -s "$app/Contents/Resources/$icon_file" ] || { echo "Missing packaged notification app icon: $icon_file" >&2; exit 1; }
 codesign --force --sign - --entitlements QIAN_YU/Widgets/QianYuWidgets.entitlements \
     "$app/Contents/PlugIns/QianYuWidgets.appex"
 codesign --force --sign - --entitlements QIAN_YU/QIAN_YU.entitlements "$app"

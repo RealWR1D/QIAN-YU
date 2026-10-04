@@ -40,6 +40,7 @@ public struct MainView: View {
     @State public var scheduleViewModel: CourseScheduleViewModel
     @State public var pomodoroViewModel: PomodoroTimerViewModel
     @State public var settingsViewModel = SettingsViewModel()
+    @State private var chatViewModel = ChatViewModel()
     @Environment(\.modelContext) private var modelContext
     @Environment(\.scenePhase) private var scenePhase
 
@@ -52,7 +53,7 @@ public struct MainView: View {
         #if os(iOS)
         TabView(selection: $selectedTab) {
             NavigationStack {
-                ChatView(scheduleViewModel: scheduleViewModel)
+                ChatView(viewModel: chatViewModel, scheduleViewModel: scheduleViewModel)
             }
             .tabItem {
                 Label(AppTab.companion.displayName, systemImage: AppTab.companion.iconName)
@@ -83,6 +84,9 @@ public struct MainView: View {
             }
             .tag(AppTab.settings)
         }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("qianyuBackupRestored"))) { _ in
+            chatViewModel.refreshHistory()
+        }
         .tint(.orange)
         .font(.body)
         .fontDesign(.default)
@@ -99,6 +103,7 @@ public struct MainView: View {
             CourseReminderBackgroundRefresh.schedule()
         }
         .onChange(of: scenePhase) { _, phase in
+            if phase != .active { chatViewModel.checkpoint() }
             if phase == .active {
                 pomodoroViewModel.synchronizeAfterSuspension()
                 CourseReminderService.shared.syncAllCourseReminders(courses: scheduleViewModel.courses)
@@ -206,7 +211,7 @@ public struct MainView: View {
             Group {
                 switch selectedTab {
                 case .companion:
-                    ChatView(scheduleViewModel: scheduleViewModel)
+                    ChatView(viewModel: chatViewModel, scheduleViewModel: scheduleViewModel)
                 case .schedule:
                     CourseScheduleView(viewModel: scheduleViewModel)
                 case .focus:
@@ -218,6 +223,9 @@ public struct MainView: View {
                 }
             }
             .frame(minWidth: 500, minHeight: 450)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("qianyuBackupRestored"))) { _ in
+            chatViewModel.refreshHistory()
         }
         .tint(.orange)
         .onChange(of: scheduleViewModel.externalImportRequestID, initial: true) { _, requestID in
@@ -232,6 +240,7 @@ public struct MainView: View {
             }
         }
         .onChange(of: scenePhase) { _, phase in
+            if phase != .active { chatViewModel.checkpoint() }
             if phase == .active {
                 pomodoroViewModel.synchronizeAfterSuspension()
                 CourseReminderService.shared.syncAllCourseReminders(courses: scheduleViewModel.courses)

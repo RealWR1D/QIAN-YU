@@ -237,7 +237,7 @@ public struct QianYuChibiSlotView: View {
                 Circle()
                     .stroke(isFocusing ? Color.orange : Color.clear, lineWidth: 2)
                     .scaleEffect(isFocusing ? 1.08 : 1.0)
-                    .animation(isFocusing ? Animation.easeInOut(duration: 1.2).repeatForever(autoreverses: true) : .default, value: isFocusing)
+
             )
 
             Text("陈千语 · 伴读中")

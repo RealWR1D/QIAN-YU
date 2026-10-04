@@ -17,6 +17,7 @@ public struct MessageBubbleView: View {
 
     public var body: some View {
         HStack(alignment: .top, spacing: 10) {
+            if isUser { Spacer(minLength: 40) }
             if !isUser {
                 // 陈千语专属头像徽章
                 ZStack {
@@ -57,6 +58,7 @@ public struct MessageBubbleView: View {
                     // 正文气泡主体
                     if !message.content.isEmpty {
                         Text(message.content)
+                            .textSelection(.enabled)
                             .font(.system(size: 15))
                             .foregroundColor(isUser ? .white : .primary)
                             .padding(.horizontal, 14)
@@ -69,6 +71,9 @@ public struct MessageBubbleView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                     }
 
+                    if let error = message.generationError {
+                        Text(error).font(.caption).foregroundStyle(.secondary)
+                    }
                     // 思考过程查看标签（如果模型输出了思维链）
                     if !isUser, let reasoning = message.reasoningContent, !reasoning.isEmpty {
                         DisclosureGroup(
@@ -109,8 +114,18 @@ public struct MessageBubbleView: View {
                 }
             }
 
-            Spacer(minLength: 40)
+            if !isUser { Spacer(minLength: 40) }
         }
         .frame(maxWidth: .infinity, alignment: isUser ? .trailing : .leading)
+        .contextMenu {
+            Button("复制") {
+                #if os(iOS)
+                UIPasteboard.general.string = message.content
+                #else
+                NSPasteboard.general.clearContents()
+                NSPasteboard.general.setString(message.content, forType: .string)
+                #endif
+            }
+        }
     }
 }

@@ -177,6 +177,66 @@ public final class CourseScheduleViewModel {
             .min { $0.startTotalMinutes < $1.startTotalMinutes }
     }
 
+    /// 每次发送聊天时读取全部课程，不受课表页的星期/教学周筛选影响。
+    public func chatScheduleContext(for question: String = "", now: Date = Date()) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "zh_CN")
+        formatter.dateFormat = "yyyy-MM-dd EEEE HH:mm"
+        let week = AppSettings.shared.currentWeekNumber(from: now)
+        let sorted = courses.sorted {
+            if $0.weekday != $1.weekday { return $0.weekday < $1.weekday }
+            if $0.startTotalMinutes != $1.startTotalMinutes { return $0.startTotalMinutes < $1.startTotalMinutes }
+            return $0.name < $1.name
+        }
+        var lines = [
+            "当前时间：\(formatter.string(from: now))；时区：\(formatter.timeZone.identifier)。",
+            "学期起始日：\(formatter.string(from: AppSettings.shared.semesterStartDate))；当前教学周：\(week)。",
+            "应用已保存 \(courses.count) 条课程安排，其中 \(courses.filter { $0.isEnabled }.count) 条已启用。以下为完整课表，不只是今天或下一节课："
+        ]
+        if sorted.isEmpty {
+            lines.append("当前课表为空。尚无已保存课程，不能据此判断用户现实中没有课程；可请用户导入或添加课表。")
+        }
+        for course in sorted {
+            // JSON strings keep user-entered fields distinct from prompt instructions.
+            func quoted(_ value: String) -> String {
+                String(data: (try? JSONEncoder().encode(value)) ?? Data(), encoding: .utf8) ?? "\"\""
+            }
+            lines.append("课程：\(quoted(course.name))；\(course.weekdayName) \(course.formattedTime)；教室：\(quoted(course.classroom))；教师：\(quoted(course.teacher))；生效教学周：\(course.effectiveWeeks.sorted().map(String.init).joined(separator: ","))；状态：\(course.isEnabled ? "启用" : "停用")。")
+        }
+        let today = sorted.filter { $0.isScheduledForToday(on: now) }
+        lines.append("今天生效的课程：\(today.isEmpty ? "无" : today.map { "\($0.name) \($0.formattedTime)" }.joined(separator: "；"))。")
+        let next = today.first { CourseTimeRules.hasNotEnded(endMinutes: $0.endTotalMinutes, at: now) }
+        lines.append("今天尚未结束的下一节课：\(next.map { "\($0.name) \($0.formattedTime)" } ?? "无（不代表学期课表为空）")。")
+        var calendar = Calendar.current
+        calendar.firstWeekday = 2
+        let todayStart = calendar.startOfDay(for: now)
+        let weekStart = calendar.dateInterval(of: .weekOfYear, for: now)?.start ?? todayStart
+        let names = ["一", "二", "三", "四", "五", "六", "日"]
+        let weekday = names.indices.first { question.contains("周" + names[$0]) || question.contains("星期" + names[$0]) }
+            ?? (question.contains("周天") || question.contains("星期天") ? 6 : nil)
+        var dates: [Date] = []
+        if question.contains("后天") { dates = [calendar.date(byAdding: .day, value: 2, to: todayStart)!] }
+        else if question.contains("明天") { dates = [calendar.date(byAdding: .day, value: 1, to: todayStart)!] }
+        else if question.contains("今天") { dates = [todayStart] }
+        else if question.contains("下周") || question.contains("下星期") {
+            dates = (weekday.map { [$0] } ?? Array(0..<7)).map { calendar.date(byAdding: .day, value: 7 + $0, to: weekStart)! }
+        } else if question.contains("本周") || question.contains("这周") || weekday != nil {
+            dates = (weekday.map { [$0] } ?? Array(0..<7)).map { calendar.date(byAdding: .day, value: $0, to: weekStart)! }
+        }
+        let nextQuestion = question.contains("下节") || question.contains("下一节")
+        if nextQuestion && dates.isEmpty { dates = (0..<14).map { calendar.date(byAdding: .day, value: $0, to: todayStart)! } }
+        if !dates.isEmpty {
+            lines.append("以下日期与生效课程由应用计算，回答该问题时优先使用，勿重新猜测周次：")
+            for date in dates {
+                let matches = sorted.filter { $0.isScheduledForToday(on: date) && (!nextQuestion || date > todayStart || CourseTimeRules.hasNotEnded(endMinutes: $0.endTotalMinutes, at: now)) }
+                let selected = nextQuestion ? Array(matches.prefix(1)) : matches
+                lines.append("查询日期：\(formatter.string(from: date))；第\(AppSettings.shared.currentWeekNumber(from: date))教学周；课程：\(selected.isEmpty ? "无" : selected.map { "\($0.name) \($0.formattedTime) 教室：\($0.classroom) 教师：\($0.teacher)" }.joined(separator: "；"))。")
+                if nextQuestion && !selected.isEmpty { break }
+            }
+        }
+        return lines.joined(separator: "\n")
+    }
+
     /// 下一门课程的一句话摘要（传给 PersonaEngine）
     public var nextCourseSummary: String? {
         guard let next = nextUpcomingCourse else { return nil }

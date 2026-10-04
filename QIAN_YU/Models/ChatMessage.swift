@@ -15,6 +15,7 @@ public final class ChatMessage: Identifiable {
     public var content: String = ""
     public var timestamp: Date = Date()
     public var isStreaming: Bool = false
+    public var generationError: String? = nil
     public var tag: String? = nil // "chat", "course_alert", "routine_greeting"
     public var reasoningContent: String? = nil // 思考/推理内容 (Thinking/Reasoning tokens)
 

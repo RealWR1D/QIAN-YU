@@ -17,6 +17,8 @@ PLACEHOLDERS = {
     "notification.ai.prompt": {"contexts", "recent"},
     "persona.context": {"base", "userName", "timeContext"},
     "persona.course": {"course"},
+    "persona.schedule": {"schedule"},
+    "dialogue.course.schedule": {"schedule"},
     "persona.weather": {"weather"},
     "notification.lunch.title": {"userName"},
     "notification.course.pre.title": {"courseName"},

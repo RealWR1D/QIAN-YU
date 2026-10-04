@@ -19,7 +19,8 @@ public struct QianYuDialogueCorpus {
     public static func matchReply(
         for input: String,
         userName: String = "管理员",
-        nextCourseSummary: String? = nil
+        nextCourseSummary: String? = nil,
+        scheduleContext: String? = nil
     ) -> String {
         let text = input.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         func containsAny(_ phrases: [String]) -> Bool {
@@ -28,6 +29,17 @@ public struct QianYuDialogueCorpus {
 
         // 1. 询问上课或课程安排
         if text.contains("课") || text.contains("教室") || text.contains("上课") || text.contains("迟到") {
+            if let schedule = scheduleContext, !schedule.isEmpty {
+                let lines = schedule.components(separatedBy: "\n")
+                let queried = lines.filter { $0.hasPrefix("查询日期：") }
+                let courses = lines.filter { $0.hasPrefix("课程：") }
+                if !queried.isEmpty {
+                    return EditorialCopy.text("dialogue.course.schedule", ["schedule": queried.joined(separator: "\n")])
+                }
+                if !containsAny(["下一节", "下节", "迟到"]), !courses.isEmpty {
+                    return EditorialCopy.text("dialogue.course.schedule", ["schedule": courses.joined(separator: "\n")])
+                }
+            }
             if let summary = nextCourseSummary, !summary.isEmpty {
                 return EditorialCopy.text("dialogue.course.next", ["summary": summary])
             } else {

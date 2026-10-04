@@ -1,5 +1,6 @@
 // Exercises the production file router and parser without sending notifications.
 import Foundation
+import SwiftData
 import SwiftUI
 
 @MainActor public final class CourseReminderService {
@@ -37,7 +38,46 @@ public struct QianYuChibiMiniAvatarView: View {
         let second = directory.appendingPathComponent("第二份课表.ics")
         try fixture("课程 A").write(to: first, atomically: true, encoding: .utf8)
         try fixture("课程 B").write(to: second, atomically: true, encoding: .utf8)
+        let backupContainer = try ModelContainer(for:CourseItem.self, ChatMessage.self, configurations:ModelConfiguration(isStoredInMemoryOnly:true))
+        let backupContext = backupContainer.mainContext
+        let course = CourseItem(name:"备份课程", activeWeeksRaw:"1,3,5")
+        let message = ChatMessage(role:"assistant", content:"备份对话")
+        backupContext.insert(course); backupContext.insert(message)
+        let backupData = try AppBackup.export(context:backupContext, settings:AppSettings.shared)
+        let object = try JSONSerialization.jsonObject(with:backupData) as! [String:Any]
+        precondition(object["apiKey"] == nil && object["courses"] != nil && object["messages"] != nil)
+        try backupContext.delete(model:CourseItem.self); try backupContext.delete(model:ChatMessage.self); try backupContext.save()
+        try AppBackup.restore(backupData, context:backupContext, settings:AppSettings.shared)
+        try AppBackup.restore(backupData, context:backupContext, settings:AppSettings.shared)
+        let restoredCourses = try backupContext.fetch(FetchDescriptor<CourseItem>())
+        let restoredMessages = try backupContext.fetch(FetchDescriptor<ChatMessage>())
+        precondition(restoredCourses.count == 1 && restoredCourses[0].activeWeeksRaw == "1,3,5" && restoredMessages.count == 1)
+        do { try AppBackup.restore(Data("{}".utf8), context:backupContext, settings:AppSettings.shared); preconditionFailure("Invalid backup must fail") } catch { }
         let model = CourseScheduleViewModel()
+        let schedule = CourseScheduleViewModel()
+        let savedCourse = CourseItem(name: "学期课程甲", classroom: "A201", teacher: "教师甲", weekday: 1, startWeek: 1, endWeek: 16)
+        let disabledCourse = CourseItem(name: "停用课程乙", weekday: 2, isEnabled: false)
+        schedule.courses = [savedCourse, disabledCourse]
+        schedule.selectedWeekday = 7
+        schedule.selectedWeek = 99
+        schedule.isFilteringCurrentWeek = true
+        let weekend = calendar.date(from: DateComponents(year: 2026, month: 10, day: 3, hour: 17))!
+        let scheduleContext = schedule.chatScheduleContext(now: weekend)
+        let nextMonday = schedule.chatScheduleContext(for:"下周一在哪里上课？", now:weekend)
+        precondition(nextMonday.contains("查询日期：2026-10-05") && nextMonday.contains("A201"))
+        let tomorrow = schedule.chatScheduleContext(for:"明天有什么课？", now:weekend)
+        precondition(tomorrow.contains("查询日期：2026-10-04"))
+        precondition(scheduleContext.contains("学期课程甲") && scheduleContext.contains("A201") && scheduleContext.contains("教师甲"))
+        precondition(scheduleContext.contains("停用课程乙") && scheduleContext.contains("停用"))
+        precondition(scheduleContext.contains("今天生效的课程：无"), "No classes today must not erase the semester schedule")
+        let prompt = PersonaEngine.shared.buildSystemPrompt(upcomingCourseHint: nil, scheduleContext: scheduleContext)
+        precondition(prompt.contains(scheduleContext) && prompt.contains("必须依据这份数据回答"))
+        let offline = QianYuDialogueCorpus.matchReply(for: "这个学期都有什么课？", scheduleContext: scheduleContext)
+        precondition(offline.contains("学期课程甲") && offline.contains("停用课程乙"))
+        savedCourse.classroom = "B202"
+        precondition(schedule.chatScheduleContext(now: weekend).contains("B202"), "Context must refresh after edits")
+        schedule.courses = []
+        precondition(schedule.chatScheduleContext(now: weekend).contains("当前课表为空"))
         precondition(!model.handleExternalCalendarURL(URL(string: "qianyu://startPomodoro")!))
         precondition(!model.handleExternalCalendarURL(URL(string: "https://example.com/course.ics")!))
         precondition(!model.handleExternalCalendarURL(directory.appendingPathComponent("readme.txt")))
@@ -112,7 +152,7 @@ public struct QianYuChibiMiniAvatarView: View {
         precondition(mixed.totalEventsCount == 2 && mixed.skippedAllDayEventsCount == 1 && mixed.courses.count == 1)
         let beforeSemester = try parse(event(start: "20260928T080000"))
         precondition(beforeSemester.courses.isEmpty, "pre-semester event does not activate week 1")
-        print("ICS import checks passed: external routing, Unicode/uppercase files, repeat imports, invalid/missing files, picker recovery, no unconfirmed writes")
+        print("ICS and backup checks passed: file routing, recovery, deterministic dates, round-trip backup, credential exclusion and restore deduplication")
         print("ICS parser checks passed: COUNT, INTERVAL, UNTIL, BYDAY, EXDATE, rescheduling, cancellation, explicit weeks, text folding, duration and merging")
     }
 }

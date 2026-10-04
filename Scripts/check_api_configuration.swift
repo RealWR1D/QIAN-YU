@@ -139,6 +139,14 @@ final class DailyPushURLProtocol: URLProtocol {
         let personaBody = try JSONSerialization.jsonObject(with: personaRequest.httpBody!) as! [String: Any]
         let serializedMessages = personaBody["messages"] as! [[String: Any]]
         precondition(serializedMessages[0]["content"] as? String == fullPrompt, "API must receive the complete persona")
+        let semesterContext = "今天无课。学期课程：电路与电子学；周一 08:00-09:40；T4502；第1至16周。"
+        let semesterPrompt = PersonaEngine(settings: first).buildSystemPrompt(scheduleContext: semesterContext)
+        let semesterRequest = try LLMRequestBuilder.chatRequest(baseURL: "https://example.org/v1", apiKey: "test", model: "test-model",
+            messages: [.init(role: "system", content: semesterPrompt), .init(role: "user", content: "这个学期都有什么课？")], stream: true)
+        let semesterBody = try JSONSerialization.jsonObject(with: semesterRequest.httpBody!) as! [String: Any]
+        let semesterMessages = semesterBody["messages"] as! [[String: String]]
+        precondition(semesterMessages[0]["content"]!.contains(semesterContext), "Actual API payload must include the whole semester even with no next class")
+        precondition(semesterMessages[0]["content"]!.hasPrefix(fullPersona), "Schedule support must retain the original persona")
         precondition(first.apiKey == "legacy-secret")
         precondition(store.values["chat-api-key.deepseek"] == "legacy-secret")
         first.modelName = "manually-entered/deepseek-model"

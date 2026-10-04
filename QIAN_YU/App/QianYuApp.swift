@@ -7,6 +7,9 @@
 
 import SwiftUI
 import SwiftData
+#if os(macOS)
+import CoreServices
+#endif
 
 @main
 struct QianYuApp: App {
@@ -60,6 +63,12 @@ struct QianYuApp: App {
         self.container = Self.sharedContainer
 
         #if os(macOS)
+        // Notification Center resolves its icon through Launch Services, not the Dock
+        // image set below. Refresh this bundle's registration after installs/rebuilds.
+        let registrationStatus = LSRegisterURL(Bundle.main.bundleURL as CFURL, true)
+        if registrationStatus != noErr {
+            NSLog("应用图标注册更新失败：%d", registrationStatus)
+        }
         // 动态强制应用 Dock 官方圆角图标（带标准 macOS 连续曲率圆角与微阴影）
         let iconPath = Bundle.main.path(forResource: "AppIcon", ofType: "icns")
         if let path = iconPath, let iconImage = NSImage(contentsOfFile: path) {

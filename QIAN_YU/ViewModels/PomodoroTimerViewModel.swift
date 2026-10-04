@@ -279,7 +279,7 @@ public final class PomodoroTimerViewModel {
         timerTask?.cancel()
         timerTask = Task { [weak self] in
             while !Task.isCancelled {
-                try? await Task.sleep(nanoseconds: 500_000_000) // 0.5s 采样
+                try? await Task.sleep(nanoseconds: 1_000_000_000) // 按实际截止时间每秒刷新
                 guard !Task.isCancelled else { break }
                 guard let self = self, let target = self.targetEndDate else { break }
 
@@ -288,7 +288,7 @@ public final class PomodoroTimerViewModel {
                     self.completeSession()
                     break
                 }
-                self.remainingSeconds = diff
+                if self.remainingSeconds != diff { self.remainingSeconds = diff }
             }
         }
     }

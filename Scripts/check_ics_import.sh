@@ -4,8 +4,12 @@
 cp "$root_dir/QIAN_YU/Resources/EditorialContent.json" "$check_dir/EditorialContent.json"
 swiftc "$root_dir/QIAN_YU/Models/CourseTimeRules.swift" -parse-as-library -o "$check_dir/check" \
     "$root_dir/QIAN_YU/Engine/EditorialCopy.swift" \
+    "$root_dir/QIAN_YU/Engine/PersonaEngine.swift" \
+    "$root_dir/QIAN_YU/Engine/QianYuDialogueCorpus.swift" \
     "$root_dir/QIAN_YU/Models/AppSettings.swift" \
     "$root_dir/QIAN_YU/Models/CourseItem.swift" \
+    "$root_dir/QIAN_YU/Models/ChatMessage.swift" \
+    "$root_dir/QIAN_YU/Models/AppBackup.swift" \
     "$root_dir/QIAN_YU/Widgets/QianYuCourseWidget.swift" \
     "$root_dir/QIAN_YU/Services/ICSParserService.swift" \
     "$root_dir/QIAN_YU/Services/ICSImportModels.swift" \
