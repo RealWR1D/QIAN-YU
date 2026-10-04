@@ -82,14 +82,7 @@ footer { color: var(--muted); text-align: center; margin-top: 2rem; font-size: .
 <p>下面的安装说明以从源码运行项目为例。若你已经安装了千语，可以直接从「第一次使用」开始。</p>
 <h2 id="section-2">2. 安装与启动</h2>
 <h3>选择安装方式</h3>
-<ul>
-<li><strong>已经安装</strong>：直接阅读第 3 章，不必重新安装。</li>
-<li><strong>有 Mac</strong>：按下面的 Xcode 步骤安装。日常使用无需保持连接，但免费签名到期仍需续签。</li>
-<li><strong>没有 Mac、但有 Windows</strong>：可用 AltStore Classic 安装项目提供的 IPA，到期前需要通过运行 AltServer 的电脑续签。</li>
-<li><strong>希望在手机上续签</strong>：SideStore 首次安装仍需要电脑，而且当前流程需要 App Store 中的 LocalDevVPN。仅有国区账号且无法下载 LocalDevVPN 时，不能按这条路线完成准备。</li>
-</ul>
-<p>完整操作见 <a href="https://github.com/RealWR1D/QIAN-YU/blob/main/Docs/iPhone免费安装.md">iPhone 免费安装指南</a>，安装包见 <a href="https://github.com/RealWR1D/QIAN-YU/releases/tag/ios-sideload">iPhone 侧载下载页</a>。IPA 需要由安装工具用自己的账号签名，不能在「文件」中直接点击安装。免费侧载也需要在 7 天到期前续签。</p>
-<p>侧载安装时如询问是否保留扩展，请保留 <strong>QianYuWidgets</strong>，否则小组件和专注实时活动不可用。更换安装方式或应用标识前，按第 16 章导出备份；安装后可能需要重新填写 API 配置。</p>
+<p>已有应用的用户可直接进入第 3 章。首次安装可以通过 Mac 上的 Xcode 编译源码，也可使用兼容工具重新签名安装项目提供的 IPA。SideStore 和 AltStore Classic 的前置条件、操作步骤及续签限制见 <a href="https://github.com/RealWR1D/QIAN-YU/blob/main/Docs/iPhone免费安装.md">iPhone 安装指南</a>。下面介绍 Xcode 源码安装方式。</p>
 <h3>获取项目</h3>
 <p>打开 <a href="https://github.com/RealWR1D/QIAN-YU">GitHub 仓库</a>，选择 <strong>Code → Download ZIP</strong>，解压到本地。也可以用终端下载：</p>
 <pre><code>git clone https://github.com/RealWR1D/QIAN-YU.git
@@ -420,9 +413,7 @@ open &quot;QIAN YU.xcodeproj&quot;</code></pre>
 <h3>Apple 日历里为什么还是旧课表，或有两次提醒？</h3>
 <p>修改千语课表后，需要再次手动同步。两次提醒可能分别来自千语和 Apple 日历，检查两边的提醒设置。重复事件还可能来自你自己另行导入的日历；千语只管理自己标记的同步事件。</p>
 <h3>免费账户安装后，过几天 App 打不开？</h3>
-<p>可能是免费签名到期。Xcode 安装版连接设备，用相同应用标识重新编译安装；SideStore 安装版到期前刷新 SideStore 与 QIAN YU，AltStore Classic 则通过运行 AltServer 的电脑续签。安装工具本身到期时可能也需要电脑恢复。不要先卸载应用作为常规续签步骤。</p>
-<h3>国区账号下载不了 LocalDevVPN，能继续 SideStore 吗？</h3>
-<p>当前官方准备流程依赖 LocalDevVPN，不能假定普通免费重签其 IPA 就能解决。可选择不依赖它的 Windows + AltStore Classic 路线，但续签仍需要电脑。仅有国区账号、没有可用电脑且不购买开发者会员时，本项目目前没有提供已验证可长期在手机上续签的方案。详见 <a href="https://github.com/RealWR1D/QIAN-YU/blob/main/Docs/iPhone免费安装.md">iPhone 免费安装指南</a>。</p>
+<p>可能是 Personal Team 的安装签名到期。连接设备，通过 Xcode 用相同应用标识重新编译安装。不要先卸载应用作为常规续签步骤。</p>
 <h3>Xcode 中修改文字会立刻出现在 App 吗？</h3>
 <p>源码文件会按编辑器设置保存，但保存与运行更新是两件事。正在运行或已经安装的 App 不会因为文件保存自动变成新版本，需要重新编译安装。若只想维护显示文字，可另看仓库中的 <code>文案维护.md</code>。</p>
 <h2 id="section-18">18. 反馈问题</h2>

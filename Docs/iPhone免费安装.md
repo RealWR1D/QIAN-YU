@@ -1,52 +1,69 @@
-# iPhone 免费安装 QIAN YU
+# QIAN YU iPhone 安装指南
 
-不需要购买 Apple Developer Program。首次安装 SideStore 需要借用一台 Windows、Mac 或 Linux 电脑，后续可在 iPhone 上安装、更新和续签。支持 iOS 17 及以上。
+QIAN YU 提供 iPhone IPA 构建产物和项目源码。符合下列条件的用户可以使用自己的 Apple 账号重新签名安装；是否能够完成安装和续签，取决于设备、账号、网络及安装工具的支持情况。
 
-## 先确认 LocalDevVPN 能否下载
+安装包：[iPhone IPA 下载页](https://github.com/RealWR1D/QIAN-YU/releases/tag/ios-sideload)。本频道不是 TestFlight 或 App Store 分发，IPA 不能在「文件」应用中直接点击安装。应用不要求安装者购买开发者会员；使用免费账号签名时仍受 Apple 的有效期、能力及配额限制。
 
-SideStore 当前官方流程要求从 App Store 安装 LocalDevVPN。若你的商店地区无法下载它（例如仅有国区账号时遇到“所在国家或地区不可用”），这套流程会卡在第一步，并不能保证“借一次电脑后就能完全在手机上续签”。
+## 选择安装方式
 
-不能通过普通免费账号重签名 LocalDevVPN 来解决：它使用的 Network Extensions 能力不向免费 Personal Team 开放。参见 [Apple 能力表](https://developer.apple.com/help/account/reference/supported-capabilities-ios) 与 [SideStore 前置要求](https://docs.sidestore.io/docs/installation/prerequisites)。
+| 方式 | 前置条件 | 更新与续签 |
+| --- | --- | --- |
+| Xcode 源码安装 | Mac、兼容的 Xcode、Apple 账号和 iPhone | 通过 Xcode 重新编译安装 |
+| SideStore 安装 IPA | 首次设置需要兼容电脑；iPhone 上需完成 LocalDevVPN、设备配对及账号配置 | 完成设置后，可在满足网络条件时通过 SideStore 更新与续签 |
+| AltStore Classic 安装 IPA | Windows 或 Mac 上运行 AltServer，完成设备和账号配置 | 通过 AltServer 配合 AltStore 更新与续签，仍需要电脑 |
 
-如果暂时不使用其他地区的商店账号，可在 Windows 上使用 [AltStore Classic](https://faq.altstore.io/altstore-classic/how-to-install-altstore-windows)，用自己的免费 Apple 账号安装下面提供的 QIAN YU IPA。该路线不依赖 LocalDevVPN，但每 7 天到期前仍需通过运行 AltServer 的电脑续签；不满足长期完全脱离电脑的需求。
+免费签名一般有效 **7 天**，到期前需续签。SideStore 的手机续签能力不代表首次安装无需电脑，也不保证后台自动续签一定执行。具体兼容系统、工具安装及账号条件以各工具官方文档为准。
 
-## 首次设置 SideStore
+源码安装步骤见 [安装与分发](https://github.com/RealWR1D/QIAN-YU/blob/main/Docs/安装与分发.md)。AltStore Classic 用户参阅 [Windows 安装](https://faq.altstore.io/altstore-classic/how-to-install-altstore-windows)及[官方说明](https://faq.altstore.io/altstore-classic/your-altstore)。以下介绍 SideStore 路线。
 
-1. 按 [SideStore 官方准备指南](https://docs.sidestore.io/docs/installation/prerequisites) 在电脑安装 iloader，在 iPhone 安装 LocalDevVPN。
-2. 用数据线连接 iPhone，解锁并确认“信任此电脑”。
-3. 按 [SideStore 官方安装指南](https://docs.sidestore.io/docs/installation/install) 使用 iloader 安装独立的 SideStore，完成设备配对。请使用官方发布的软件。
-4. 按系统提示开启开发者模式、信任自己的开发者账号。在 SideStore 中登录自己的 Apple 账号，完成首次刷新。密码、设备配对文件和签名凭据只在你自己的设备中使用，不需要发给项目维护者。
+## SideStore 前置要求
 
-本项目提供的是独立安装包，使用独立 SideStore 安装；不使用 LiveContainer 容器，以保留小组件与灵动岛扩展的安装机会。
+- iPhone 运行 iOS 17 或更新版本，且满足所安装 SideStore 版本的要求。
+- 准备一台兼容的 Windows、Mac 或 Linux 电脑、数据线和自己的 Apple 账号。
+- 确认 App Store 所在地区可以下载 **LocalDevVPN**。若商店地区不提供该应用，此路线的前置条件尚未满足，应选择其他支持的安装方式。
+- 按官方说明准备 iloader、设备配对及所需网络环境。
+
+LocalDevVPN 使用的 Network Extensions 能力不向免费 Personal Team 开放，因此不能假定下载它的普通 IPA 再免费重签就能替代 App Store 安装。参见 [Apple 能力表](https://developer.apple.com/help/account/reference/supported-capabilities-ios)和 [SideStore 前置要求](https://docs.sidestore.io/docs/installation/prerequisites)。
+
+## 首次安装 SideStore
+
+1. 按 [官方准备指南](https://docs.sidestore.io/docs/installation/prerequisites)，在电脑安装 iloader，在 iPhone 安装 LocalDevVPN。
+2. 用数据线连接 iPhone，解锁并确认「信任此电脑」。
+3. 按 [官方安装指南](https://docs.sidestore.io/docs/installation/install)，使用 iloader 安装独立的 SideStore 并完成设备配对。
+4. 根据系统提示开启开发者模式、信任对应开发者。使用自己的 Apple 账号登录 SideStore，完成首次刷新。
+
+本项目使用独立安装方式，保留 QianYuWidgets 扩展。账号密码、验证码、设备配对文件和签名凭据应仅用于安装者自己的设备，不需要提交给项目维护者。
 
 ## 安装 QIAN YU
 
-在 SideStore 的 Sources 页面点击添加源，粘贴：
+1. 在 SideStore 的 **Sources** 页面添加以下源：
 
 ```text
 https://github.com/RealWR1D/QIAN-YU/releases/download/ios-sideload/sidestore.json
 ```
 
-刷新源，找到 **QIAN YU** 并安装。若询问是否保留扩展，请保留 `QianYuWidgets`，否则桌面小组件、锁屏专注和灵动岛界面无法显示。
+2. 刷新源，找到 **QIAN YU** 并安装。
+3. 如询问是否保留扩展，保留 **QianYuWidgets**；移除扩展将无法使用课程小组件、锁屏专注和灵动岛展示。
+4. 安装完成后打开应用，按 [千语使用指南](https://github.com/RealWR1D/QIAN-YU/blob/main/Docs/千语使用指南.md)配置学期、导入课表、设置提醒，并按需配置 AI。
 
-也可从 [iPhone 侧载下载页](https://github.com/RealWR1D/QIAN-YU/releases/tag/ios-sideload) 下载 `QIAN-YU-iOS-SideStore.ipa`，在 SideStore 的 My Apps 中使用“+”导入。
+也可从下载页获取 `QIAN-YU-iOS-SideStore.ipa`，通过 SideStore 的 **My Apps → +** 导入，或使用支持该包的其他安装工具。
 
-IPA 是用于个人重新签名的构建产物，不是 App Store 安装包，也不能在“文件”应用中直接点击安装。实际安装由 SideStore 使用你自己的账号签名。原有 Xcode 安装版可能被替换，也可能因为安装标识不同而共存；新安装版需要重新填写 API 配置。
+更换安装方式或应用标识前，可在 **设置 → 关于应用 → 备份与恢复** 导出数据。不同安装标识可能形成独立的数据容器，原有 Xcode 安装版可能被替换或共存；新安装后需检查数据并重新配置 API。
 
-## 续签与更新
+## 日常更新与续签
 
-- 免费签名有效期为 **7 天**。到期前在 SideStore 的 My Apps 中刷新 **SideStore 和 QIAN YU**；建议每隔几天手动检查一次，不要仅依赖后台自动刷新。
-- 安装、更新和续签时需要连接 **Wi-Fi** 并开启 **LocalDevVPN**，只连蜂窝网络不满足要求。完成后可断开该本地 VPN。
-- 新版会出现在 SideStore 的更新列表。仓库 main 的相关源码更新通过检查后，自动生成新版 IPA 并更新相同的源地址。
-- 如果 SideStore 自己过期而无法启动，可能需要再次借电脑重新安装它。持续保持续签可以避免通常情况下每周接电脑。
-- 免费账号最多同时安装 3 个侧载应用，SideStore 自己占一个；扩展还会占用 App ID 配额。遇到配额错误时，按 SideStore 提示处理。保留 QianYuWidgets 需要额外的 App ID。
+- 免费账号用户应在到期前，在 SideStore 的 **My Apps** 中刷新 **SideStore 和 QIAN YU**，定期检查剩余有效期。
+- 按当前 SideStore 流程，安装、更新和续签时需要 Wi-Fi 并开启 LocalDevVPN；完成后可断开该本地 VPN。
+- 新版本通过相同源地址提供。安装前可查看发布页的源码提交、构建信息和校验文件。
+- SideStore 本身到期无法启动时，可能需要电脑重新安装。不要把后台刷新视作持续可用的保证。
+- 免费账号的侧载应用数量及 App ID 配额有限。SideStore 本身占用应用名额，QianYuWidgets 还需要相应 App ID；遇到配额错误时按安装工具的提示处理。
 
-参考：[SideStore 常见问题](https://docs.sidestore.io/docs/faq)、[错误排查](https://docs.sidestore.io/docs/troubleshooting/error-codes)。
+参考：[SideStore 常见问题](https://docs.sidestore.io/docs/faq)及[错误排查](https://docs.sidestore.io/docs/troubleshooting/error-codes)。
 
-## 本包的检查范围
+## 构建与验证范围
 
-构建使用 Release 配置，包含聊天与性能修复，并保留 `QianYuWidgets`、头像和图标。侧载版课程与聊天数据库存放在应用自己的容器内；共享课表读取安装后的 App Group，后台提醒使用安装后的任务标识。
+构建为设备 arm64 Release，包含主应用、QianYuWidgets、头像和应用图标。侧载版使用应用容器内的本地数据库，按安装后的 App Group 共享课程数据。
 
-自动检查覆盖原标识及个人签名标识映射、课程规则、聊天、数据库保存、IPA 中的主应用与扩展结构、版本一致性、arm64 可执行文件和本地签名完整性。**这些检查不等于已在你的 iPhone 上通过 SideStore 安装验收。**首次安装后请检查启动、课表保存、通知、聊天、专注灵动岛和桌面小组件。
+自动检查覆盖回归测试、设备 Release 编译、IPA 结构、版本一致性、可执行文件和本地签名完整性。它们不等于已在所有设备和安装工具上通过验收。首次安装后请检查启动、课表保存、通知、聊天、专注实时活动和小组件。
 
-这是非官方同人应用，素材来源和授权情况见 [素材与权利说明](素材与权利说明.md)。
+本项目为非官方同人应用，素材来源和授权情况见 [素材与权利说明](https://github.com/RealWR1D/QIAN-YU/blob/main/Docs/素材与权利说明.md)。

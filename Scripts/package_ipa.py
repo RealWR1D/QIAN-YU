@@ -88,7 +88,7 @@ def package(args):
             "apps": [{
                 "name": "QIAN YU", "bundleIdentifier": app_info["CFBundleIdentifier"],
                 "developerName": "RealWR1D", "iconURL": icon,
-                "localizedDescription": "千语陪伴、ICS 课表导入、聊天、每日提醒与专注计时。通过自己的免费 Apple 账号签名，每 7 天续签。包含小组件与灵动岛扩展，设备兼容性需要安装后验证。",
+                "localizedDescription": "千语陪伴、ICS 课表导入、聊天、每日提醒与专注计时。需使用安装者自己的账号重新签名，安装与续签要求以所用工具为准。包含小组件与灵动岛扩展，设备兼容性需要安装后验证。",
                 "versions": [{
                     "version": version, "buildVersion": args.build_version,
                     "date": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
