@@ -23,14 +23,19 @@ struct QianYuApp: App {
             CourseItem.self
         ])
 
-        #if os(macOS) && QIANYU_LOCAL_DISTRIBUTION
+        #if (os(macOS) && QIANYU_LOCAL_DISTRIBUTION) || (os(iOS) && QIANYU_SIDELOAD)
         // Ad hoc signatures cannot access the developer team's App Group.
         // Use a stable, separate store; never move or delete the signed build's data.
         do {
+            #if os(iOS)
+            let storeDirectory = "QIAN YU/Sideload"
+            #else
+            let storeDirectory = "QIAN YU/LocalDistribution"
+            #endif
             let directory = try FileManager.default.url(
                 for: .applicationSupportDirectory, in: .userDomainMask,
                 appropriateFor: nil, create: true
-            ).appendingPathComponent("QIAN YU/LocalDistribution", isDirectory: true)
+            ).appendingPathComponent(storeDirectory, isDirectory: true)
             try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
             let configuration = ModelConfiguration(
                 schema: schema, url: directory.appendingPathComponent("default.store"),
@@ -128,7 +133,7 @@ struct QianYuApp: App {
                 }
         }
         #if os(iOS)
-        .backgroundTask(.appRefresh("com.qianyu.companion.course-reminder-refresh")) {
+        .backgroundTask(.appRefresh(CourseReminderBackgroundRefresh.identifier)) {
             CourseReminderBackgroundRefresh.schedule()
             await CourseReminderBackgroundRefresh.refresh(container: container)
         }

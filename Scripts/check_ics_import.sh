@@ -8,6 +8,7 @@ swiftc "$root_dir/QIAN_YU/Models/CourseTimeRules.swift" -parse-as-library -o "$c
     "$root_dir/QIAN_YU/Engine/QianYuDialogueCorpus.swift" \
     "$root_dir/QIAN_YU/Models/AppSettings.swift" \
     "$root_dir/QIAN_YU/Models/CourseItem.swift" \
+    "$root_dir/QIAN_YU/Models/AppInstallationIdentity.swift" \
     "$root_dir/QIAN_YU/Models/ChatMessage.swift" \
     "$root_dir/QIAN_YU/Models/AppBackup.swift" \
     "$root_dir/QIAN_YU/Widgets/QianYuCourseWidget.swift" \

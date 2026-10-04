@@ -393,6 +393,10 @@ private struct ChatEventDecoder {
     private var receivedFinish = false
     private(set) var isDone = false
 
+    init(apiKey: String) {
+        self.apiKey = apiKey
+    }
+
     /// SSE accepts LF, CRLF, and CR. Decode UTF-8 only after a whole line arrives.
     mutating func consume(byte: UInt8) throws -> [StreamChunk] {
         if skipLF {

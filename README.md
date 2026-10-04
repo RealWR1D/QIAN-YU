@@ -6,6 +6,8 @@
 
 iPhone 免费自签与 Mac 下载包的说明见[安装与分发](Docs/安装与分发.md)。本项目为非官方同人应用，第三方素材的来源和授权状态见[素材与权利说明](Docs/素材与权利说明.md)。
 
+没有 Mac 或暂不购买开发者会员：使用 [SideStore 免费安装与续签](Docs/iPhone免费安装.md)，从 [iPhone 下载页](https://github.com/RealWR1D/QIAN-YU/releases/tag/ios-sideload) 获取 IPA。首次设置借一次电脑，之后在手机上每 7 天到期前续签。
+
 维护与发布前检查见[维护与验证](Docs/维护与验证.md)。在项目根目录运行 `bash Scripts/check_project.sh`，可执行回归检查及 iOS、macOS Release 构建。
 
 ---

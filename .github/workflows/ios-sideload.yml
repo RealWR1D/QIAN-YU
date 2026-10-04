@@ -1,0 +1,77 @@
+name: Publish iPhone SideStore build
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'QIAN_YU/**'
+      - 'QIAN YU.xcodeproj/**'
+      - 'Scripts/**'
+      - '.github/workflows/ios-sideload.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ios-sideload
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.repository == 'RealWR1D/QIAN-YU' && github.ref == 'refs/heads/main'
+    runs-on: macos-15
+    timeout-minutes: 35
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Regression checks
+        run: bash Scripts/check_project.sh --checks-only --output-dir "$RUNNER_TEMP/checks"
+      - name: Build and verify IPA
+        run: bash Scripts/package_ios.sh "$RUNNER_TEMP/ios-sideload"
+      - name: Prepare installation notes
+        env:
+          BUILD_COMMIT: ${{ github.sha }}
+        run: |
+          cp Docs/iPhone免费安装.md "$RUNNER_TEMP/ios-sideload/安装说明.md"
+          cp Docs/素材与权利说明.md "$RUNNER_TEMP/ios-sideload/素材与权利说明.md"
+          python3 - <<'PY'
+          import os, pathlib
+          directory = pathlib.Path(os.environ['RUNNER_TEMP']) / 'ios-sideload'
+          notes = directory.joinpath('安装说明.md').read_text()
+          notes += '\n\n当前构建源码：`' + os.environ['BUILD_COMMIT'] + '`。此预发布频道随 main 更新；IPA 与源索引一起更新。\n'
+          notes += '\n已通过回归、设备 Release 编译、包结构与本地签名检查；尚未在 SideStore 真机安装验收。\n'
+          directory.joinpath('release-notes.md').write_text(notes)
+          PY
+      - name: Publish SideStore channel
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          BUILD_COMMIT: ${{ github.sha }}
+        run: |
+          directory="$RUNNER_TEMP/ios-sideload"
+          if ! gh release view ios-sideload >/dev/null 2>&1; then
+            gh release create ios-sideload --target "$BUILD_COMMIT" --prerelease \
+              --title 'QIAN YU · iPhone 免费侧载' --notes-file "$directory/release-notes.md"
+          fi
+          gh release upload ios-sideload "$directory/QIAN-YU-iOS-SideStore.ipa" \
+            "$directory/build-info.json" "$directory/SHA256SUMS-ios.txt" \
+            "$directory/安装说明.md" "$directory/素材与权利说明.md" --clobber
+          gh release upload ios-sideload "$directory/sidestore.json" --clobber
+          gh api --method PATCH "repos/$GH_REPO/git/refs/tags/ios-sideload" \
+            -f sha="$BUILD_COMMIT" -F force=true
+          gh release edit ios-sideload --prerelease --notes-file "$directory/release-notes.md"
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-sideload-logs
+          path: |
+            ${{ runner.temp }}/ios-sideload/build-ios.log
+            ${{ runner.temp }}/checks/*.log
+            ${{ runner.temp }}/checks/summary.txt
+          retention-days: 14

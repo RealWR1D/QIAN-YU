@@ -560,6 +560,16 @@
         }
       }
     },
+    "上次回复未完成" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上次回复未完成"
+          }
+        }
+      }
+    },
     "上次验证：%@。修改地址、密钥、模型或思考配置后需要重新测试。" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1253,6 +1263,16 @@
         }
       }
     },
+    "加载更早的消息" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加载更早的消息"
+          }
+        }
+      }
+    },
     "北区风雨操场" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1764,12 +1784,32 @@
         }
       }
     },
+    "回到最新消息" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回到最新消息"
+          }
+        }
+      }
+    },
     "回到本周 (第 %lld 周)" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "回到本周 (第 %lld 周)"
+          }
+        }
+      }
+    },
+    "回复已停止" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回复已停止"
           }
         }
       }
@@ -1830,6 +1870,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "基本信息"
+          }
+        }
+      }
+    },
+    "备份与恢复" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "备份与恢复"
+          }
+        }
+      }
+    },
+    "备份课表、聊天、人设、称呼和学期起始日。备份不包含 API Key。文件中包含你的聊天内容，请自行妥善保存。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "备份课表、聊天、人设、称呼和学期起始日。备份不包含 API Key。文件中包含你的聊天内容，请自行妥善保存。"
+          }
+        }
+      }
+    },
+    "复制" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制"
           }
         }
       }
@@ -2002,6 +2072,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "导入课程表 (.ics)"
+          }
+        }
+      }
+    },
+    "导出备份" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导出备份"
           }
         }
       }
@@ -2448,6 +2528,26 @@
         }
       }
     },
+    "恢复备份" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复备份"
+          }
+        }
+      }
+    },
+    "恢复时合并缺少的课程和消息，保留现有记录；人设、称呼和学期起始日使用备份中的值。" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复时合并缺少的课程和消息，保留现有记录；人设、称呼和学期起始日使用备份中的值。"
+          }
+        }
+      }
+    },
     "恢复默认" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2772,6 +2872,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "教师未填写"
+          }
+        }
+      }
+    },
+    "数据备份" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "数据备份"
           }
         }
       }
@@ -3997,6 +4107,16 @@
         }
       }
     },
+    "聊天记录尚未保存：" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "聊天记录尚未保存："
+          }
+        }
+      }
+    },
     "自动（模型默认）" : {
       "localizations" : {
         "zh-Hans" : {
@@ -4185,6 +4305,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "读取模型列表失败：%@。仍可手动填写模型 ID 并测试连接。"
+          }
+        }
+      }
+    },
+    "读取聊天记录失败：" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "读取聊天记录失败："
           }
         }
       }
@@ -4458,6 +4588,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "重置"
+          }
+        }
+      }
+    },
+    "重试保存" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重试保存"
+          }
+        }
+      }
+    },
+    "重试回复" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重试回复"
           }
         }
       }

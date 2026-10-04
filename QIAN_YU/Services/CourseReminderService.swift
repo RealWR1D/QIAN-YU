@@ -139,7 +139,7 @@ public final class CourseReminderService {
 #if os(iOS)
 /// 在系统允许后台刷新时补排后续课程。iOS 决定实际执行时间，前台激活仍会立即补排。
 public enum CourseReminderBackgroundRefresh {
-    private static let identifier = "com.qianyu.companion.course-reminder-refresh"
+    public static let identifier = AppInstallationIdentity.backgroundRefreshIdentifier(in: Bundle.main.infoDictionary ?? [:])
 
     @MainActor
     public static func refresh(container: ModelContainer) async {

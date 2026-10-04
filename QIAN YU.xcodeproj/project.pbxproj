@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F9B02000AA114400BBBB0003 /* AppInstallationIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A02000AA114400BBBB0003 /* AppInstallationIdentity.swift */; };
+		F9B02000AA114400BBBB0004 /* AppInstallationIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A02000AA114400BBBB0003 /* AppInstallationIdentity.swift */; };
 		F9B02000AA114400BBBB0002 /* BackupSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A02000AA114400BBBB0002 /* BackupSettingsView.swift */; };
 		F9B02000AA114400BBBB0001 /* AppBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A02000AA114400BBBB0001 /* AppBackup.swift */; };
 		F6A914C93D414ADCB7149FA1 /* DailyPushPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A914C93D414ADCB7149FA2 /* DailyPushPlanner.swift */; };
@@ -96,6 +98,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F9A02000AA114400BBBB0003 /* AppInstallationIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInstallationIdentity.swift; sourceTree = "<group>"; };
 		F9A02000AA114400BBBB0002 /* BackupSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupSettingsView.swift; sourceTree = "<group>"; };
 		F9A02000AA114400BBBB0001 /* AppBackup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBackup.swift; sourceTree = "<group>"; };
 		F6A914C93D414ADCB7149FA2 /* DailyPushPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPushPlanner.swift; sourceTree = "<group>"; };
@@ -212,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				F9A02000AA114400BBBB0001 /* AppBackup.swift */,
+				F9A02000AA114400BBBB0003 /* AppInstallationIdentity.swift */,
 				F6B1682E7BE34276B0C6C23B /* CourseTimeRules.swift */,
 				C69800022F984BC39B14A87D /* ChatMessage.swift */,
 				28DAD27A7891468F9B85B703 /* CourseItem.swift */,
@@ -496,6 +500,7 @@
 				00CA77B950EB4388B0F860BA /* ChatViewModel.swift in Sources */,
 				F9B02000AA114400BBBB0002 /* BackupSettingsView.swift in Sources */,
 				F9B02000AA114400BBBB0001 /* AppBackup.swift in Sources */,
+				F9B02000AA114400BBBB0003 /* AppInstallationIdentity.swift in Sources */,
 				06074522E9904523BA64DCD5 /* CourseScheduleViewModel.swift in Sources */,
 				41FBE959F808408D94D1E849 /* SettingsViewModel.swift in Sources */,
 				2D7BCB28A64B49418E0B8B73 /* MainView.swift in Sources */,
@@ -531,6 +536,7 @@
 			files = (
 				5810A4E7A191458EBCCDDB23 /* CourseTimeRules.swift in Sources */,
 				C4B01100D0014D88A1230001 /* QianYuWidgetBundle.swift in Sources */,
+				F9B02000AA114400BBBB0004 /* AppInstallationIdentity.swift in Sources */,
 				C4B01100D0014D88A1230002 /* QianYuCourseWidget.swift in Sources */,
 				C4B01100D0014D88A1230003 /* QianYuDynamicIslandView.swift in Sources */,
 				C4B01100D0014D88A1230004 /* PomodoroActivityAttributes.swift in Sources */,

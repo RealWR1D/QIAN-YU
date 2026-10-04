@@ -45,7 +45,7 @@ run_check() {
 }
 if [ "$mode" != build ]; then
     run_check copy python3 Scripts/check_copy.py
-    for name in course_time notification_scheduler daily_push daily_content pomodoro api_configuration ics_import distribution_storage chat; do
+    for name in course_time notification_scheduler daily_push daily_content pomodoro api_configuration ics_import distribution_storage chat sideload; do
         run_check "$name" sh "Scripts/check_$name.sh"
     done
 fi

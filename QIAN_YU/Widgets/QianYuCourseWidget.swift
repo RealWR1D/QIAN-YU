@@ -100,7 +100,7 @@ public struct CourseWidgetProvider: TimelineProvider {
     }
 
     private func readSchedule() -> CourseWidgetScheduleSnapshot? {
-        guard let defaults = UserDefaults(suiteName: "group.com.qianyu.companion"),
+        guard let defaults = UserDefaults(suiteName: AppInstallationIdentity.sharedGroup),
               let data = defaults.data(forKey: "widget_schedule_v2") else { return nil }
         return try? JSONDecoder().decode(CourseWidgetScheduleSnapshot.self, from: data)
     }
@@ -125,7 +125,7 @@ public struct CourseWidgetProvider: TimelineProvider {
             return CourseWidgetEntry(date: date, courseName: next.name, classroom: next.classroom.isEmpty ? String(localized: "教室未指定") : next.classroom, timeString: timeString, teacher: next.teacher, weekInfo: weekInfo)
         }
 
-        let appGroupID = "group.com.qianyu.companion"
+        let appGroupID = AppInstallationIdentity.sharedGroup
         guard let userDefaults = UserDefaults(suiteName: appGroupID) else {
             NSLog("无法打开 App Group UserDefaults：%@", appGroupID)
             return CourseWidgetEntry(

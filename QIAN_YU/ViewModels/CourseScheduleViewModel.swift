@@ -565,7 +565,7 @@ public final class CourseScheduleViewModel {
 
     // MARK: - 小组件数据快照同步
     public func updateWidgetSnapshot() {
-        let appGroupID = "group.com.qianyu.companion"
+        let appGroupID = AppInstallationIdentity.sharedGroup
         guard let userDefaults = UserDefaults(suiteName: appGroupID) else {
             NSLog("无法打开 App Group UserDefaults：%@", appGroupID)
             return
