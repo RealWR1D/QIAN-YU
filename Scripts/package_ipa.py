@@ -91,15 +91,17 @@ def package(args):
                 "localizedDescription": "千语陪伴、ICS 课表导入、聊天、每日提醒与专注计时。通过自己的免费 Apple 账号签名，每 7 天续签。包含小组件与灵动岛扩展，设备兼容性需要安装后验证。",
                 "versions": [{
                     "version": version, "buildVersion": args.build_version,
-                    "date": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                    "date": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
                     "localizedDescription": f"源码提交 {args.commit[:7]}；包含最新聊天与性能修复。",
                     "downloadURL": f"{base}/{IPA_NAME}", "size": ipa.stat().st_size,
+                    "sha256": hashlib.sha256(ipa.read_bytes()).hexdigest(),
                     "minOSVersion": app_info["MinimumOSVersion"],
                 }],
                 "appPermissions": {"entitlements": sorted(permissions), "privacy": privacy},
             }], "news": [],
         }
         (output / "sidestore.json").write_text(json.dumps(source, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        run("swift", str(ROOT / "Scripts/check_sideload_source.swift"), str(output / "sidestore.json"))
         (output / "build-info.json").write_text(json.dumps({"commit": args.commit, "version": version, "buildVersion": args.build_version, "signing": "ad hoc; re-sign with a personal Apple account before installation"}, indent=2) + "\n")
         files = [IPA_NAME, "sidestore.json", "build-info.json"]
         (output / "SHA256SUMS-ios.txt").write_text("".join(f"{hashlib.sha256((output / name).read_bytes()).hexdigest()}  {name}\n" for name in files))
