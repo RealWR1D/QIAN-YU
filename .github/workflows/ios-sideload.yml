@@ -7,6 +7,7 @@ on:
       - 'QIAN_YU/**'
       - 'QIAN YU.xcodeproj/**'
       - 'Scripts/**'
+      - 'Docs/千语使用指南.md'
       - '.github/workflows/ios-sideload.yml'
   workflow_dispatch:
 
@@ -37,8 +38,8 @@ jobs:
         env:
           BUILD_COMMIT: ${{ github.sha }}
         run: |
-          cp Docs/iPhone免费安装.md "$RUNNER_TEMP/ios-sideload/Installation.md"
-          cp Docs/素材与权利说明.md "$RUNNER_TEMP/ios-sideload/ThirdPartyAssets.md"
+          python3 Scripts/export_guide.py --section "安装与启动" --output "$RUNNER_TEMP/ios-sideload/Installation.md"
+          python3 Scripts/export_guide.py --section "素材与权利说明" --output "$RUNNER_TEMP/ios-sideload/ThirdPartyAssets.md"
           python3 - <<'PY'
           import os, pathlib
           directory = pathlib.Path(os.environ['RUNNER_TEMP']) / 'ios-sideload'

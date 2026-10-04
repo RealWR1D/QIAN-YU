@@ -31,8 +31,8 @@ for arch in arm64 x86_64; do
 done
 mkdir -p "$work_dir/package"
 ditto "$app" "$work_dir/package/QIAN YU.app"
-cp Docs/安装与分发.md "$work_dir/package/安装说明.md"
-cp Docs/素材与权利说明.md "$work_dir/package/素材与权利说明.md"
+python3 Scripts/export_guide.py --section "安装与启动" --output "$work_dir/package/安装说明.md"
+python3 Scripts/export_guide.py --section "素材与权利说明" --output "$work_dir/package/素材与权利说明.md"
 archive="$output_dir/QIAN-YU-macOS-universal-local.zip"
 ditto -c -k --sequesterRsrc --keepParent "$work_dir/package" "$archive"
 (cd "$output_dir" && shasum -a 256 "$(basename "$archive")" > SHA256SUMS.txt)
