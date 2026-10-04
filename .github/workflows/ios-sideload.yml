@@ -37,12 +37,12 @@ jobs:
         env:
           BUILD_COMMIT: ${{ github.sha }}
         run: |
-          cp Docs/iPhone免费安装.md "$RUNNER_TEMP/ios-sideload/安装说明.md"
-          cp Docs/素材与权利说明.md "$RUNNER_TEMP/ios-sideload/素材与权利说明.md"
+          cp Docs/iPhone免费安装.md "$RUNNER_TEMP/ios-sideload/Installation.md"
+          cp Docs/素材与权利说明.md "$RUNNER_TEMP/ios-sideload/ThirdPartyAssets.md"
           python3 - <<'PY'
           import os, pathlib
           directory = pathlib.Path(os.environ['RUNNER_TEMP']) / 'ios-sideload'
-          notes = directory.joinpath('安装说明.md').read_text()
+          notes = directory.joinpath('Installation.md').read_text()
           notes += '\n\n当前构建源码：`' + os.environ['BUILD_COMMIT'] + '`。此预发布频道随 main 更新；IPA 与源索引一起更新。\n'
           notes += '\n已通过回归、设备 Release 编译、包结构与本地签名检查；尚未在 SideStore 真机安装验收。\n'
           directory.joinpath('release-notes.md').write_text(notes)
@@ -58,10 +58,13 @@ jobs:
             gh release create ios-sideload --target "$BUILD_COMMIT" --prerelease \
               --title 'QIAN YU · iPhone 免费侧载' --notes-file "$directory/release-notes.md"
           fi
-          gh release upload ios-sideload "$directory/QIAN-YU-iOS-SideStore.ipa" \
-            "$directory/build-info.json" "$directory/SHA256SUMS-ios.txt" \
-            "$directory/安装说明.md" "$directory/素材与权利说明.md" --clobber
-          gh release upload ios-sideload "$directory/sidestore.json" --clobber
+          # Upload the index last so it only advertises an available IPA.
+          for asset in QIAN-YU-iOS-SideStore.ipa build-info.json SHA256SUMS-ios.txt Installation.md ThirdPartyAssets.md sidestore.json; do
+            if ! gh release upload ios-sideload "$directory/$asset" --clobber; then
+              sleep 5
+              gh release upload ios-sideload "$directory/$asset" --clobber
+            fi
+          done
           gh api --method PATCH "repos/$GH_REPO/git/refs/tags/ios-sideload" \
             -f sha="$BUILD_COMMIT" -F force=true
           gh release edit ios-sideload --prerelease --notes-file "$directory/release-notes.md"
