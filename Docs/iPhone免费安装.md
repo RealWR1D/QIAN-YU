@@ -2,6 +2,14 @@
 
 不需要购买 Apple Developer Program。首次安装 SideStore 需要借用一台 Windows、Mac 或 Linux 电脑，后续可在 iPhone 上安装、更新和续签。支持 iOS 17 及以上。
 
+## 先确认 LocalDevVPN 能否下载
+
+SideStore 当前官方流程要求从 App Store 安装 LocalDevVPN。若你的商店地区无法下载它（例如仅有国区账号时遇到“所在国家或地区不可用”），这套流程会卡在第一步，并不能保证“借一次电脑后就能完全在手机上续签”。
+
+不能通过普通免费账号重签名 LocalDevVPN 来解决：它使用的 Network Extensions 能力不向免费 Personal Team 开放。参见 [Apple 能力表](https://developer.apple.com/help/account/reference/supported-capabilities-ios) 与 [SideStore 前置要求](https://docs.sidestore.io/docs/installation/prerequisites)。
+
+如果暂时不使用其他地区的商店账号，可在 Windows 上使用 [AltStore Classic](https://faq.altstore.io/altstore-classic/how-to-install-altstore-windows)，用自己的免费 Apple 账号安装下面提供的 QIAN YU IPA。该路线不依赖 LocalDevVPN，但每 7 天到期前仍需通过运行 AltServer 的电脑续签；不满足长期完全脱离电脑的需求。
+
 ## 首次设置 SideStore
 
 1. 按 [SideStore 官方准备指南](https://docs.sidestore.io/docs/installation/prerequisites) 在电脑安装 iloader，在 iPhone 安装 LocalDevVPN。
